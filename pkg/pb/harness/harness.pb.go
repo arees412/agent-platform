@@ -15441,6 +15441,1930 @@ func (x *ValidateWorkflowResponse) GetErrors() []string {
 	return nil
 }
 
+// EvalDatasetEntry is a persistent test set used as ground truth for prompt evaluation.
+type EvalDatasetEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	TenantId      string                 `protobuf:"bytes,4,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	CaseCount     int32                  `protobuf:"varint,5,opt,name=case_count,json=caseCount,proto3" json:"case_count,omitempty"`
+	CreatedAt     int64                  `protobuf:"varint,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     int64                  `protobuf:"varint,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EvalDatasetEntry) Reset() {
+	*x = EvalDatasetEntry{}
+	mi := &file_proto_harness_harness_proto_msgTypes[210]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EvalDatasetEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EvalDatasetEntry) ProtoMessage() {}
+
+func (x *EvalDatasetEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[210]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EvalDatasetEntry.ProtoReflect.Descriptor instead.
+func (*EvalDatasetEntry) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{210}
+}
+
+func (x *EvalDatasetEntry) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *EvalDatasetEntry) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *EvalDatasetEntry) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *EvalDatasetEntry) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+func (x *EvalDatasetEntry) GetCaseCount() int32 {
+	if x != nil {
+		return x.CaseCount
+	}
+	return 0
+}
+
+func (x *EvalDatasetEntry) GetCreatedAt() int64 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
+func (x *EvalDatasetEntry) GetUpdatedAt() int64 {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return 0
+}
+
+// DatasetCaseEntry is a single test case within a dataset.
+type DatasetCaseEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	DatasetId     string                 `protobuf:"bytes,2,opt,name=dataset_id,json=datasetId,proto3" json:"dataset_id,omitempty"`
+	Input         string                 `protobuf:"bytes,3,opt,name=input,proto3" json:"input,omitempty"`       // User input / question
+	Expected      string                 `protobuf:"bytes,4,opt,name=expected,proto3" json:"expected,omitempty"` // Expected output (for automatic scoring)
+	Context       string                 `protobuf:"bytes,5,opt,name=context,proto3" json:"context,omitempty"`   // Optional RAG context
+	Tags          string                 `protobuf:"bytes,6,opt,name=tags,proto3" json:"tags,omitempty"`         // JSON array, e.g. ["jailbreak","normal"]
+	CreatedAt     int64                  `protobuf:"varint,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DatasetCaseEntry) Reset() {
+	*x = DatasetCaseEntry{}
+	mi := &file_proto_harness_harness_proto_msgTypes[211]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DatasetCaseEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DatasetCaseEntry) ProtoMessage() {}
+
+func (x *DatasetCaseEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[211]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DatasetCaseEntry.ProtoReflect.Descriptor instead.
+func (*DatasetCaseEntry) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{211}
+}
+
+func (x *DatasetCaseEntry) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *DatasetCaseEntry) GetDatasetId() string {
+	if x != nil {
+		return x.DatasetId
+	}
+	return ""
+}
+
+func (x *DatasetCaseEntry) GetInput() string {
+	if x != nil {
+		return x.Input
+	}
+	return ""
+}
+
+func (x *DatasetCaseEntry) GetExpected() string {
+	if x != nil {
+		return x.Expected
+	}
+	return ""
+}
+
+func (x *DatasetCaseEntry) GetContext() string {
+	if x != nil {
+		return x.Context
+	}
+	return ""
+}
+
+func (x *DatasetCaseEntry) GetTags() string {
+	if x != nil {
+		return x.Tags
+	}
+	return ""
+}
+
+func (x *DatasetCaseEntry) GetCreatedAt() int64 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
+// CreateDatasetRequest
+type CreateDatasetRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	TenantId      string                 `protobuf:"bytes,3,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateDatasetRequest) Reset() {
+	*x = CreateDatasetRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[212]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateDatasetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateDatasetRequest) ProtoMessage() {}
+
+func (x *CreateDatasetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[212]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateDatasetRequest.ProtoReflect.Descriptor instead.
+func (*CreateDatasetRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{212}
+}
+
+func (x *CreateDatasetRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateDatasetRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *CreateDatasetRequest) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+// GetDatasetRequest
+type GetDatasetRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetDatasetRequest) Reset() {
+	*x = GetDatasetRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[213]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetDatasetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetDatasetRequest) ProtoMessage() {}
+
+func (x *GetDatasetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[213]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetDatasetRequest.ProtoReflect.Descriptor instead.
+func (*GetDatasetRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{213}
+}
+
+func (x *GetDatasetRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+// ListDatasetsRequest
+type ListDatasetsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TenantId      string                 `protobuf:"bytes,1,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListDatasetsRequest) Reset() {
+	*x = ListDatasetsRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[214]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListDatasetsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListDatasetsRequest) ProtoMessage() {}
+
+func (x *ListDatasetsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[214]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListDatasetsRequest.ProtoReflect.Descriptor instead.
+func (*ListDatasetsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{214}
+}
+
+func (x *ListDatasetsRequest) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+// ListDatasetsResponse
+type ListDatasetsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Datasets      []*EvalDatasetEntry    `protobuf:"bytes,1,rep,name=datasets,proto3" json:"datasets,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListDatasetsResponse) Reset() {
+	*x = ListDatasetsResponse{}
+	mi := &file_proto_harness_harness_proto_msgTypes[215]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListDatasetsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListDatasetsResponse) ProtoMessage() {}
+
+func (x *ListDatasetsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[215]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListDatasetsResponse.ProtoReflect.Descriptor instead.
+func (*ListDatasetsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{215}
+}
+
+func (x *ListDatasetsResponse) GetDatasets() []*EvalDatasetEntry {
+	if x != nil {
+		return x.Datasets
+	}
+	return nil
+}
+
+// AddDatasetCaseRequest
+type AddDatasetCaseRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DatasetId     string                 `protobuf:"bytes,1,opt,name=dataset_id,json=datasetId,proto3" json:"dataset_id,omitempty"`
+	Input         string                 `protobuf:"bytes,2,opt,name=input,proto3" json:"input,omitempty"`
+	Expected      string                 `protobuf:"bytes,3,opt,name=expected,proto3" json:"expected,omitempty"`
+	Context       string                 `protobuf:"bytes,4,opt,name=context,proto3" json:"context,omitempty"`
+	Tags          string                 `protobuf:"bytes,5,opt,name=tags,proto3" json:"tags,omitempty"` // JSON array
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddDatasetCaseRequest) Reset() {
+	*x = AddDatasetCaseRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[216]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddDatasetCaseRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddDatasetCaseRequest) ProtoMessage() {}
+
+func (x *AddDatasetCaseRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[216]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddDatasetCaseRequest.ProtoReflect.Descriptor instead.
+func (*AddDatasetCaseRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{216}
+}
+
+func (x *AddDatasetCaseRequest) GetDatasetId() string {
+	if x != nil {
+		return x.DatasetId
+	}
+	return ""
+}
+
+func (x *AddDatasetCaseRequest) GetInput() string {
+	if x != nil {
+		return x.Input
+	}
+	return ""
+}
+
+func (x *AddDatasetCaseRequest) GetExpected() string {
+	if x != nil {
+		return x.Expected
+	}
+	return ""
+}
+
+func (x *AddDatasetCaseRequest) GetContext() string {
+	if x != nil {
+		return x.Context
+	}
+	return ""
+}
+
+func (x *AddDatasetCaseRequest) GetTags() string {
+	if x != nil {
+		return x.Tags
+	}
+	return ""
+}
+
+// AddDatasetCasesRequest (batch)
+type AddDatasetCasesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DatasetId     string                 `protobuf:"bytes,1,opt,name=dataset_id,json=datasetId,proto3" json:"dataset_id,omitempty"`
+	Cases         []*DatasetCaseEntry    `protobuf:"bytes,2,rep,name=cases,proto3" json:"cases,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AddDatasetCasesRequest) Reset() {
+	*x = AddDatasetCasesRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[217]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AddDatasetCasesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AddDatasetCasesRequest) ProtoMessage() {}
+
+func (x *AddDatasetCasesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[217]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AddDatasetCasesRequest.ProtoReflect.Descriptor instead.
+func (*AddDatasetCasesRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{217}
+}
+
+func (x *AddDatasetCasesRequest) GetDatasetId() string {
+	if x != nil {
+		return x.DatasetId
+	}
+	return ""
+}
+
+func (x *AddDatasetCasesRequest) GetCases() []*DatasetCaseEntry {
+	if x != nil {
+		return x.Cases
+	}
+	return nil
+}
+
+// ListDatasetCasesRequest
+type ListDatasetCasesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DatasetId     string                 `protobuf:"bytes,1,opt,name=dataset_id,json=datasetId,proto3" json:"dataset_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListDatasetCasesRequest) Reset() {
+	*x = ListDatasetCasesRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[218]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListDatasetCasesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListDatasetCasesRequest) ProtoMessage() {}
+
+func (x *ListDatasetCasesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[218]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListDatasetCasesRequest.ProtoReflect.Descriptor instead.
+func (*ListDatasetCasesRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{218}
+}
+
+func (x *ListDatasetCasesRequest) GetDatasetId() string {
+	if x != nil {
+		return x.DatasetId
+	}
+	return ""
+}
+
+// ListDatasetCasesResponse
+type ListDatasetCasesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Cases         []*DatasetCaseEntry    `protobuf:"bytes,1,rep,name=cases,proto3" json:"cases,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListDatasetCasesResponse) Reset() {
+	*x = ListDatasetCasesResponse{}
+	mi := &file_proto_harness_harness_proto_msgTypes[219]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListDatasetCasesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListDatasetCasesResponse) ProtoMessage() {}
+
+func (x *ListDatasetCasesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[219]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListDatasetCasesResponse.ProtoReflect.Descriptor instead.
+func (*ListDatasetCasesResponse) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{219}
+}
+
+func (x *ListDatasetCasesResponse) GetCases() []*DatasetCaseEntry {
+	if x != nil {
+		return x.Cases
+	}
+	return nil
+}
+
+// ImportDatasetCasesRequest — import cases from JSON or CSV content
+type ImportDatasetCasesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DatasetId     string                 `protobuf:"bytes,1,opt,name=dataset_id,json=datasetId,proto3" json:"dataset_id,omitempty"`
+	Format        string                 `protobuf:"bytes,2,opt,name=format,proto3" json:"format,omitempty"`   // "json" or "csv"
+	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"` // raw JSON array or CSV text
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImportDatasetCasesRequest) Reset() {
+	*x = ImportDatasetCasesRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[220]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImportDatasetCasesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportDatasetCasesRequest) ProtoMessage() {}
+
+func (x *ImportDatasetCasesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[220]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportDatasetCasesRequest.ProtoReflect.Descriptor instead.
+func (*ImportDatasetCasesRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{220}
+}
+
+func (x *ImportDatasetCasesRequest) GetDatasetId() string {
+	if x != nil {
+		return x.DatasetId
+	}
+	return ""
+}
+
+func (x *ImportDatasetCasesRequest) GetFormat() string {
+	if x != nil {
+		return x.Format
+	}
+	return ""
+}
+
+func (x *ImportDatasetCasesRequest) GetContent() string {
+	if x != nil {
+		return x.Content
+	}
+	return ""
+}
+
+// ImportDatasetCasesResponse
+type ImportDatasetCasesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Imported      int32                  `protobuf:"varint,1,opt,name=imported,proto3" json:"imported,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ImportDatasetCasesResponse) Reset() {
+	*x = ImportDatasetCasesResponse{}
+	mi := &file_proto_harness_harness_proto_msgTypes[221]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ImportDatasetCasesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ImportDatasetCasesResponse) ProtoMessage() {}
+
+func (x *ImportDatasetCasesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[221]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ImportDatasetCasesResponse.ProtoReflect.Descriptor instead.
+func (*ImportDatasetCasesResponse) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{221}
+}
+
+func (x *ImportDatasetCasesResponse) GetImported() int32 {
+	if x != nil {
+		return x.Imported
+	}
+	return 0
+}
+
+// ExperimentEntry is a single run of "configuration × dataset".
+type ExperimentEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	DatasetId     string                 `protobuf:"bytes,3,opt,name=dataset_id,json=datasetId,proto3" json:"dataset_id,omitempty"`
+	ConfigType    string                 `protobuf:"bytes,4,opt,name=config_type,json=configType,proto3" json:"config_type,omitempty"` // "prompt_version" / "model" / "manual"
+	ConfigRef     string                 `protobuf:"bytes,5,opt,name=config_ref,json=configRef,proto3" json:"config_ref,omitempty"`    // prompt version ID / model name / config JSON
+	Model         string                 `protobuf:"bytes,6,opt,name=model,proto3" json:"model,omitempty"`
+	Status        string                 `protobuf:"bytes,7,opt,name=status,proto3" json:"status,omitempty"` // "running" / "completed" / "failed"
+	AvgScore      float64                `protobuf:"fixed64,8,opt,name=avg_score,json=avgScore,proto3" json:"avg_score,omitempty"`
+	CaseCount     int32                  `protobuf:"varint,9,opt,name=case_count,json=caseCount,proto3" json:"case_count,omitempty"`
+	CreatedAt     int64                  `protobuf:"varint,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CompletedAt   int64                  `protobuf:"varint,11,opt,name=completed_at,json=completedAt,proto3" json:"completed_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExperimentEntry) Reset() {
+	*x = ExperimentEntry{}
+	mi := &file_proto_harness_harness_proto_msgTypes[222]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExperimentEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExperimentEntry) ProtoMessage() {}
+
+func (x *ExperimentEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[222]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExperimentEntry.ProtoReflect.Descriptor instead.
+func (*ExperimentEntry) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{222}
+}
+
+func (x *ExperimentEntry) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ExperimentEntry) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ExperimentEntry) GetDatasetId() string {
+	if x != nil {
+		return x.DatasetId
+	}
+	return ""
+}
+
+func (x *ExperimentEntry) GetConfigType() string {
+	if x != nil {
+		return x.ConfigType
+	}
+	return ""
+}
+
+func (x *ExperimentEntry) GetConfigRef() string {
+	if x != nil {
+		return x.ConfigRef
+	}
+	return ""
+}
+
+func (x *ExperimentEntry) GetModel() string {
+	if x != nil {
+		return x.Model
+	}
+	return ""
+}
+
+func (x *ExperimentEntry) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *ExperimentEntry) GetAvgScore() float64 {
+	if x != nil {
+		return x.AvgScore
+	}
+	return 0
+}
+
+func (x *ExperimentEntry) GetCaseCount() int32 {
+	if x != nil {
+		return x.CaseCount
+	}
+	return 0
+}
+
+func (x *ExperimentEntry) GetCreatedAt() int64 {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return 0
+}
+
+func (x *ExperimentEntry) GetCompletedAt() int64 {
+	if x != nil {
+		return x.CompletedAt
+	}
+	return 0
+}
+
+// ExperimentResultEntry is the result of running a single case through the LLM.
+type ExperimentResultEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	ExperimentId  string                 `protobuf:"bytes,2,opt,name=experiment_id,json=experimentId,proto3" json:"experiment_id,omitempty"`
+	CaseId        string                 `protobuf:"bytes,3,opt,name=case_id,json=caseId,proto3" json:"case_id,omitempty"`
+	Output        string                 `protobuf:"bytes,4,opt,name=output,proto3" json:"output,omitempty"` // LLM actual output
+	Score         float64                `protobuf:"fixed64,5,opt,name=score,proto3" json:"score,omitempty"` // 0-1 overall score
+	Passed        bool                   `protobuf:"varint,6,opt,name=passed,proto3" json:"passed,omitempty"`
+	LatencyMs     int64                  `protobuf:"varint,7,opt,name=latency_ms,json=latencyMs,proto3" json:"latency_ms,omitempty"`
+	Tokens        int64                  `protobuf:"varint,8,opt,name=tokens,proto3" json:"tokens,omitempty"`
+	Scores        string                 `protobuf:"bytes,9,opt,name=scores,proto3" json:"scores,omitempty"` // JSON: multi-dimension scores
+	Error         string                 `protobuf:"bytes,10,opt,name=error,proto3" json:"error,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExperimentResultEntry) Reset() {
+	*x = ExperimentResultEntry{}
+	mi := &file_proto_harness_harness_proto_msgTypes[223]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExperimentResultEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExperimentResultEntry) ProtoMessage() {}
+
+func (x *ExperimentResultEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[223]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExperimentResultEntry.ProtoReflect.Descriptor instead.
+func (*ExperimentResultEntry) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{223}
+}
+
+func (x *ExperimentResultEntry) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ExperimentResultEntry) GetExperimentId() string {
+	if x != nil {
+		return x.ExperimentId
+	}
+	return ""
+}
+
+func (x *ExperimentResultEntry) GetCaseId() string {
+	if x != nil {
+		return x.CaseId
+	}
+	return ""
+}
+
+func (x *ExperimentResultEntry) GetOutput() string {
+	if x != nil {
+		return x.Output
+	}
+	return ""
+}
+
+func (x *ExperimentResultEntry) GetScore() float64 {
+	if x != nil {
+		return x.Score
+	}
+	return 0
+}
+
+func (x *ExperimentResultEntry) GetPassed() bool {
+	if x != nil {
+		return x.Passed
+	}
+	return false
+}
+
+func (x *ExperimentResultEntry) GetLatencyMs() int64 {
+	if x != nil {
+		return x.LatencyMs
+	}
+	return 0
+}
+
+func (x *ExperimentResultEntry) GetTokens() int64 {
+	if x != nil {
+		return x.Tokens
+	}
+	return 0
+}
+
+func (x *ExperimentResultEntry) GetScores() string {
+	if x != nil {
+		return x.Scores
+	}
+	return ""
+}
+
+func (x *ExperimentResultEntry) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
+// CreateExperimentRequest
+type CreateExperimentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	DatasetId     string                 `protobuf:"bytes,2,opt,name=dataset_id,json=datasetId,proto3" json:"dataset_id,omitempty"`
+	ConfigType    string                 `protobuf:"bytes,3,opt,name=config_type,json=configType,proto3" json:"config_type,omitempty"` // "prompt_version" / "model" / "manual"
+	ConfigRef     string                 `protobuf:"bytes,4,opt,name=config_ref,json=configRef,proto3" json:"config_ref,omitempty"`    // prompt version ID
+	Model         string                 `protobuf:"bytes,5,opt,name=model,proto3" json:"model,omitempty"`
+	PromptContent string                 `protobuf:"bytes,6,opt,name=prompt_content,json=promptContent,proto3" json:"prompt_content,omitempty"` // rendered prompt content to test
+	Variables     string                 `protobuf:"bytes,7,opt,name=variables,proto3" json:"variables,omitempty"`                              // JSON: variables for rendering
+	TenantId      string                 `protobuf:"bytes,8,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateExperimentRequest) Reset() {
+	*x = CreateExperimentRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[224]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateExperimentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateExperimentRequest) ProtoMessage() {}
+
+func (x *CreateExperimentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[224]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateExperimentRequest.ProtoReflect.Descriptor instead.
+func (*CreateExperimentRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{224}
+}
+
+func (x *CreateExperimentRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateExperimentRequest) GetDatasetId() string {
+	if x != nil {
+		return x.DatasetId
+	}
+	return ""
+}
+
+func (x *CreateExperimentRequest) GetConfigType() string {
+	if x != nil {
+		return x.ConfigType
+	}
+	return ""
+}
+
+func (x *CreateExperimentRequest) GetConfigRef() string {
+	if x != nil {
+		return x.ConfigRef
+	}
+	return ""
+}
+
+func (x *CreateExperimentRequest) GetModel() string {
+	if x != nil {
+		return x.Model
+	}
+	return ""
+}
+
+func (x *CreateExperimentRequest) GetPromptContent() string {
+	if x != nil {
+		return x.PromptContent
+	}
+	return ""
+}
+
+func (x *CreateExperimentRequest) GetVariables() string {
+	if x != nil {
+		return x.Variables
+	}
+	return ""
+}
+
+func (x *CreateExperimentRequest) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+// RunExperimentRequest — create + run an experiment in one call
+type RunExperimentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	DatasetId     string                 `protobuf:"bytes,2,opt,name=dataset_id,json=datasetId,proto3" json:"dataset_id,omitempty"`
+	ConfigType    string                 `protobuf:"bytes,3,opt,name=config_type,json=configType,proto3" json:"config_type,omitempty"`
+	ConfigRef     string                 `protobuf:"bytes,4,opt,name=config_ref,json=configRef,proto3" json:"config_ref,omitempty"`
+	Model         string                 `protobuf:"bytes,5,opt,name=model,proto3" json:"model,omitempty"`
+	PromptContent string                 `protobuf:"bytes,6,opt,name=prompt_content,json=promptContent,proto3" json:"prompt_content,omitempty"`
+	Variables     string                 `protobuf:"bytes,7,opt,name=variables,proto3" json:"variables,omitempty"` // JSON
+	TenantId      string                 `protobuf:"bytes,8,opt,name=tenant_id,json=tenantId,proto3" json:"tenant_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RunExperimentRequest) Reset() {
+	*x = RunExperimentRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[225]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RunExperimentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RunExperimentRequest) ProtoMessage() {}
+
+func (x *RunExperimentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[225]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RunExperimentRequest.ProtoReflect.Descriptor instead.
+func (*RunExperimentRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{225}
+}
+
+func (x *RunExperimentRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *RunExperimentRequest) GetDatasetId() string {
+	if x != nil {
+		return x.DatasetId
+	}
+	return ""
+}
+
+func (x *RunExperimentRequest) GetConfigType() string {
+	if x != nil {
+		return x.ConfigType
+	}
+	return ""
+}
+
+func (x *RunExperimentRequest) GetConfigRef() string {
+	if x != nil {
+		return x.ConfigRef
+	}
+	return ""
+}
+
+func (x *RunExperimentRequest) GetModel() string {
+	if x != nil {
+		return x.Model
+	}
+	return ""
+}
+
+func (x *RunExperimentRequest) GetPromptContent() string {
+	if x != nil {
+		return x.PromptContent
+	}
+	return ""
+}
+
+func (x *RunExperimentRequest) GetVariables() string {
+	if x != nil {
+		return x.Variables
+	}
+	return ""
+}
+
+func (x *RunExperimentRequest) GetTenantId() string {
+	if x != nil {
+		return x.TenantId
+	}
+	return ""
+}
+
+// GetExperimentRequest
+type GetExperimentRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetExperimentRequest) Reset() {
+	*x = GetExperimentRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[226]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetExperimentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetExperimentRequest) ProtoMessage() {}
+
+func (x *GetExperimentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[226]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetExperimentRequest.ProtoReflect.Descriptor instead.
+func (*GetExperimentRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{226}
+}
+
+func (x *GetExperimentRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+// ListExperimentsRequest
+type ListExperimentsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	DatasetId     string                 `protobuf:"bytes,1,opt,name=dataset_id,json=datasetId,proto3" json:"dataset_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListExperimentsRequest) Reset() {
+	*x = ListExperimentsRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[227]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListExperimentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListExperimentsRequest) ProtoMessage() {}
+
+func (x *ListExperimentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[227]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListExperimentsRequest.ProtoReflect.Descriptor instead.
+func (*ListExperimentsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{227}
+}
+
+func (x *ListExperimentsRequest) GetDatasetId() string {
+	if x != nil {
+		return x.DatasetId
+	}
+	return ""
+}
+
+// ListExperimentsResponse
+type ListExperimentsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Experiments   []*ExperimentEntry     `protobuf:"bytes,1,rep,name=experiments,proto3" json:"experiments,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListExperimentsResponse) Reset() {
+	*x = ListExperimentsResponse{}
+	mi := &file_proto_harness_harness_proto_msgTypes[228]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListExperimentsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListExperimentsResponse) ProtoMessage() {}
+
+func (x *ListExperimentsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[228]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListExperimentsResponse.ProtoReflect.Descriptor instead.
+func (*ListExperimentsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{228}
+}
+
+func (x *ListExperimentsResponse) GetExperiments() []*ExperimentEntry {
+	if x != nil {
+		return x.Experiments
+	}
+	return nil
+}
+
+// GetExperimentResultsRequest
+type GetExperimentResultsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ExperimentId  string                 `protobuf:"bytes,1,opt,name=experiment_id,json=experimentId,proto3" json:"experiment_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetExperimentResultsRequest) Reset() {
+	*x = GetExperimentResultsRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[229]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetExperimentResultsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetExperimentResultsRequest) ProtoMessage() {}
+
+func (x *GetExperimentResultsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[229]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetExperimentResultsRequest.ProtoReflect.Descriptor instead.
+func (*GetExperimentResultsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{229}
+}
+
+func (x *GetExperimentResultsRequest) GetExperimentId() string {
+	if x != nil {
+		return x.ExperimentId
+	}
+	return ""
+}
+
+// GetExperimentResultsResponse
+type GetExperimentResultsResponse struct {
+	state         protoimpl.MessageState   `protogen:"open.v1"`
+	Results       []*ExperimentResultEntry `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetExperimentResultsResponse) Reset() {
+	*x = GetExperimentResultsResponse{}
+	mi := &file_proto_harness_harness_proto_msgTypes[230]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetExperimentResultsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetExperimentResultsResponse) ProtoMessage() {}
+
+func (x *GetExperimentResultsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[230]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetExperimentResultsResponse.ProtoReflect.Descriptor instead.
+func (*GetExperimentResultsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{230}
+}
+
+func (x *GetExperimentResultsResponse) GetResults() []*ExperimentResultEntry {
+	if x != nil {
+		return x.Results
+	}
+	return nil
+}
+
+// CompareExperimentsRequest
+type CompareExperimentsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ExperimentIds []string               `protobuf:"bytes,1,rep,name=experiment_ids,json=experimentIds,proto3" json:"experiment_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CompareExperimentsRequest) Reset() {
+	*x = CompareExperimentsRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[231]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CompareExperimentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompareExperimentsRequest) ProtoMessage() {}
+
+func (x *CompareExperimentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[231]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompareExperimentsRequest.ProtoReflect.Descriptor instead.
+func (*CompareExperimentsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{231}
+}
+
+func (x *CompareExperimentsRequest) GetExperimentIds() []string {
+	if x != nil {
+		return x.ExperimentIds
+	}
+	return nil
+}
+
+// ExperimentSummaryEntry
+type ExperimentSummaryEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	ConfigType    string                 `protobuf:"bytes,3,opt,name=config_type,json=configType,proto3" json:"config_type,omitempty"`
+	ConfigRef     string                 `protobuf:"bytes,4,opt,name=config_ref,json=configRef,proto3" json:"config_ref,omitempty"`
+	AvgScore      float64                `protobuf:"fixed64,5,opt,name=avg_score,json=avgScore,proto3" json:"avg_score,omitempty"`
+	CaseCount     int32                  `protobuf:"varint,6,opt,name=case_count,json=caseCount,proto3" json:"case_count,omitempty"`
+	PassedCount   int32                  `protobuf:"varint,7,opt,name=passed_count,json=passedCount,proto3" json:"passed_count,omitempty"`
+	FailedCount   int32                  `protobuf:"varint,8,opt,name=failed_count,json=failedCount,proto3" json:"failed_count,omitempty"`
+	Status        string                 `protobuf:"bytes,9,opt,name=status,proto3" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ExperimentSummaryEntry) Reset() {
+	*x = ExperimentSummaryEntry{}
+	mi := &file_proto_harness_harness_proto_msgTypes[232]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ExperimentSummaryEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ExperimentSummaryEntry) ProtoMessage() {}
+
+func (x *ExperimentSummaryEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[232]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ExperimentSummaryEntry.ProtoReflect.Descriptor instead.
+func (*ExperimentSummaryEntry) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{232}
+}
+
+func (x *ExperimentSummaryEntry) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *ExperimentSummaryEntry) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ExperimentSummaryEntry) GetConfigType() string {
+	if x != nil {
+		return x.ConfigType
+	}
+	return ""
+}
+
+func (x *ExperimentSummaryEntry) GetConfigRef() string {
+	if x != nil {
+		return x.ConfigRef
+	}
+	return ""
+}
+
+func (x *ExperimentSummaryEntry) GetAvgScore() float64 {
+	if x != nil {
+		return x.AvgScore
+	}
+	return 0
+}
+
+func (x *ExperimentSummaryEntry) GetCaseCount() int32 {
+	if x != nil {
+		return x.CaseCount
+	}
+	return 0
+}
+
+func (x *ExperimentSummaryEntry) GetPassedCount() int32 {
+	if x != nil {
+		return x.PassedCount
+	}
+	return 0
+}
+
+func (x *ExperimentSummaryEntry) GetFailedCount() int32 {
+	if x != nil {
+		return x.FailedCount
+	}
+	return 0
+}
+
+func (x *ExperimentSummaryEntry) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+// CompareExperimentsResponse
+type CompareExperimentsResponse struct {
+	state            protoimpl.MessageState    `protogen:"open.v1"`
+	Experiments      []*ExperimentSummaryEntry `protobuf:"bytes,1,rep,name=experiments,proto3" json:"experiments,omitempty"`
+	BestExperimentId string                    `protobuf:"bytes,2,opt,name=best_experiment_id,json=bestExperimentId,proto3" json:"best_experiment_id,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *CompareExperimentsResponse) Reset() {
+	*x = CompareExperimentsResponse{}
+	mi := &file_proto_harness_harness_proto_msgTypes[233]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CompareExperimentsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CompareExperimentsResponse) ProtoMessage() {}
+
+func (x *CompareExperimentsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[233]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CompareExperimentsResponse.ProtoReflect.Descriptor instead.
+func (*CompareExperimentsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{233}
+}
+
+func (x *CompareExperimentsResponse) GetExperiments() []*ExperimentSummaryEntry {
+	if x != nil {
+		return x.Experiments
+	}
+	return nil
+}
+
+func (x *CompareExperimentsResponse) GetBestExperimentId() string {
+	if x != nil {
+		return x.BestExperimentId
+	}
+	return ""
+}
+
+// RunPromptOptimizationRequest
+type RunPromptOptimizationRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	PromptKey          string                 `protobuf:"bytes,1,opt,name=prompt_key,json=promptKey,proto3" json:"prompt_key,omitempty"`
+	DatasetId          string                 `protobuf:"bytes,2,opt,name=dataset_id,json=datasetId,proto3" json:"dataset_id,omitempty"`
+	Metric             string                 `protobuf:"bytes,3,opt,name=metric,proto3" json:"metric,omitempty"`                                                      // "overall" / "faithfulness" / "relevancy"
+	Strategy           string                 `protobuf:"bytes,4,opt,name=strategy,proto3" json:"strategy,omitempty"`                                                  // "textgrad" / "gepa"
+	Model              string                 `protobuf:"bytes,5,opt,name=model,proto3" json:"model,omitempty"`                                                        // LLM model for optimization
+	MaxRounds          int32                  `protobuf:"varint,6,opt,name=max_rounds,json=maxRounds,proto3" json:"max_rounds,omitempty"`                              // default 5
+	NoImproveLimit     int32                  `protobuf:"varint,7,opt,name=no_improve_limit,json=noImproveLimit,proto3" json:"no_improve_limit,omitempty"`             // default 2
+	ScoreThreshold     float64                `protobuf:"fixed64,8,opt,name=score_threshold,json=scoreThreshold,proto3" json:"score_threshold,omitempty"`              // default 0.8
+	CandidatesPerRound int32                  `protobuf:"varint,9,opt,name=candidates_per_round,json=candidatesPerRound,proto3" json:"candidates_per_round,omitempty"` // default 2
+	PopulationSize     int32                  `protobuf:"varint,10,opt,name=population_size,json=populationSize,proto3" json:"population_size,omitempty"`              // GEPA: default 4
+	Variables          string                 `protobuf:"bytes,11,opt,name=variables,proto3" json:"variables,omitempty"`                                               // JSON: variables for rendering
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *RunPromptOptimizationRequest) Reset() {
+	*x = RunPromptOptimizationRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[234]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RunPromptOptimizationRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RunPromptOptimizationRequest) ProtoMessage() {}
+
+func (x *RunPromptOptimizationRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[234]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RunPromptOptimizationRequest.ProtoReflect.Descriptor instead.
+func (*RunPromptOptimizationRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{234}
+}
+
+func (x *RunPromptOptimizationRequest) GetPromptKey() string {
+	if x != nil {
+		return x.PromptKey
+	}
+	return ""
+}
+
+func (x *RunPromptOptimizationRequest) GetDatasetId() string {
+	if x != nil {
+		return x.DatasetId
+	}
+	return ""
+}
+
+func (x *RunPromptOptimizationRequest) GetMetric() string {
+	if x != nil {
+		return x.Metric
+	}
+	return ""
+}
+
+func (x *RunPromptOptimizationRequest) GetStrategy() string {
+	if x != nil {
+		return x.Strategy
+	}
+	return ""
+}
+
+func (x *RunPromptOptimizationRequest) GetModel() string {
+	if x != nil {
+		return x.Model
+	}
+	return ""
+}
+
+func (x *RunPromptOptimizationRequest) GetMaxRounds() int32 {
+	if x != nil {
+		return x.MaxRounds
+	}
+	return 0
+}
+
+func (x *RunPromptOptimizationRequest) GetNoImproveLimit() int32 {
+	if x != nil {
+		return x.NoImproveLimit
+	}
+	return 0
+}
+
+func (x *RunPromptOptimizationRequest) GetScoreThreshold() float64 {
+	if x != nil {
+		return x.ScoreThreshold
+	}
+	return 0
+}
+
+func (x *RunPromptOptimizationRequest) GetCandidatesPerRound() int32 {
+	if x != nil {
+		return x.CandidatesPerRound
+	}
+	return 0
+}
+
+func (x *RunPromptOptimizationRequest) GetPopulationSize() int32 {
+	if x != nil {
+		return x.PopulationSize
+	}
+	return 0
+}
+
+func (x *RunPromptOptimizationRequest) GetVariables() string {
+	if x != nil {
+		return x.Variables
+	}
+	return ""
+}
+
+// OptimizeRoundEntry records one round of optimization.
+type OptimizeRoundEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Round         int32                  `protobuf:"varint,1,opt,name=round,proto3" json:"round,omitempty"`
+	PromptText    string                 `protobuf:"bytes,2,opt,name=prompt_text,json=promptText,proto3" json:"prompt_text,omitempty"`
+	Score         float64                `protobuf:"fixed64,3,opt,name=score,proto3" json:"score,omitempty"`
+	Improved      bool                   `protobuf:"varint,4,opt,name=improved,proto3" json:"improved,omitempty"`
+	Suggestion    string                 `protobuf:"bytes,5,opt,name=suggestion,proto3" json:"suggestion,omitempty"`
+	VersionId     string                 `protobuf:"bytes,6,opt,name=version_id,json=versionId,proto3" json:"version_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OptimizeRoundEntry) Reset() {
+	*x = OptimizeRoundEntry{}
+	mi := &file_proto_harness_harness_proto_msgTypes[235]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OptimizeRoundEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OptimizeRoundEntry) ProtoMessage() {}
+
+func (x *OptimizeRoundEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[235]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OptimizeRoundEntry.ProtoReflect.Descriptor instead.
+func (*OptimizeRoundEntry) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{235}
+}
+
+func (x *OptimizeRoundEntry) GetRound() int32 {
+	if x != nil {
+		return x.Round
+	}
+	return 0
+}
+
+func (x *OptimizeRoundEntry) GetPromptText() string {
+	if x != nil {
+		return x.PromptText
+	}
+	return ""
+}
+
+func (x *OptimizeRoundEntry) GetScore() float64 {
+	if x != nil {
+		return x.Score
+	}
+	return 0
+}
+
+func (x *OptimizeRoundEntry) GetImproved() bool {
+	if x != nil {
+		return x.Improved
+	}
+	return false
+}
+
+func (x *OptimizeRoundEntry) GetSuggestion() string {
+	if x != nil {
+		return x.Suggestion
+	}
+	return ""
+}
+
+func (x *OptimizeRoundEntry) GetVersionId() string {
+	if x != nil {
+		return x.VersionId
+	}
+	return ""
+}
+
+// RunPromptOptimizationResponse
+type RunPromptOptimizationResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BestVersionId string                 `protobuf:"bytes,1,opt,name=best_version_id,json=bestVersionId,proto3" json:"best_version_id,omitempty"`
+	BestScore     float64                `protobuf:"fixed64,2,opt,name=best_score,json=bestScore,proto3" json:"best_score,omitempty"`
+	OriginalScore float64                `protobuf:"fixed64,3,opt,name=original_score,json=originalScore,proto3" json:"original_score,omitempty"`
+	Rounds        int32                  `protobuf:"varint,4,opt,name=rounds,proto3" json:"rounds,omitempty"`
+	Strategy      string                 `protobuf:"bytes,5,opt,name=strategy,proto3" json:"strategy,omitempty"`
+	History       []*OptimizeRoundEntry  `protobuf:"bytes,6,rep,name=history,proto3" json:"history,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RunPromptOptimizationResponse) Reset() {
+	*x = RunPromptOptimizationResponse{}
+	mi := &file_proto_harness_harness_proto_msgTypes[236]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RunPromptOptimizationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RunPromptOptimizationResponse) ProtoMessage() {}
+
+func (x *RunPromptOptimizationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[236]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RunPromptOptimizationResponse.ProtoReflect.Descriptor instead.
+func (*RunPromptOptimizationResponse) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{236}
+}
+
+func (x *RunPromptOptimizationResponse) GetBestVersionId() string {
+	if x != nil {
+		return x.BestVersionId
+	}
+	return ""
+}
+
+func (x *RunPromptOptimizationResponse) GetBestScore() float64 {
+	if x != nil {
+		return x.BestScore
+	}
+	return 0
+}
+
+func (x *RunPromptOptimizationResponse) GetOriginalScore() float64 {
+	if x != nil {
+		return x.OriginalScore
+	}
+	return 0
+}
+
+func (x *RunPromptOptimizationResponse) GetRounds() int32 {
+	if x != nil {
+		return x.Rounds
+	}
+	return 0
+}
+
+func (x *RunPromptOptimizationResponse) GetStrategy() string {
+	if x != nil {
+		return x.Strategy
+	}
+	return ""
+}
+
+func (x *RunPromptOptimizationResponse) GetHistory() []*OptimizeRoundEntry {
+	if x != nil {
+		return x.History
+	}
+	return nil
+}
+
+// AdoptPromptVersionRequest
+type AdoptPromptVersionRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	VersionId     string                 `protobuf:"bytes,1,opt,name=version_id,json=versionId,proto3" json:"version_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AdoptPromptVersionRequest) Reset() {
+	*x = AdoptPromptVersionRequest{}
+	mi := &file_proto_harness_harness_proto_msgTypes[237]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AdoptPromptVersionRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AdoptPromptVersionRequest) ProtoMessage() {}
+
+func (x *AdoptPromptVersionRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_harness_harness_proto_msgTypes[237]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AdoptPromptVersionRequest.ProtoReflect.Descriptor instead.
+func (*AdoptPromptVersionRequest) Descriptor() ([]byte, []int) {
+	return file_proto_harness_harness_proto_rawDescGZIP(), []int{237}
+}
+
+func (x *AdoptPromptVersionRequest) GetVersionId() string {
+	if x != nil {
+		return x.VersionId
+	}
+	return ""
+}
+
 var File_proto_harness_harness_proto protoreflect.FileDescriptor
 
 const file_proto_harness_harness_proto_rawDesc = "" +
@@ -16855,7 +18779,183 @@ const file_proto_harness_harness_proto_rawDesc = "" +
 	"\rentry_node_id\x18\x03 \x01(\tR\ventryNodeId\"H\n" +
 	"\x18ValidateWorkflowResponse\x12\x14\n" +
 	"\x05valid\x18\x01 \x01(\bR\x05valid\x12\x16\n" +
-	"\x06errors\x18\x02 \x03(\tR\x06errors2\x97R\n" +
+	"\x06errors\x18\x02 \x03(\tR\x06errors\"\xd2\x01\n" +
+	"\x10EvalDatasetEntry\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x1b\n" +
+	"\ttenant_id\x18\x04 \x01(\tR\btenantId\x12\x1d\n" +
+	"\n" +
+	"case_count\x18\x05 \x01(\x05R\tcaseCount\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\x03R\tcreatedAt\x12\x1d\n" +
+	"\n" +
+	"updated_at\x18\a \x01(\x03R\tupdatedAt\"\xc0\x01\n" +
+	"\x10DatasetCaseEntry\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\n" +
+	"dataset_id\x18\x02 \x01(\tR\tdatasetId\x12\x14\n" +
+	"\x05input\x18\x03 \x01(\tR\x05input\x12\x1a\n" +
+	"\bexpected\x18\x04 \x01(\tR\bexpected\x12\x18\n" +
+	"\acontext\x18\x05 \x01(\tR\acontext\x12\x12\n" +
+	"\x04tags\x18\x06 \x01(\tR\x04tags\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\a \x01(\x03R\tcreatedAt\"i\n" +
+	"\x14CreateDatasetRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x1b\n" +
+	"\ttenant_id\x18\x03 \x01(\tR\btenantId\"#\n" +
+	"\x11GetDatasetRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"2\n" +
+	"\x13ListDatasetsRequest\x12\x1b\n" +
+	"\ttenant_id\x18\x01 \x01(\tR\btenantId\"M\n" +
+	"\x14ListDatasetsResponse\x125\n" +
+	"\bdatasets\x18\x01 \x03(\v2\x19.harness.EvalDatasetEntryR\bdatasets\"\x96\x01\n" +
+	"\x15AddDatasetCaseRequest\x12\x1d\n" +
+	"\n" +
+	"dataset_id\x18\x01 \x01(\tR\tdatasetId\x12\x14\n" +
+	"\x05input\x18\x02 \x01(\tR\x05input\x12\x1a\n" +
+	"\bexpected\x18\x03 \x01(\tR\bexpected\x12\x18\n" +
+	"\acontext\x18\x04 \x01(\tR\acontext\x12\x12\n" +
+	"\x04tags\x18\x05 \x01(\tR\x04tags\"h\n" +
+	"\x16AddDatasetCasesRequest\x12\x1d\n" +
+	"\n" +
+	"dataset_id\x18\x01 \x01(\tR\tdatasetId\x12/\n" +
+	"\x05cases\x18\x02 \x03(\v2\x19.harness.DatasetCaseEntryR\x05cases\"8\n" +
+	"\x17ListDatasetCasesRequest\x12\x1d\n" +
+	"\n" +
+	"dataset_id\x18\x01 \x01(\tR\tdatasetId\"K\n" +
+	"\x18ListDatasetCasesResponse\x12/\n" +
+	"\x05cases\x18\x01 \x03(\v2\x19.harness.DatasetCaseEntryR\x05cases\"l\n" +
+	"\x19ImportDatasetCasesRequest\x12\x1d\n" +
+	"\n" +
+	"dataset_id\x18\x01 \x01(\tR\tdatasetId\x12\x16\n" +
+	"\x06format\x18\x02 \x01(\tR\x06format\x12\x18\n" +
+	"\acontent\x18\x03 \x01(\tR\acontent\"8\n" +
+	"\x1aImportDatasetCasesResponse\x12\x1a\n" +
+	"\bimported\x18\x01 \x01(\x05R\bimported\"\xc0\x02\n" +
+	"\x0fExperimentEntry\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1d\n" +
+	"\n" +
+	"dataset_id\x18\x03 \x01(\tR\tdatasetId\x12\x1f\n" +
+	"\vconfig_type\x18\x04 \x01(\tR\n" +
+	"configType\x12\x1d\n" +
+	"\n" +
+	"config_ref\x18\x05 \x01(\tR\tconfigRef\x12\x14\n" +
+	"\x05model\x18\x06 \x01(\tR\x05model\x12\x16\n" +
+	"\x06status\x18\a \x01(\tR\x06status\x12\x1b\n" +
+	"\tavg_score\x18\b \x01(\x01R\bavgScore\x12\x1d\n" +
+	"\n" +
+	"case_count\x18\t \x01(\x05R\tcaseCount\x12\x1d\n" +
+	"\n" +
+	"created_at\x18\n" +
+	" \x01(\x03R\tcreatedAt\x12!\n" +
+	"\fcompleted_at\x18\v \x01(\x03R\vcompletedAt\"\x90\x02\n" +
+	"\x15ExperimentResultEntry\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
+	"\rexperiment_id\x18\x02 \x01(\tR\fexperimentId\x12\x17\n" +
+	"\acase_id\x18\x03 \x01(\tR\x06caseId\x12\x16\n" +
+	"\x06output\x18\x04 \x01(\tR\x06output\x12\x14\n" +
+	"\x05score\x18\x05 \x01(\x01R\x05score\x12\x16\n" +
+	"\x06passed\x18\x06 \x01(\bR\x06passed\x12\x1d\n" +
+	"\n" +
+	"latency_ms\x18\a \x01(\x03R\tlatencyMs\x12\x16\n" +
+	"\x06tokens\x18\b \x01(\x03R\x06tokens\x12\x16\n" +
+	"\x06scores\x18\t \x01(\tR\x06scores\x12\x14\n" +
+	"\x05error\x18\n" +
+	" \x01(\tR\x05error\"\x84\x02\n" +
+	"\x17CreateExperimentRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1d\n" +
+	"\n" +
+	"dataset_id\x18\x02 \x01(\tR\tdatasetId\x12\x1f\n" +
+	"\vconfig_type\x18\x03 \x01(\tR\n" +
+	"configType\x12\x1d\n" +
+	"\n" +
+	"config_ref\x18\x04 \x01(\tR\tconfigRef\x12\x14\n" +
+	"\x05model\x18\x05 \x01(\tR\x05model\x12%\n" +
+	"\x0eprompt_content\x18\x06 \x01(\tR\rpromptContent\x12\x1c\n" +
+	"\tvariables\x18\a \x01(\tR\tvariables\x12\x1b\n" +
+	"\ttenant_id\x18\b \x01(\tR\btenantId\"\x81\x02\n" +
+	"\x14RunExperimentRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x1d\n" +
+	"\n" +
+	"dataset_id\x18\x02 \x01(\tR\tdatasetId\x12\x1f\n" +
+	"\vconfig_type\x18\x03 \x01(\tR\n" +
+	"configType\x12\x1d\n" +
+	"\n" +
+	"config_ref\x18\x04 \x01(\tR\tconfigRef\x12\x14\n" +
+	"\x05model\x18\x05 \x01(\tR\x05model\x12%\n" +
+	"\x0eprompt_content\x18\x06 \x01(\tR\rpromptContent\x12\x1c\n" +
+	"\tvariables\x18\a \x01(\tR\tvariables\x12\x1b\n" +
+	"\ttenant_id\x18\b \x01(\tR\btenantId\"&\n" +
+	"\x14GetExperimentRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"7\n" +
+	"\x16ListExperimentsRequest\x12\x1d\n" +
+	"\n" +
+	"dataset_id\x18\x01 \x01(\tR\tdatasetId\"U\n" +
+	"\x17ListExperimentsResponse\x12:\n" +
+	"\vexperiments\x18\x01 \x03(\v2\x18.harness.ExperimentEntryR\vexperiments\"B\n" +
+	"\x1bGetExperimentResultsRequest\x12#\n" +
+	"\rexperiment_id\x18\x01 \x01(\tR\fexperimentId\"X\n" +
+	"\x1cGetExperimentResultsResponse\x128\n" +
+	"\aresults\x18\x01 \x03(\v2\x1e.harness.ExperimentResultEntryR\aresults\"B\n" +
+	"\x19CompareExperimentsRequest\x12%\n" +
+	"\x0eexperiment_ids\x18\x01 \x03(\tR\rexperimentIds\"\x96\x02\n" +
+	"\x16ExperimentSummaryEntry\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1f\n" +
+	"\vconfig_type\x18\x03 \x01(\tR\n" +
+	"configType\x12\x1d\n" +
+	"\n" +
+	"config_ref\x18\x04 \x01(\tR\tconfigRef\x12\x1b\n" +
+	"\tavg_score\x18\x05 \x01(\x01R\bavgScore\x12\x1d\n" +
+	"\n" +
+	"case_count\x18\x06 \x01(\x05R\tcaseCount\x12!\n" +
+	"\fpassed_count\x18\a \x01(\x05R\vpassedCount\x12!\n" +
+	"\ffailed_count\x18\b \x01(\x05R\vfailedCount\x12\x16\n" +
+	"\x06status\x18\t \x01(\tR\x06status\"\x8d\x01\n" +
+	"\x1aCompareExperimentsResponse\x12A\n" +
+	"\vexperiments\x18\x01 \x03(\v2\x1f.harness.ExperimentSummaryEntryR\vexperiments\x12,\n" +
+	"\x12best_experiment_id\x18\x02 \x01(\tR\x10bestExperimentId\"\x91\x03\n" +
+	"\x1cRunPromptOptimizationRequest\x12\x1d\n" +
+	"\n" +
+	"prompt_key\x18\x01 \x01(\tR\tpromptKey\x12\x1d\n" +
+	"\n" +
+	"dataset_id\x18\x02 \x01(\tR\tdatasetId\x12\x16\n" +
+	"\x06metric\x18\x03 \x01(\tR\x06metric\x12\x1a\n" +
+	"\bstrategy\x18\x04 \x01(\tR\bstrategy\x12\x14\n" +
+	"\x05model\x18\x05 \x01(\tR\x05model\x12\x1d\n" +
+	"\n" +
+	"max_rounds\x18\x06 \x01(\x05R\tmaxRounds\x12(\n" +
+	"\x10no_improve_limit\x18\a \x01(\x05R\x0enoImproveLimit\x12'\n" +
+	"\x0fscore_threshold\x18\b \x01(\x01R\x0escoreThreshold\x120\n" +
+	"\x14candidates_per_round\x18\t \x01(\x05R\x12candidatesPerRound\x12'\n" +
+	"\x0fpopulation_size\x18\n" +
+	" \x01(\x05R\x0epopulationSize\x12\x1c\n" +
+	"\tvariables\x18\v \x01(\tR\tvariables\"\xbc\x01\n" +
+	"\x12OptimizeRoundEntry\x12\x14\n" +
+	"\x05round\x18\x01 \x01(\x05R\x05round\x12\x1f\n" +
+	"\vprompt_text\x18\x02 \x01(\tR\n" +
+	"promptText\x12\x14\n" +
+	"\x05score\x18\x03 \x01(\x01R\x05score\x12\x1a\n" +
+	"\bimproved\x18\x04 \x01(\bR\bimproved\x12\x1e\n" +
+	"\n" +
+	"suggestion\x18\x05 \x01(\tR\n" +
+	"suggestion\x12\x1d\n" +
+	"\n" +
+	"version_id\x18\x06 \x01(\tR\tversionId\"\xf8\x01\n" +
+	"\x1dRunPromptOptimizationResponse\x12&\n" +
+	"\x0fbest_version_id\x18\x01 \x01(\tR\rbestVersionId\x12\x1d\n" +
+	"\n" +
+	"best_score\x18\x02 \x01(\x01R\tbestScore\x12%\n" +
+	"\x0eoriginal_score\x18\x03 \x01(\x01R\roriginalScore\x12\x16\n" +
+	"\x06rounds\x18\x04 \x01(\x05R\x06rounds\x12\x1a\n" +
+	"\bstrategy\x18\x05 \x01(\tR\bstrategy\x125\n" +
+	"\ahistory\x18\x06 \x03(\v2\x1b.harness.OptimizeRoundEntryR\ahistory\":\n" +
+	"\x19AdoptPromptVersionRequest\x12\x1d\n" +
+	"\n" +
+	"version_id\x18\x01 \x01(\tR\tversionId2\xd7[\n" +
 	"\x0eHarnessService\x127\n" +
 	"\n" +
 	"CreateRule\x12\x1a.harness.CreateRuleRequest\x1a\r.harness.Rule\x12B\n" +
@@ -16997,7 +19097,23 @@ const file_proto_harness_harness_proto_rawDesc = "" +
 	"\x10ValidateWorkflow\x12 .harness.ValidateWorkflowRequest\x1a!.harness.ValidateWorkflowResponse\x12X\n" +
 	"\x14GetWorkflowExecution\x12$.harness.GetWorkflowExecutionRequest\x1a\x1a.harness.WorkflowExecution\x12i\n" +
 	"\x16ListWorkflowExecutions\x12&.harness.ListWorkflowExecutionsRequest\x1a'.harness.ListWorkflowExecutionsResponse\x12Q\n" +
-	"\x17CancelWorkflowExecution\x12'.harness.CancelWorkflowExecutionRequest\x1a\r.common.EmptyB\x1fZ\x1dagent-platform/pkg/pb/harnessb\x06proto3"
+	"\x17CancelWorkflowExecution\x12'.harness.CancelWorkflowExecutionRequest\x1a\r.common.Empty\x12I\n" +
+	"\rCreateDataset\x12\x1d.harness.CreateDatasetRequest\x1a\x19.harness.EvalDatasetEntry\x12C\n" +
+	"\n" +
+	"GetDataset\x12\x1a.harness.GetDatasetRequest\x1a\x19.harness.EvalDatasetEntry\x12K\n" +
+	"\fListDatasets\x12\x1c.harness.ListDatasetsRequest\x1a\x1d.harness.ListDatasetsResponse\x12:\n" +
+	"\rDeleteDataset\x12\x1a.harness.GetDatasetRequest\x1a\r.common.Empty\x12K\n" +
+	"\x0eAddDatasetCase\x12\x1e.harness.AddDatasetCaseRequest\x1a\x19.harness.DatasetCaseEntry\x12A\n" +
+	"\x0fAddDatasetCases\x12\x1f.harness.AddDatasetCasesRequest\x1a\r.common.Empty\x12W\n" +
+	"\x10ListDatasetCases\x12 .harness.ListDatasetCasesRequest\x1a!.harness.ListDatasetCasesResponse\x12]\n" +
+	"\x12ImportDatasetCases\x12\".harness.ImportDatasetCasesRequest\x1a#.harness.ImportDatasetCasesResponse\x12H\n" +
+	"\rRunExperiment\x12\x1d.harness.RunExperimentRequest\x1a\x18.harness.ExperimentEntry\x12H\n" +
+	"\rGetExperiment\x12\x1d.harness.GetExperimentRequest\x1a\x18.harness.ExperimentEntry\x12T\n" +
+	"\x0fListExperiments\x12\x1f.harness.ListExperimentsRequest\x1a .harness.ListExperimentsResponse\x12c\n" +
+	"\x14GetExperimentResults\x12$.harness.GetExperimentResultsRequest\x1a%.harness.GetExperimentResultsResponse\x12]\n" +
+	"\x12CompareExperiments\x12\".harness.CompareExperimentsRequest\x1a#.harness.CompareExperimentsResponse\x12f\n" +
+	"\x15RunPromptOptimization\x12%.harness.RunPromptOptimizationRequest\x1a&.harness.RunPromptOptimizationResponse\x12G\n" +
+	"\x12AdoptPromptVersion\x12\".harness.AdoptPromptVersionRequest\x1a\r.common.EmptyB\x1fZ\x1dagent-platform/pkg/pb/harnessb\x06proto3"
 
 var (
 	file_proto_harness_harness_proto_rawDescOnce sync.Once
@@ -17011,7 +19127,7 @@ func file_proto_harness_harness_proto_rawDescGZIP() []byte {
 	return file_proto_harness_harness_proto_rawDescData
 }
 
-var file_proto_harness_harness_proto_msgTypes = make([]protoimpl.MessageInfo, 219)
+var file_proto_harness_harness_proto_msgTypes = make([]protoimpl.MessageInfo, 247)
 var file_proto_harness_harness_proto_goTypes = []any{
 	(*Rule)(nil),                             // 0: harness.Rule
 	(*CreateRuleRequest)(nil),                // 1: harness.CreateRuleRequest
@@ -17223,36 +19339,64 @@ var file_proto_harness_harness_proto_goTypes = []any{
 	(*CancelWorkflowExecutionRequest)(nil),   // 207: harness.CancelWorkflowExecutionRequest
 	(*ValidateWorkflowRequest)(nil),          // 208: harness.ValidateWorkflowRequest
 	(*ValidateWorkflowResponse)(nil),         // 209: harness.ValidateWorkflowResponse
-	nil,                                      // 210: harness.EvalCase.MetadataEntry
-	nil,                                      // 211: harness.EvaluateFeatureFlagRequest.AttributesEntry
-	nil,                                      // 212: harness.RunOptimizerRequest.MetricsEntry
-	nil,                                      // 213: harness.EvalSchedule.MetadataEntry
-	nil,                                      // 214: harness.SetEvalScheduleRequest.MetadataEntry
-	nil,                                      // 215: harness.GatewayChatRequest.ParametersEntry
-	nil,                                      // 216: harness.PlaygroundRequest.ParametersEntry
-	nil,                                      // 217: harness.PlaygroundHistory.ParametersEntry
-	nil,                                      // 218: harness.PlaygroundStats.ModelCountsEntry
-	(*common.Empty)(nil),                     // 219: common.Empty
-	(*CreateSessionRequest)(nil),             // 220: harness.CreateSessionRequest
-	(*GetSessionRequest)(nil),                // 221: harness.GetSessionRequest
-	(*ListSessionsRequest)(nil),              // 222: harness.ListSessionsRequest
-	(*RecordStepRequest)(nil),                // 223: harness.RecordStepRequest
-	(*EndSessionRequest)(nil),                // 224: harness.EndSessionRequest
-	(*ReplaySessionRequest)(nil),             // 225: harness.ReplaySessionRequest
-	(*GetSessionGraphRequest)(nil),           // 226: harness.GetSessionGraphRequest
-	(*ExportSessionRequest)(nil),             // 227: harness.ExportSessionRequest
-	(*CreateSessionResponse)(nil),            // 228: harness.CreateSessionResponse
-	(*SessionDetail)(nil),                    // 229: harness.SessionDetail
-	(*ListSessionsResponse)(nil),             // 230: harness.ListSessionsResponse
-	(*RecordStepResponse)(nil),               // 231: harness.RecordStepResponse
-	(*EndSessionResponse)(nil),               // 232: harness.EndSessionResponse
-	(*ReplaySessionResponse)(nil),            // 233: harness.ReplaySessionResponse
-	(*SessionGraph)(nil),                     // 234: harness.SessionGraph
-	(*ExportSessionResponse)(nil),            // 235: harness.ExportSessionResponse
+	(*EvalDatasetEntry)(nil),                 // 210: harness.EvalDatasetEntry
+	(*DatasetCaseEntry)(nil),                 // 211: harness.DatasetCaseEntry
+	(*CreateDatasetRequest)(nil),             // 212: harness.CreateDatasetRequest
+	(*GetDatasetRequest)(nil),                // 213: harness.GetDatasetRequest
+	(*ListDatasetsRequest)(nil),              // 214: harness.ListDatasetsRequest
+	(*ListDatasetsResponse)(nil),             // 215: harness.ListDatasetsResponse
+	(*AddDatasetCaseRequest)(nil),            // 216: harness.AddDatasetCaseRequest
+	(*AddDatasetCasesRequest)(nil),           // 217: harness.AddDatasetCasesRequest
+	(*ListDatasetCasesRequest)(nil),          // 218: harness.ListDatasetCasesRequest
+	(*ListDatasetCasesResponse)(nil),         // 219: harness.ListDatasetCasesResponse
+	(*ImportDatasetCasesRequest)(nil),        // 220: harness.ImportDatasetCasesRequest
+	(*ImportDatasetCasesResponse)(nil),       // 221: harness.ImportDatasetCasesResponse
+	(*ExperimentEntry)(nil),                  // 222: harness.ExperimentEntry
+	(*ExperimentResultEntry)(nil),            // 223: harness.ExperimentResultEntry
+	(*CreateExperimentRequest)(nil),          // 224: harness.CreateExperimentRequest
+	(*RunExperimentRequest)(nil),             // 225: harness.RunExperimentRequest
+	(*GetExperimentRequest)(nil),             // 226: harness.GetExperimentRequest
+	(*ListExperimentsRequest)(nil),           // 227: harness.ListExperimentsRequest
+	(*ListExperimentsResponse)(nil),          // 228: harness.ListExperimentsResponse
+	(*GetExperimentResultsRequest)(nil),      // 229: harness.GetExperimentResultsRequest
+	(*GetExperimentResultsResponse)(nil),     // 230: harness.GetExperimentResultsResponse
+	(*CompareExperimentsRequest)(nil),        // 231: harness.CompareExperimentsRequest
+	(*ExperimentSummaryEntry)(nil),           // 232: harness.ExperimentSummaryEntry
+	(*CompareExperimentsResponse)(nil),       // 233: harness.CompareExperimentsResponse
+	(*RunPromptOptimizationRequest)(nil),     // 234: harness.RunPromptOptimizationRequest
+	(*OptimizeRoundEntry)(nil),               // 235: harness.OptimizeRoundEntry
+	(*RunPromptOptimizationResponse)(nil),    // 236: harness.RunPromptOptimizationResponse
+	(*AdoptPromptVersionRequest)(nil),        // 237: harness.AdoptPromptVersionRequest
+	nil,                                      // 238: harness.EvalCase.MetadataEntry
+	nil,                                      // 239: harness.EvaluateFeatureFlagRequest.AttributesEntry
+	nil,                                      // 240: harness.RunOptimizerRequest.MetricsEntry
+	nil,                                      // 241: harness.EvalSchedule.MetadataEntry
+	nil,                                      // 242: harness.SetEvalScheduleRequest.MetadataEntry
+	nil,                                      // 243: harness.GatewayChatRequest.ParametersEntry
+	nil,                                      // 244: harness.PlaygroundRequest.ParametersEntry
+	nil,                                      // 245: harness.PlaygroundHistory.ParametersEntry
+	nil,                                      // 246: harness.PlaygroundStats.ModelCountsEntry
+	(*common.Empty)(nil),                     // 247: common.Empty
+	(*CreateSessionRequest)(nil),             // 248: harness.CreateSessionRequest
+	(*GetSessionRequest)(nil),                // 249: harness.GetSessionRequest
+	(*ListSessionsRequest)(nil),              // 250: harness.ListSessionsRequest
+	(*RecordStepRequest)(nil),                // 251: harness.RecordStepRequest
+	(*EndSessionRequest)(nil),                // 252: harness.EndSessionRequest
+	(*ReplaySessionRequest)(nil),             // 253: harness.ReplaySessionRequest
+	(*GetSessionGraphRequest)(nil),           // 254: harness.GetSessionGraphRequest
+	(*ExportSessionRequest)(nil),             // 255: harness.ExportSessionRequest
+	(*CreateSessionResponse)(nil),            // 256: harness.CreateSessionResponse
+	(*SessionDetail)(nil),                    // 257: harness.SessionDetail
+	(*ListSessionsResponse)(nil),             // 258: harness.ListSessionsResponse
+	(*RecordStepResponse)(nil),               // 259: harness.RecordStepResponse
+	(*EndSessionResponse)(nil),               // 260: harness.EndSessionResponse
+	(*ReplaySessionResponse)(nil),            // 261: harness.ReplaySessionResponse
+	(*SessionGraph)(nil),                     // 262: harness.SessionGraph
+	(*ExportSessionResponse)(nil),            // 263: harness.ExportSessionResponse
 }
 var file_proto_harness_harness_proto_depIdxs = []int32{
 	0,   // 0: harness.ListRulesResponse.rules:type_name -> harness.Rule
-	210, // 1: harness.EvalCase.metadata:type_name -> harness.EvalCase.MetadataEntry
+	238, // 1: harness.EvalCase.metadata:type_name -> harness.EvalCase.MetadataEntry
 	10,  // 2: harness.EvalSuite.cases:type_name -> harness.EvalCase
 	10,  // 3: harness.CreateEvalSuiteRequest.cases:type_name -> harness.EvalCase
 	14,  // 4: harness.EvalResult.metrics:type_name -> harness.EvalMetrics
@@ -17264,7 +19408,7 @@ var file_proto_harness_harness_proto_depIdxs = []int32{
 	9,   // 10: harness.HarnessChatResponse.rule_check:type_name -> harness.RuleCheckResult
 	35,  // 11: harness.HarnessChatResponse.ab_test:type_name -> harness.ABTestInfo
 	36,  // 12: harness.ListFeatureFlagsResponse.flags:type_name -> harness.FeatureFlag
-	211, // 13: harness.EvaluateFeatureFlagRequest.attributes:type_name -> harness.EvaluateFeatureFlagRequest.AttributesEntry
+	239, // 13: harness.EvaluateFeatureFlagRequest.attributes:type_name -> harness.EvaluateFeatureFlagRequest.AttributesEntry
 	45,  // 14: harness.ListSnapshotsResponse.snapshots:type_name -> harness.ConfigSnapshot
 	52,  // 15: harness.RootCause.change_event:type_name -> harness.ChangeEvent
 	55,  // 16: harness.AnalysisReport.suspected_root_causes:type_name -> harness.RootCause
@@ -17276,7 +19420,7 @@ var file_proto_harness_harness_proto_depIdxs = []int32{
 	30,  // 22: harness.LLMMetricsSummary.slo_statuses:type_name -> harness.SLOStatus
 	75,  // 23: harness.LLMMetricsSummary.metrics:type_name -> harness.LLMCallMetric
 	77,  // 24: harness.ListProposalsResponse.proposals:type_name -> harness.Proposal
-	212, // 25: harness.RunOptimizerRequest.metrics:type_name -> harness.RunOptimizerRequest.MetricsEntry
+	240, // 25: harness.RunOptimizerRequest.metrics:type_name -> harness.RunOptimizerRequest.MetricsEntry
 	77,  // 26: harness.AnalyzeAndProposeResponse.proposals:type_name -> harness.Proposal
 	87,  // 27: harness.ListCatalogAgentsResponse.agents:type_name -> harness.CatalogAgent
 	93,  // 28: harness.ListGoldenPathTemplatesResponse.templates:type_name -> harness.GoldenPathTemplate
@@ -17293,26 +19437,26 @@ var file_proto_harness_harness_proto_depIdxs = []int32{
 	129, // 39: harness.PromptVersionDiff.var_diff:type_name -> harness.VariableDiff
 	136, // 40: harness.PromptPerformanceTrend.data_points:type_name -> harness.PerformanceDataPoint
 	15,  // 41: harness.EvalSchedule.last_result:type_name -> harness.EvalResult
-	213, // 42: harness.EvalSchedule.metadata:type_name -> harness.EvalSchedule.MetadataEntry
-	214, // 43: harness.SetEvalScheduleRequest.metadata:type_name -> harness.SetEvalScheduleRequest.MetadataEntry
+	241, // 42: harness.EvalSchedule.metadata:type_name -> harness.EvalSchedule.MetadataEntry
+	242, // 43: harness.SetEvalScheduleRequest.metadata:type_name -> harness.SetEvalScheduleRequest.MetadataEntry
 	138, // 44: harness.ListEvalSchedulesResponse.schedules:type_name -> harness.EvalSchedule
 	139, // 45: harness.GetScheduleResultsResponse.results:type_name -> harness.ScheduledEvalResult
 	153, // 46: harness.GatewayChatRequest.messages:type_name -> harness.GatewayMessage
-	215, // 47: harness.GatewayChatRequest.parameters:type_name -> harness.GatewayChatRequest.ParametersEntry
+	243, // 47: harness.GatewayChatRequest.parameters:type_name -> harness.GatewayChatRequest.ParametersEntry
 	155, // 48: harness.ListGatewayConfigsResponse.configs:type_name -> harness.GatewayConfig
 	163, // 49: harness.ListGatewayRoutesResponse.routes:type_name -> harness.GatewayRoute
 	169, // 50: harness.GatewayStatsResponse.stats:type_name -> harness.GatewayStats
 	172, // 51: harness.PlaygroundRequest.messages:type_name -> harness.PlaygroundMessage
-	216, // 52: harness.PlaygroundRequest.parameters:type_name -> harness.PlaygroundRequest.ParametersEntry
+	244, // 52: harness.PlaygroundRequest.parameters:type_name -> harness.PlaygroundRequest.ParametersEntry
 	172, // 53: harness.CompareModelsRequest.messages:type_name -> harness.PlaygroundMessage
 	174, // 54: harness.CompareModelsResponse.results:type_name -> harness.PlaygroundResult
 	176, // 55: harness.CompareModelsResponse.comparison:type_name -> harness.ModelComparison
 	172, // 56: harness.PlaygroundHistory.messages:type_name -> harness.PlaygroundMessage
 	174, // 57: harness.PlaygroundHistory.result:type_name -> harness.PlaygroundResult
 	177, // 58: harness.PlaygroundHistory.comparison:type_name -> harness.CompareModelsResponse
-	217, // 59: harness.PlaygroundHistory.parameters:type_name -> harness.PlaygroundHistory.ParametersEntry
+	245, // 59: harness.PlaygroundHistory.parameters:type_name -> harness.PlaygroundHistory.ParametersEntry
 	179, // 60: harness.GetPlaygroundHistoryResponse.histories:type_name -> harness.PlaygroundHistory
-	218, // 61: harness.PlaygroundStats.model_counts:type_name -> harness.PlaygroundStats.ModelCountsEntry
+	246, // 61: harness.PlaygroundStats.model_counts:type_name -> harness.PlaygroundStats.ModelCountsEntry
 	185, // 62: harness.ListCheckpointsResponse.checkpoints:type_name -> harness.Checkpoint
 	185, // 63: harness.GetCheckpointResponse.checkpoint:type_name -> harness.Checkpoint
 	192, // 64: harness.ListWorkflowsResponse.workflows:type_name -> harness.Workflow
@@ -17320,279 +19464,316 @@ var file_proto_harness_harness_proto_depIdxs = []int32{
 	201, // 66: harness.WorkflowStreamChunk.final_result:type_name -> harness.ExecuteWorkflowResponse
 	200, // 67: harness.WorkflowExecution.node_results:type_name -> harness.WorkflowNodeResult
 	204, // 68: harness.ListWorkflowExecutionsResponse.executions:type_name -> harness.WorkflowExecution
-	1,   // 69: harness.HarnessService.CreateRule:input_type -> harness.CreateRuleRequest
-	2,   // 70: harness.HarnessService.ListRules:input_type -> harness.ListRulesRequest
-	4,   // 71: harness.HarnessService.UpdateRule:input_type -> harness.UpdateRuleRequest
-	5,   // 72: harness.HarnessService.DeleteRule:input_type -> harness.DeleteRuleRequest
-	6,   // 73: harness.HarnessService.CheckGuardrail:input_type -> harness.GuardrailCheckRequest
-	12,  // 74: harness.HarnessService.CreateEvalSuite:input_type -> harness.CreateEvalSuiteRequest
-	13,  // 75: harness.HarnessService.RunEval:input_type -> harness.RunEvalRequest
-	17,  // 76: harness.HarnessService.GetEvalResults:input_type -> harness.GetEvalResultsRequest
-	19,  // 77: harness.HarnessService.CreateABTest:input_type -> harness.CreateABTestRequest
-	20,  // 78: harness.HarnessService.ListABTests:input_type -> harness.ListABTestsRequest
-	25,  // 79: harness.HarnessService.GetABTestResult:input_type -> harness.GetABTestResultRequest
-	27,  // 80: harness.HarnessService.DeleteABTest:input_type -> harness.PromoteVariantRequest
-	27,  // 81: harness.HarnessService.PromoteVariant:input_type -> harness.PromoteVariantRequest
-	22,  // 82: harness.HarnessService.ShouldUseVariant:input_type -> harness.ShouldUseVariantRequest
-	24,  // 83: harness.HarnessService.RecordABTestResult:input_type -> harness.RecordABTestResultRequest
-	29,  // 84: harness.HarnessService.CreateSLO:input_type -> harness.CreateSLORequest
-	31,  // 85: harness.HarnessService.GetSLOStatus:input_type -> harness.GetSLOStatusRequest
-	33,  // 86: harness.HarnessService.Chat:input_type -> harness.HarnessChatRequest
-	33,  // 87: harness.HarnessService.ChatStream:input_type -> harness.HarnessChatRequest
-	37,  // 88: harness.HarnessService.CreateFeatureFlag:input_type -> harness.CreateFeatureFlagRequest
-	38,  // 89: harness.HarnessService.ListFeatureFlags:input_type -> harness.ListFeatureFlagsRequest
-	40,  // 90: harness.HarnessService.GetFeatureFlag:input_type -> harness.GetFeatureFlagRequest
-	41,  // 91: harness.HarnessService.ToggleFeatureFlag:input_type -> harness.ToggleFeatureFlagRequest
-	40,  // 92: harness.HarnessService.DeleteFeatureFlag:input_type -> harness.GetFeatureFlagRequest
-	42,  // 93: harness.HarnessService.EvaluateFeatureFlag:input_type -> harness.EvaluateFeatureFlagRequest
-	46,  // 94: harness.HarnessService.CreateRollbackConfig:input_type -> harness.CreateRollbackConfigRequest
-	40,  // 95: harness.HarnessService.GetRollbackConfig:input_type -> harness.GetFeatureFlagRequest
-	47,  // 96: harness.HarnessService.TakeSnapshot:input_type -> harness.TakeSnapshotRequest
-	48,  // 97: harness.HarnessService.ListSnapshots:input_type -> harness.ListSnapshotsRequest
-	50,  // 98: harness.HarnessService.ExecuteRollback:input_type -> harness.ExecuteRollbackRequest
-	54,  // 99: harness.HarnessService.RecordChange:input_type -> harness.RecordChangeRequest
-	57,  // 100: harness.HarnessService.Analyze:input_type -> harness.AnalyzeRequest
-	59,  // 101: harness.HarnessService.CreateChaosExperiment:input_type -> harness.CreateChaosExperimentRequest
-	60,  // 102: harness.HarnessService.StartChaosExperiment:input_type -> harness.StartChaosExperimentRequest
-	61,  // 103: harness.HarnessService.StopChaosExperiment:input_type -> harness.StopChaosExperimentRequest
-	62,  // 104: harness.HarnessService.ListChaosExperiments:input_type -> harness.ListChaosExperimentsRequest
-	65,  // 105: harness.HarnessService.SetModelPricing:input_type -> harness.SetModelPricingRequest
-	219, // 106: harness.HarnessService.ListModelPricing:input_type -> common.Empty
-	67,  // 107: harness.HarnessService.GetCostReport:input_type -> harness.CostReportRequest
-	219, // 108: harness.HarnessService.GetCostRecommendations:input_type -> common.Empty
-	72,  // 109: harness.HarnessService.RecordCostUsage:input_type -> harness.RecordCostUsageRequest
-	73,  // 110: harness.HarnessService.RecordLLMMetrics:input_type -> harness.RecordLLMMetricsRequest
-	76,  // 111: harness.HarnessService.GetLLMMetrics:input_type -> harness.GetLLMMetricsRequest
-	78,  // 112: harness.HarnessService.CreateProposal:input_type -> harness.CreateProposalRequest
-	79,  // 113: harness.HarnessService.ListProposals:input_type -> harness.ListProposalsRequest
-	81,  // 114: harness.HarnessService.ApproveProposal:input_type -> harness.ApproveProposalRequest
-	82,  // 115: harness.HarnessService.RejectProposal:input_type -> harness.RejectProposalRequest
-	84,  // 116: harness.HarnessService.RunOptimizer:input_type -> harness.RunOptimizerRequest
-	85,  // 117: harness.HarnessService.AnalyzeAndPropose:input_type -> harness.AnalyzeAndProposeRequest
-	81,  // 118: harness.HarnessService.ExecuteProposal:input_type -> harness.ApproveProposalRequest
-	88,  // 119: harness.HarnessService.ListCatalogAgents:input_type -> harness.ListCatalogAgentsRequest
-	40,  // 120: harness.HarnessService.GetCatalogAgent:input_type -> harness.GetFeatureFlagRequest
-	90,  // 121: harness.HarnessService.RegisterCatalogAgent:input_type -> harness.RegisterCatalogAgentRequest
-	91,  // 122: harness.HarnessService.RecordCatalogUsage:input_type -> harness.RecordCatalogUsageRequest
-	92,  // 123: harness.HarnessService.RateCatalogAgent:input_type -> harness.RateCatalogAgentRequest
-	94,  // 124: harness.HarnessService.CreateGoldenPathTemplate:input_type -> harness.CreateGoldenPathTemplateRequest
-	95,  // 125: harness.HarnessService.ListGoldenPathTemplates:input_type -> harness.ListGoldenPathTemplatesRequest
-	97,  // 126: harness.HarnessService.InstantiateTemplate:input_type -> harness.InstantiateTemplateRequest
-	140, // 127: harness.HarnessService.SetEvalSchedule:input_type -> harness.SetEvalScheduleRequest
-	141, // 128: harness.HarnessService.GetEvalSchedule:input_type -> harness.GetEvalScheduleRequest
-	142, // 129: harness.HarnessService.ListEvalSchedules:input_type -> harness.ListEvalSchedulesRequest
-	144, // 130: harness.HarnessService.PauseEvalSchedule:input_type -> harness.PauseScheduleRequest
-	145, // 131: harness.HarnessService.ResumeEvalSchedule:input_type -> harness.ResumeScheduleRequest
-	141, // 132: harness.HarnessService.DeleteEvalSchedule:input_type -> harness.GetEvalScheduleRequest
-	146, // 133: harness.HarnessService.RunEvalScheduleNow:input_type -> harness.RunScheduleNowRequest
-	147, // 134: harness.HarnessService.GetEvalScheduleResults:input_type -> harness.GetScheduleResultsRequest
-	219, // 135: harness.HarnessService.GetSchedulerStatus:input_type -> common.Empty
-	150, // 136: harness.HarnessService.SchedulerControl:input_type -> harness.SchedulerControlRequest
-	219, // 137: harness.HarnessService.GetSchedulerStats:input_type -> common.Empty
-	116, // 138: harness.HarnessService.CreatePrompt:input_type -> harness.CreatePromptRequest
-	117, // 139: harness.HarnessService.GetPrompt:input_type -> harness.GetPromptRequest
-	118, // 140: harness.HarnessService.ListPrompts:input_type -> harness.ListPromptsRequest
-	117, // 141: harness.HarnessService.DeletePrompt:input_type -> harness.GetPromptRequest
-	120, // 142: harness.HarnessService.CreatePromptVersion:input_type -> harness.CreatePromptVersionRequest
-	121, // 143: harness.HarnessService.GetPromptVersion:input_type -> harness.GetPromptVersionRequest
-	122, // 144: harness.HarnessService.GetActivePromptVersion:input_type -> harness.GetActivePromptVersionRequest
-	123, // 145: harness.HarnessService.ListPromptVersions:input_type -> harness.ListPromptVersionsRequest
-	125, // 146: harness.HarnessService.ActivatePromptVersion:input_type -> harness.ActivatePromptVersionRequest
-	126, // 147: harness.HarnessService.ArchivePromptVersion:input_type -> harness.ArchivePromptVersionRequest
-	125, // 148: harness.HarnessService.RollbackPromptVersion:input_type -> harness.ActivatePromptVersionRequest
-	127, // 149: harness.HarnessService.ComparePromptVersions:input_type -> harness.ComparePromptVersionsRequest
-	131, // 150: harness.HarnessService.RenderPrompt:input_type -> harness.RenderPromptRequest
-	133, // 151: harness.HarnessService.RecordPromptUsage:input_type -> harness.RecordPromptUsageRequest
-	134, // 152: harness.HarnessService.GetPromptPerformance:input_type -> harness.GetPromptPerformanceRequest
-	135, // 153: harness.HarnessService.GetPromptPerformanceTrend:input_type -> harness.GetPromptPerformanceTrendRequest
-	99,  // 154: harness.HarnessService.EvaluateRAG:input_type -> harness.EvaluateRAGRequest
-	100, // 155: harness.HarnessService.BatchEvaluateRAG:input_type -> harness.BatchEvaluateRAGRequest
-	102, // 156: harness.HarnessService.GetRAGMetrics:input_type -> harness.GetRAGMetricsRequest
-	103, // 157: harness.HarnessService.ListRAGMetrics:input_type -> harness.ListRAGMetricsRequest
-	105, // 158: harness.HarnessService.CreateRAGEvaluation:input_type -> harness.CreateRAGEvaluationRequest
-	108, // 159: harness.HarnessService.GetRAGEvaluation:input_type -> harness.GetRAGEvaluationRequest
-	109, // 160: harness.HarnessService.ListRAGEvaluations:input_type -> harness.ListRAGEvaluationsRequest
-	111, // 161: harness.HarnessService.RunRAGEvaluation:input_type -> harness.RunRAGEvaluationRequest
-	173, // 162: harness.HarnessService.ExecutePlayground:input_type -> harness.PlaygroundRequest
-	175, // 163: harness.HarnessService.CompareModels:input_type -> harness.CompareModelsRequest
-	173, // 164: harness.HarnessService.StreamPlayground:input_type -> harness.PlaygroundRequest
-	180, // 165: harness.HarnessService.GetPlaygroundHistory:input_type -> harness.GetPlaygroundHistoryRequest
-	182, // 166: harness.HarnessService.DeletePlaygroundHistory:input_type -> harness.DeletePlaygroundHistoryRequest
-	184, // 167: harness.HarnessService.GetPlaygroundStats:input_type -> harness.GetPlaygroundStatsRequest
-	220, // 168: harness.HarnessService.CreateSession:input_type -> harness.CreateSessionRequest
-	221, // 169: harness.HarnessService.GetSession:input_type -> harness.GetSessionRequest
-	222, // 170: harness.HarnessService.ListSessions:input_type -> harness.ListSessionsRequest
-	223, // 171: harness.HarnessService.RecordStep:input_type -> harness.RecordStepRequest
-	224, // 172: harness.HarnessService.EndSession:input_type -> harness.EndSessionRequest
-	225, // 173: harness.HarnessService.ReplaySession:input_type -> harness.ReplaySessionRequest
-	226, // 174: harness.HarnessService.GetSessionGraph:input_type -> harness.GetSessionGraphRequest
-	227, // 175: harness.HarnessService.ExportSession:input_type -> harness.ExportSessionRequest
-	221, // 176: harness.HarnessService.DeleteSession:input_type -> harness.GetSessionRequest
-	152, // 177: harness.HarnessService.GatewayChat:input_type -> harness.GatewayChatRequest
-	152, // 178: harness.HarnessService.GatewayChatStream:input_type -> harness.GatewayChatRequest
-	157, // 179: harness.HarnessService.CreateGatewayConfig:input_type -> harness.CreateGatewayConfigRequest
-	158, // 180: harness.HarnessService.ListGatewayConfigs:input_type -> harness.ListGatewayConfigsRequest
-	160, // 181: harness.HarnessService.GetGatewayConfig:input_type -> harness.GetGatewayConfigRequest
-	161, // 182: harness.HarnessService.UpdateGatewayConfig:input_type -> harness.UpdateGatewayConfigRequest
-	162, // 183: harness.HarnessService.DeleteGatewayConfig:input_type -> harness.DeleteGatewayConfigRequest
-	164, // 184: harness.HarnessService.CreateGatewayRoute:input_type -> harness.CreateGatewayRouteRequest
-	165, // 185: harness.HarnessService.ListGatewayRoutes:input_type -> harness.ListGatewayRoutesRequest
-	167, // 186: harness.HarnessService.DeleteGatewayRoute:input_type -> harness.DeleteGatewayRouteRequest
-	219, // 187: harness.HarnessService.GetGatewayStats:input_type -> common.Empty
-	171, // 188: harness.HarnessService.SetLoadBalanceStrategy:input_type -> harness.SetLoadBalanceStrategyRequest
-	186, // 189: harness.HarnessService.ListCheckpoints:input_type -> harness.ListCheckpointsRequest
-	188, // 190: harness.HarnessService.GetCheckpoint:input_type -> harness.GetCheckpointRequest
-	190, // 191: harness.HarnessService.ResumeFromCheckpoint:input_type -> harness.ResumeFromCheckpointRequest
-	193, // 192: harness.HarnessService.CreateWorkflow:input_type -> harness.CreateWorkflowRequest
-	195, // 193: harness.HarnessService.GetWorkflow:input_type -> harness.GetWorkflowRequest
-	194, // 194: harness.HarnessService.UpdateWorkflow:input_type -> harness.UpdateWorkflowRequest
-	196, // 195: harness.HarnessService.ListWorkflows:input_type -> harness.ListWorkflowsRequest
-	198, // 196: harness.HarnessService.DeleteWorkflow:input_type -> harness.DeleteWorkflowRequest
-	199, // 197: harness.HarnessService.ExecuteWorkflow:input_type -> harness.ExecuteWorkflowRequest
-	199, // 198: harness.HarnessService.ExecuteWorkflowStream:input_type -> harness.ExecuteWorkflowRequest
-	208, // 199: harness.HarnessService.ValidateWorkflow:input_type -> harness.ValidateWorkflowRequest
-	203, // 200: harness.HarnessService.GetWorkflowExecution:input_type -> harness.GetWorkflowExecutionRequest
-	205, // 201: harness.HarnessService.ListWorkflowExecutions:input_type -> harness.ListWorkflowExecutionsRequest
-	207, // 202: harness.HarnessService.CancelWorkflowExecution:input_type -> harness.CancelWorkflowExecutionRequest
-	0,   // 203: harness.HarnessService.CreateRule:output_type -> harness.Rule
-	3,   // 204: harness.HarnessService.ListRules:output_type -> harness.ListRulesResponse
-	0,   // 205: harness.HarnessService.UpdateRule:output_type -> harness.Rule
-	219, // 206: harness.HarnessService.DeleteRule:output_type -> common.Empty
-	7,   // 207: harness.HarnessService.CheckGuardrail:output_type -> harness.GuardrailCheckResponse
-	11,  // 208: harness.HarnessService.CreateEvalSuite:output_type -> harness.EvalSuite
-	16,  // 209: harness.HarnessService.RunEval:output_type -> harness.RunEvalResponse
-	16,  // 210: harness.HarnessService.GetEvalResults:output_type -> harness.RunEvalResponse
-	18,  // 211: harness.HarnessService.CreateABTest:output_type -> harness.ABTest
-	21,  // 212: harness.HarnessService.ListABTests:output_type -> harness.ListABTestsResponse
-	26,  // 213: harness.HarnessService.GetABTestResult:output_type -> harness.ABTestResult
-	219, // 214: harness.HarnessService.DeleteABTest:output_type -> common.Empty
-	219, // 215: harness.HarnessService.PromoteVariant:output_type -> common.Empty
-	23,  // 216: harness.HarnessService.ShouldUseVariant:output_type -> harness.ShouldUseVariantResponse
-	219, // 217: harness.HarnessService.RecordABTestResult:output_type -> common.Empty
-	28,  // 218: harness.HarnessService.CreateSLO:output_type -> harness.SLO
-	32,  // 219: harness.HarnessService.GetSLOStatus:output_type -> harness.GetSLOStatusResponse
-	34,  // 220: harness.HarnessService.Chat:output_type -> harness.HarnessChatResponse
-	34,  // 221: harness.HarnessService.ChatStream:output_type -> harness.HarnessChatResponse
-	36,  // 222: harness.HarnessService.CreateFeatureFlag:output_type -> harness.FeatureFlag
-	39,  // 223: harness.HarnessService.ListFeatureFlags:output_type -> harness.ListFeatureFlagsResponse
-	36,  // 224: harness.HarnessService.GetFeatureFlag:output_type -> harness.FeatureFlag
-	36,  // 225: harness.HarnessService.ToggleFeatureFlag:output_type -> harness.FeatureFlag
-	219, // 226: harness.HarnessService.DeleteFeatureFlag:output_type -> common.Empty
-	43,  // 227: harness.HarnessService.EvaluateFeatureFlag:output_type -> harness.EvaluateFeatureFlagResponse
-	44,  // 228: harness.HarnessService.CreateRollbackConfig:output_type -> harness.RollbackConfig
-	44,  // 229: harness.HarnessService.GetRollbackConfig:output_type -> harness.RollbackConfig
-	45,  // 230: harness.HarnessService.TakeSnapshot:output_type -> harness.ConfigSnapshot
-	49,  // 231: harness.HarnessService.ListSnapshots:output_type -> harness.ListSnapshotsResponse
-	51,  // 232: harness.HarnessService.ExecuteRollback:output_type -> harness.RollbackEvent
-	52,  // 233: harness.HarnessService.RecordChange:output_type -> harness.ChangeEvent
-	56,  // 234: harness.HarnessService.Analyze:output_type -> harness.AnalysisReport
-	58,  // 235: harness.HarnessService.CreateChaosExperiment:output_type -> harness.ChaosExperiment
-	58,  // 236: harness.HarnessService.StartChaosExperiment:output_type -> harness.ChaosExperiment
-	58,  // 237: harness.HarnessService.StopChaosExperiment:output_type -> harness.ChaosExperiment
-	63,  // 238: harness.HarnessService.ListChaosExperiments:output_type -> harness.ListChaosExperimentsResponse
-	64,  // 239: harness.HarnessService.SetModelPricing:output_type -> harness.ModelPricing
-	66,  // 240: harness.HarnessService.ListModelPricing:output_type -> harness.ListModelPricingResponse
-	69,  // 241: harness.HarnessService.GetCostReport:output_type -> harness.CostReport
-	71,  // 242: harness.HarnessService.GetCostRecommendations:output_type -> harness.ListCostRecommendationsResponse
-	219, // 243: harness.HarnessService.RecordCostUsage:output_type -> common.Empty
-	219, // 244: harness.HarnessService.RecordLLMMetrics:output_type -> common.Empty
-	74,  // 245: harness.HarnessService.GetLLMMetrics:output_type -> harness.LLMMetricsSummary
-	77,  // 246: harness.HarnessService.CreateProposal:output_type -> harness.Proposal
-	80,  // 247: harness.HarnessService.ListProposals:output_type -> harness.ListProposalsResponse
-	77,  // 248: harness.HarnessService.ApproveProposal:output_type -> harness.Proposal
-	77,  // 249: harness.HarnessService.RejectProposal:output_type -> harness.Proposal
-	83,  // 250: harness.HarnessService.RunOptimizer:output_type -> harness.OptimizationResult
-	86,  // 251: harness.HarnessService.AnalyzeAndPropose:output_type -> harness.AnalyzeAndProposeResponse
-	77,  // 252: harness.HarnessService.ExecuteProposal:output_type -> harness.Proposal
-	89,  // 253: harness.HarnessService.ListCatalogAgents:output_type -> harness.ListCatalogAgentsResponse
-	87,  // 254: harness.HarnessService.GetCatalogAgent:output_type -> harness.CatalogAgent
-	87,  // 255: harness.HarnessService.RegisterCatalogAgent:output_type -> harness.CatalogAgent
-	219, // 256: harness.HarnessService.RecordCatalogUsage:output_type -> common.Empty
-	219, // 257: harness.HarnessService.RateCatalogAgent:output_type -> common.Empty
-	93,  // 258: harness.HarnessService.CreateGoldenPathTemplate:output_type -> harness.GoldenPathTemplate
-	96,  // 259: harness.HarnessService.ListGoldenPathTemplates:output_type -> harness.ListGoldenPathTemplatesResponse
-	219, // 260: harness.HarnessService.InstantiateTemplate:output_type -> common.Empty
-	138, // 261: harness.HarnessService.SetEvalSchedule:output_type -> harness.EvalSchedule
-	138, // 262: harness.HarnessService.GetEvalSchedule:output_type -> harness.EvalSchedule
-	143, // 263: harness.HarnessService.ListEvalSchedules:output_type -> harness.ListEvalSchedulesResponse
-	138, // 264: harness.HarnessService.PauseEvalSchedule:output_type -> harness.EvalSchedule
-	138, // 265: harness.HarnessService.ResumeEvalSchedule:output_type -> harness.EvalSchedule
-	219, // 266: harness.HarnessService.DeleteEvalSchedule:output_type -> common.Empty
-	139, // 267: harness.HarnessService.RunEvalScheduleNow:output_type -> harness.ScheduledEvalResult
-	148, // 268: harness.HarnessService.GetEvalScheduleResults:output_type -> harness.GetScheduleResultsResponse
-	149, // 269: harness.HarnessService.GetSchedulerStatus:output_type -> harness.SchedulerStatus
-	149, // 270: harness.HarnessService.SchedulerControl:output_type -> harness.SchedulerStatus
-	151, // 271: harness.HarnessService.GetSchedulerStats:output_type -> harness.SchedulerStatsResponse
-	113, // 272: harness.HarnessService.CreatePrompt:output_type -> harness.Prompt
-	113, // 273: harness.HarnessService.GetPrompt:output_type -> harness.Prompt
-	119, // 274: harness.HarnessService.ListPrompts:output_type -> harness.ListPromptsResponse
-	219, // 275: harness.HarnessService.DeletePrompt:output_type -> common.Empty
-	114, // 276: harness.HarnessService.CreatePromptVersion:output_type -> harness.PromptVersion
-	114, // 277: harness.HarnessService.GetPromptVersion:output_type -> harness.PromptVersion
-	114, // 278: harness.HarnessService.GetActivePromptVersion:output_type -> harness.PromptVersion
-	124, // 279: harness.HarnessService.ListPromptVersions:output_type -> harness.ListPromptVersionsResponse
-	114, // 280: harness.HarnessService.ActivatePromptVersion:output_type -> harness.PromptVersion
-	114, // 281: harness.HarnessService.ArchivePromptVersion:output_type -> harness.PromptVersion
-	114, // 282: harness.HarnessService.RollbackPromptVersion:output_type -> harness.PromptVersion
-	130, // 283: harness.HarnessService.ComparePromptVersions:output_type -> harness.PromptVersionDiff
-	132, // 284: harness.HarnessService.RenderPrompt:output_type -> harness.RenderPromptResponse
-	219, // 285: harness.HarnessService.RecordPromptUsage:output_type -> common.Empty
-	115, // 286: harness.HarnessService.GetPromptPerformance:output_type -> harness.PromptPerformance
-	137, // 287: harness.HarnessService.GetPromptPerformanceTrend:output_type -> harness.PromptPerformanceTrend
-	98,  // 288: harness.HarnessService.EvaluateRAG:output_type -> harness.RAGMetrics
-	101, // 289: harness.HarnessService.BatchEvaluateRAG:output_type -> harness.BatchEvaluateRAGResponse
-	98,  // 290: harness.HarnessService.GetRAGMetrics:output_type -> harness.RAGMetrics
-	104, // 291: harness.HarnessService.ListRAGMetrics:output_type -> harness.ListRAGMetricsResponse
-	107, // 292: harness.HarnessService.CreateRAGEvaluation:output_type -> harness.RAGEvaluation
-	107, // 293: harness.HarnessService.GetRAGEvaluation:output_type -> harness.RAGEvaluation
-	110, // 294: harness.HarnessService.ListRAGEvaluations:output_type -> harness.ListRAGEvaluationsResponse
-	112, // 295: harness.HarnessService.RunRAGEvaluation:output_type -> harness.RunRAGEvaluationResponse
-	174, // 296: harness.HarnessService.ExecutePlayground:output_type -> harness.PlaygroundResult
-	177, // 297: harness.HarnessService.CompareModels:output_type -> harness.CompareModelsResponse
-	178, // 298: harness.HarnessService.StreamPlayground:output_type -> harness.PlaygroundStreamChunk
-	181, // 299: harness.HarnessService.GetPlaygroundHistory:output_type -> harness.GetPlaygroundHistoryResponse
-	219, // 300: harness.HarnessService.DeletePlaygroundHistory:output_type -> common.Empty
-	183, // 301: harness.HarnessService.GetPlaygroundStats:output_type -> harness.PlaygroundStats
-	228, // 302: harness.HarnessService.CreateSession:output_type -> harness.CreateSessionResponse
-	229, // 303: harness.HarnessService.GetSession:output_type -> harness.SessionDetail
-	230, // 304: harness.HarnessService.ListSessions:output_type -> harness.ListSessionsResponse
-	231, // 305: harness.HarnessService.RecordStep:output_type -> harness.RecordStepResponse
-	232, // 306: harness.HarnessService.EndSession:output_type -> harness.EndSessionResponse
-	233, // 307: harness.HarnessService.ReplaySession:output_type -> harness.ReplaySessionResponse
-	234, // 308: harness.HarnessService.GetSessionGraph:output_type -> harness.SessionGraph
-	235, // 309: harness.HarnessService.ExportSession:output_type -> harness.ExportSessionResponse
-	219, // 310: harness.HarnessService.DeleteSession:output_type -> common.Empty
-	154, // 311: harness.HarnessService.GatewayChat:output_type -> harness.GatewayChatResponse
-	154, // 312: harness.HarnessService.GatewayChatStream:output_type -> harness.GatewayChatResponse
-	155, // 313: harness.HarnessService.CreateGatewayConfig:output_type -> harness.GatewayConfig
-	159, // 314: harness.HarnessService.ListGatewayConfigs:output_type -> harness.ListGatewayConfigsResponse
-	155, // 315: harness.HarnessService.GetGatewayConfig:output_type -> harness.GatewayConfig
-	155, // 316: harness.HarnessService.UpdateGatewayConfig:output_type -> harness.GatewayConfig
-	219, // 317: harness.HarnessService.DeleteGatewayConfig:output_type -> common.Empty
-	163, // 318: harness.HarnessService.CreateGatewayRoute:output_type -> harness.GatewayRoute
-	166, // 319: harness.HarnessService.ListGatewayRoutes:output_type -> harness.ListGatewayRoutesResponse
-	168, // 320: harness.HarnessService.DeleteGatewayRoute:output_type -> harness.DeleteGatewayRouteResponse
-	170, // 321: harness.HarnessService.GetGatewayStats:output_type -> harness.GatewayStatsResponse
-	219, // 322: harness.HarnessService.SetLoadBalanceStrategy:output_type -> common.Empty
-	187, // 323: harness.HarnessService.ListCheckpoints:output_type -> harness.ListCheckpointsResponse
-	189, // 324: harness.HarnessService.GetCheckpoint:output_type -> harness.GetCheckpointResponse
-	191, // 325: harness.HarnessService.ResumeFromCheckpoint:output_type -> harness.ResumeFromCheckpointResponse
-	192, // 326: harness.HarnessService.CreateWorkflow:output_type -> harness.Workflow
-	192, // 327: harness.HarnessService.GetWorkflow:output_type -> harness.Workflow
-	192, // 328: harness.HarnessService.UpdateWorkflow:output_type -> harness.Workflow
-	197, // 329: harness.HarnessService.ListWorkflows:output_type -> harness.ListWorkflowsResponse
-	219, // 330: harness.HarnessService.DeleteWorkflow:output_type -> common.Empty
-	201, // 331: harness.HarnessService.ExecuteWorkflow:output_type -> harness.ExecuteWorkflowResponse
-	202, // 332: harness.HarnessService.ExecuteWorkflowStream:output_type -> harness.WorkflowStreamChunk
-	209, // 333: harness.HarnessService.ValidateWorkflow:output_type -> harness.ValidateWorkflowResponse
-	204, // 334: harness.HarnessService.GetWorkflowExecution:output_type -> harness.WorkflowExecution
-	206, // 335: harness.HarnessService.ListWorkflowExecutions:output_type -> harness.ListWorkflowExecutionsResponse
-	219, // 336: harness.HarnessService.CancelWorkflowExecution:output_type -> common.Empty
-	203, // [203:337] is the sub-list for method output_type
-	69,  // [69:203] is the sub-list for method input_type
-	69,  // [69:69] is the sub-list for extension type_name
-	69,  // [69:69] is the sub-list for extension extendee
-	0,   // [0:69] is the sub-list for field type_name
+	210, // 69: harness.ListDatasetsResponse.datasets:type_name -> harness.EvalDatasetEntry
+	211, // 70: harness.AddDatasetCasesRequest.cases:type_name -> harness.DatasetCaseEntry
+	211, // 71: harness.ListDatasetCasesResponse.cases:type_name -> harness.DatasetCaseEntry
+	222, // 72: harness.ListExperimentsResponse.experiments:type_name -> harness.ExperimentEntry
+	223, // 73: harness.GetExperimentResultsResponse.results:type_name -> harness.ExperimentResultEntry
+	232, // 74: harness.CompareExperimentsResponse.experiments:type_name -> harness.ExperimentSummaryEntry
+	235, // 75: harness.RunPromptOptimizationResponse.history:type_name -> harness.OptimizeRoundEntry
+	1,   // 76: harness.HarnessService.CreateRule:input_type -> harness.CreateRuleRequest
+	2,   // 77: harness.HarnessService.ListRules:input_type -> harness.ListRulesRequest
+	4,   // 78: harness.HarnessService.UpdateRule:input_type -> harness.UpdateRuleRequest
+	5,   // 79: harness.HarnessService.DeleteRule:input_type -> harness.DeleteRuleRequest
+	6,   // 80: harness.HarnessService.CheckGuardrail:input_type -> harness.GuardrailCheckRequest
+	12,  // 81: harness.HarnessService.CreateEvalSuite:input_type -> harness.CreateEvalSuiteRequest
+	13,  // 82: harness.HarnessService.RunEval:input_type -> harness.RunEvalRequest
+	17,  // 83: harness.HarnessService.GetEvalResults:input_type -> harness.GetEvalResultsRequest
+	19,  // 84: harness.HarnessService.CreateABTest:input_type -> harness.CreateABTestRequest
+	20,  // 85: harness.HarnessService.ListABTests:input_type -> harness.ListABTestsRequest
+	25,  // 86: harness.HarnessService.GetABTestResult:input_type -> harness.GetABTestResultRequest
+	27,  // 87: harness.HarnessService.DeleteABTest:input_type -> harness.PromoteVariantRequest
+	27,  // 88: harness.HarnessService.PromoteVariant:input_type -> harness.PromoteVariantRequest
+	22,  // 89: harness.HarnessService.ShouldUseVariant:input_type -> harness.ShouldUseVariantRequest
+	24,  // 90: harness.HarnessService.RecordABTestResult:input_type -> harness.RecordABTestResultRequest
+	29,  // 91: harness.HarnessService.CreateSLO:input_type -> harness.CreateSLORequest
+	31,  // 92: harness.HarnessService.GetSLOStatus:input_type -> harness.GetSLOStatusRequest
+	33,  // 93: harness.HarnessService.Chat:input_type -> harness.HarnessChatRequest
+	33,  // 94: harness.HarnessService.ChatStream:input_type -> harness.HarnessChatRequest
+	37,  // 95: harness.HarnessService.CreateFeatureFlag:input_type -> harness.CreateFeatureFlagRequest
+	38,  // 96: harness.HarnessService.ListFeatureFlags:input_type -> harness.ListFeatureFlagsRequest
+	40,  // 97: harness.HarnessService.GetFeatureFlag:input_type -> harness.GetFeatureFlagRequest
+	41,  // 98: harness.HarnessService.ToggleFeatureFlag:input_type -> harness.ToggleFeatureFlagRequest
+	40,  // 99: harness.HarnessService.DeleteFeatureFlag:input_type -> harness.GetFeatureFlagRequest
+	42,  // 100: harness.HarnessService.EvaluateFeatureFlag:input_type -> harness.EvaluateFeatureFlagRequest
+	46,  // 101: harness.HarnessService.CreateRollbackConfig:input_type -> harness.CreateRollbackConfigRequest
+	40,  // 102: harness.HarnessService.GetRollbackConfig:input_type -> harness.GetFeatureFlagRequest
+	47,  // 103: harness.HarnessService.TakeSnapshot:input_type -> harness.TakeSnapshotRequest
+	48,  // 104: harness.HarnessService.ListSnapshots:input_type -> harness.ListSnapshotsRequest
+	50,  // 105: harness.HarnessService.ExecuteRollback:input_type -> harness.ExecuteRollbackRequest
+	54,  // 106: harness.HarnessService.RecordChange:input_type -> harness.RecordChangeRequest
+	57,  // 107: harness.HarnessService.Analyze:input_type -> harness.AnalyzeRequest
+	59,  // 108: harness.HarnessService.CreateChaosExperiment:input_type -> harness.CreateChaosExperimentRequest
+	60,  // 109: harness.HarnessService.StartChaosExperiment:input_type -> harness.StartChaosExperimentRequest
+	61,  // 110: harness.HarnessService.StopChaosExperiment:input_type -> harness.StopChaosExperimentRequest
+	62,  // 111: harness.HarnessService.ListChaosExperiments:input_type -> harness.ListChaosExperimentsRequest
+	65,  // 112: harness.HarnessService.SetModelPricing:input_type -> harness.SetModelPricingRequest
+	247, // 113: harness.HarnessService.ListModelPricing:input_type -> common.Empty
+	67,  // 114: harness.HarnessService.GetCostReport:input_type -> harness.CostReportRequest
+	247, // 115: harness.HarnessService.GetCostRecommendations:input_type -> common.Empty
+	72,  // 116: harness.HarnessService.RecordCostUsage:input_type -> harness.RecordCostUsageRequest
+	73,  // 117: harness.HarnessService.RecordLLMMetrics:input_type -> harness.RecordLLMMetricsRequest
+	76,  // 118: harness.HarnessService.GetLLMMetrics:input_type -> harness.GetLLMMetricsRequest
+	78,  // 119: harness.HarnessService.CreateProposal:input_type -> harness.CreateProposalRequest
+	79,  // 120: harness.HarnessService.ListProposals:input_type -> harness.ListProposalsRequest
+	81,  // 121: harness.HarnessService.ApproveProposal:input_type -> harness.ApproveProposalRequest
+	82,  // 122: harness.HarnessService.RejectProposal:input_type -> harness.RejectProposalRequest
+	84,  // 123: harness.HarnessService.RunOptimizer:input_type -> harness.RunOptimizerRequest
+	85,  // 124: harness.HarnessService.AnalyzeAndPropose:input_type -> harness.AnalyzeAndProposeRequest
+	81,  // 125: harness.HarnessService.ExecuteProposal:input_type -> harness.ApproveProposalRequest
+	88,  // 126: harness.HarnessService.ListCatalogAgents:input_type -> harness.ListCatalogAgentsRequest
+	40,  // 127: harness.HarnessService.GetCatalogAgent:input_type -> harness.GetFeatureFlagRequest
+	90,  // 128: harness.HarnessService.RegisterCatalogAgent:input_type -> harness.RegisterCatalogAgentRequest
+	91,  // 129: harness.HarnessService.RecordCatalogUsage:input_type -> harness.RecordCatalogUsageRequest
+	92,  // 130: harness.HarnessService.RateCatalogAgent:input_type -> harness.RateCatalogAgentRequest
+	94,  // 131: harness.HarnessService.CreateGoldenPathTemplate:input_type -> harness.CreateGoldenPathTemplateRequest
+	95,  // 132: harness.HarnessService.ListGoldenPathTemplates:input_type -> harness.ListGoldenPathTemplatesRequest
+	97,  // 133: harness.HarnessService.InstantiateTemplate:input_type -> harness.InstantiateTemplateRequest
+	140, // 134: harness.HarnessService.SetEvalSchedule:input_type -> harness.SetEvalScheduleRequest
+	141, // 135: harness.HarnessService.GetEvalSchedule:input_type -> harness.GetEvalScheduleRequest
+	142, // 136: harness.HarnessService.ListEvalSchedules:input_type -> harness.ListEvalSchedulesRequest
+	144, // 137: harness.HarnessService.PauseEvalSchedule:input_type -> harness.PauseScheduleRequest
+	145, // 138: harness.HarnessService.ResumeEvalSchedule:input_type -> harness.ResumeScheduleRequest
+	141, // 139: harness.HarnessService.DeleteEvalSchedule:input_type -> harness.GetEvalScheduleRequest
+	146, // 140: harness.HarnessService.RunEvalScheduleNow:input_type -> harness.RunScheduleNowRequest
+	147, // 141: harness.HarnessService.GetEvalScheduleResults:input_type -> harness.GetScheduleResultsRequest
+	247, // 142: harness.HarnessService.GetSchedulerStatus:input_type -> common.Empty
+	150, // 143: harness.HarnessService.SchedulerControl:input_type -> harness.SchedulerControlRequest
+	247, // 144: harness.HarnessService.GetSchedulerStats:input_type -> common.Empty
+	116, // 145: harness.HarnessService.CreatePrompt:input_type -> harness.CreatePromptRequest
+	117, // 146: harness.HarnessService.GetPrompt:input_type -> harness.GetPromptRequest
+	118, // 147: harness.HarnessService.ListPrompts:input_type -> harness.ListPromptsRequest
+	117, // 148: harness.HarnessService.DeletePrompt:input_type -> harness.GetPromptRequest
+	120, // 149: harness.HarnessService.CreatePromptVersion:input_type -> harness.CreatePromptVersionRequest
+	121, // 150: harness.HarnessService.GetPromptVersion:input_type -> harness.GetPromptVersionRequest
+	122, // 151: harness.HarnessService.GetActivePromptVersion:input_type -> harness.GetActivePromptVersionRequest
+	123, // 152: harness.HarnessService.ListPromptVersions:input_type -> harness.ListPromptVersionsRequest
+	125, // 153: harness.HarnessService.ActivatePromptVersion:input_type -> harness.ActivatePromptVersionRequest
+	126, // 154: harness.HarnessService.ArchivePromptVersion:input_type -> harness.ArchivePromptVersionRequest
+	125, // 155: harness.HarnessService.RollbackPromptVersion:input_type -> harness.ActivatePromptVersionRequest
+	127, // 156: harness.HarnessService.ComparePromptVersions:input_type -> harness.ComparePromptVersionsRequest
+	131, // 157: harness.HarnessService.RenderPrompt:input_type -> harness.RenderPromptRequest
+	133, // 158: harness.HarnessService.RecordPromptUsage:input_type -> harness.RecordPromptUsageRequest
+	134, // 159: harness.HarnessService.GetPromptPerformance:input_type -> harness.GetPromptPerformanceRequest
+	135, // 160: harness.HarnessService.GetPromptPerformanceTrend:input_type -> harness.GetPromptPerformanceTrendRequest
+	99,  // 161: harness.HarnessService.EvaluateRAG:input_type -> harness.EvaluateRAGRequest
+	100, // 162: harness.HarnessService.BatchEvaluateRAG:input_type -> harness.BatchEvaluateRAGRequest
+	102, // 163: harness.HarnessService.GetRAGMetrics:input_type -> harness.GetRAGMetricsRequest
+	103, // 164: harness.HarnessService.ListRAGMetrics:input_type -> harness.ListRAGMetricsRequest
+	105, // 165: harness.HarnessService.CreateRAGEvaluation:input_type -> harness.CreateRAGEvaluationRequest
+	108, // 166: harness.HarnessService.GetRAGEvaluation:input_type -> harness.GetRAGEvaluationRequest
+	109, // 167: harness.HarnessService.ListRAGEvaluations:input_type -> harness.ListRAGEvaluationsRequest
+	111, // 168: harness.HarnessService.RunRAGEvaluation:input_type -> harness.RunRAGEvaluationRequest
+	173, // 169: harness.HarnessService.ExecutePlayground:input_type -> harness.PlaygroundRequest
+	175, // 170: harness.HarnessService.CompareModels:input_type -> harness.CompareModelsRequest
+	173, // 171: harness.HarnessService.StreamPlayground:input_type -> harness.PlaygroundRequest
+	180, // 172: harness.HarnessService.GetPlaygroundHistory:input_type -> harness.GetPlaygroundHistoryRequest
+	182, // 173: harness.HarnessService.DeletePlaygroundHistory:input_type -> harness.DeletePlaygroundHistoryRequest
+	184, // 174: harness.HarnessService.GetPlaygroundStats:input_type -> harness.GetPlaygroundStatsRequest
+	248, // 175: harness.HarnessService.CreateSession:input_type -> harness.CreateSessionRequest
+	249, // 176: harness.HarnessService.GetSession:input_type -> harness.GetSessionRequest
+	250, // 177: harness.HarnessService.ListSessions:input_type -> harness.ListSessionsRequest
+	251, // 178: harness.HarnessService.RecordStep:input_type -> harness.RecordStepRequest
+	252, // 179: harness.HarnessService.EndSession:input_type -> harness.EndSessionRequest
+	253, // 180: harness.HarnessService.ReplaySession:input_type -> harness.ReplaySessionRequest
+	254, // 181: harness.HarnessService.GetSessionGraph:input_type -> harness.GetSessionGraphRequest
+	255, // 182: harness.HarnessService.ExportSession:input_type -> harness.ExportSessionRequest
+	249, // 183: harness.HarnessService.DeleteSession:input_type -> harness.GetSessionRequest
+	152, // 184: harness.HarnessService.GatewayChat:input_type -> harness.GatewayChatRequest
+	152, // 185: harness.HarnessService.GatewayChatStream:input_type -> harness.GatewayChatRequest
+	157, // 186: harness.HarnessService.CreateGatewayConfig:input_type -> harness.CreateGatewayConfigRequest
+	158, // 187: harness.HarnessService.ListGatewayConfigs:input_type -> harness.ListGatewayConfigsRequest
+	160, // 188: harness.HarnessService.GetGatewayConfig:input_type -> harness.GetGatewayConfigRequest
+	161, // 189: harness.HarnessService.UpdateGatewayConfig:input_type -> harness.UpdateGatewayConfigRequest
+	162, // 190: harness.HarnessService.DeleteGatewayConfig:input_type -> harness.DeleteGatewayConfigRequest
+	164, // 191: harness.HarnessService.CreateGatewayRoute:input_type -> harness.CreateGatewayRouteRequest
+	165, // 192: harness.HarnessService.ListGatewayRoutes:input_type -> harness.ListGatewayRoutesRequest
+	167, // 193: harness.HarnessService.DeleteGatewayRoute:input_type -> harness.DeleteGatewayRouteRequest
+	247, // 194: harness.HarnessService.GetGatewayStats:input_type -> common.Empty
+	171, // 195: harness.HarnessService.SetLoadBalanceStrategy:input_type -> harness.SetLoadBalanceStrategyRequest
+	186, // 196: harness.HarnessService.ListCheckpoints:input_type -> harness.ListCheckpointsRequest
+	188, // 197: harness.HarnessService.GetCheckpoint:input_type -> harness.GetCheckpointRequest
+	190, // 198: harness.HarnessService.ResumeFromCheckpoint:input_type -> harness.ResumeFromCheckpointRequest
+	193, // 199: harness.HarnessService.CreateWorkflow:input_type -> harness.CreateWorkflowRequest
+	195, // 200: harness.HarnessService.GetWorkflow:input_type -> harness.GetWorkflowRequest
+	194, // 201: harness.HarnessService.UpdateWorkflow:input_type -> harness.UpdateWorkflowRequest
+	196, // 202: harness.HarnessService.ListWorkflows:input_type -> harness.ListWorkflowsRequest
+	198, // 203: harness.HarnessService.DeleteWorkflow:input_type -> harness.DeleteWorkflowRequest
+	199, // 204: harness.HarnessService.ExecuteWorkflow:input_type -> harness.ExecuteWorkflowRequest
+	199, // 205: harness.HarnessService.ExecuteWorkflowStream:input_type -> harness.ExecuteWorkflowRequest
+	208, // 206: harness.HarnessService.ValidateWorkflow:input_type -> harness.ValidateWorkflowRequest
+	203, // 207: harness.HarnessService.GetWorkflowExecution:input_type -> harness.GetWorkflowExecutionRequest
+	205, // 208: harness.HarnessService.ListWorkflowExecutions:input_type -> harness.ListWorkflowExecutionsRequest
+	207, // 209: harness.HarnessService.CancelWorkflowExecution:input_type -> harness.CancelWorkflowExecutionRequest
+	212, // 210: harness.HarnessService.CreateDataset:input_type -> harness.CreateDatasetRequest
+	213, // 211: harness.HarnessService.GetDataset:input_type -> harness.GetDatasetRequest
+	214, // 212: harness.HarnessService.ListDatasets:input_type -> harness.ListDatasetsRequest
+	213, // 213: harness.HarnessService.DeleteDataset:input_type -> harness.GetDatasetRequest
+	216, // 214: harness.HarnessService.AddDatasetCase:input_type -> harness.AddDatasetCaseRequest
+	217, // 215: harness.HarnessService.AddDatasetCases:input_type -> harness.AddDatasetCasesRequest
+	218, // 216: harness.HarnessService.ListDatasetCases:input_type -> harness.ListDatasetCasesRequest
+	220, // 217: harness.HarnessService.ImportDatasetCases:input_type -> harness.ImportDatasetCasesRequest
+	225, // 218: harness.HarnessService.RunExperiment:input_type -> harness.RunExperimentRequest
+	226, // 219: harness.HarnessService.GetExperiment:input_type -> harness.GetExperimentRequest
+	227, // 220: harness.HarnessService.ListExperiments:input_type -> harness.ListExperimentsRequest
+	229, // 221: harness.HarnessService.GetExperimentResults:input_type -> harness.GetExperimentResultsRequest
+	231, // 222: harness.HarnessService.CompareExperiments:input_type -> harness.CompareExperimentsRequest
+	234, // 223: harness.HarnessService.RunPromptOptimization:input_type -> harness.RunPromptOptimizationRequest
+	237, // 224: harness.HarnessService.AdoptPromptVersion:input_type -> harness.AdoptPromptVersionRequest
+	0,   // 225: harness.HarnessService.CreateRule:output_type -> harness.Rule
+	3,   // 226: harness.HarnessService.ListRules:output_type -> harness.ListRulesResponse
+	0,   // 227: harness.HarnessService.UpdateRule:output_type -> harness.Rule
+	247, // 228: harness.HarnessService.DeleteRule:output_type -> common.Empty
+	7,   // 229: harness.HarnessService.CheckGuardrail:output_type -> harness.GuardrailCheckResponse
+	11,  // 230: harness.HarnessService.CreateEvalSuite:output_type -> harness.EvalSuite
+	16,  // 231: harness.HarnessService.RunEval:output_type -> harness.RunEvalResponse
+	16,  // 232: harness.HarnessService.GetEvalResults:output_type -> harness.RunEvalResponse
+	18,  // 233: harness.HarnessService.CreateABTest:output_type -> harness.ABTest
+	21,  // 234: harness.HarnessService.ListABTests:output_type -> harness.ListABTestsResponse
+	26,  // 235: harness.HarnessService.GetABTestResult:output_type -> harness.ABTestResult
+	247, // 236: harness.HarnessService.DeleteABTest:output_type -> common.Empty
+	247, // 237: harness.HarnessService.PromoteVariant:output_type -> common.Empty
+	23,  // 238: harness.HarnessService.ShouldUseVariant:output_type -> harness.ShouldUseVariantResponse
+	247, // 239: harness.HarnessService.RecordABTestResult:output_type -> common.Empty
+	28,  // 240: harness.HarnessService.CreateSLO:output_type -> harness.SLO
+	32,  // 241: harness.HarnessService.GetSLOStatus:output_type -> harness.GetSLOStatusResponse
+	34,  // 242: harness.HarnessService.Chat:output_type -> harness.HarnessChatResponse
+	34,  // 243: harness.HarnessService.ChatStream:output_type -> harness.HarnessChatResponse
+	36,  // 244: harness.HarnessService.CreateFeatureFlag:output_type -> harness.FeatureFlag
+	39,  // 245: harness.HarnessService.ListFeatureFlags:output_type -> harness.ListFeatureFlagsResponse
+	36,  // 246: harness.HarnessService.GetFeatureFlag:output_type -> harness.FeatureFlag
+	36,  // 247: harness.HarnessService.ToggleFeatureFlag:output_type -> harness.FeatureFlag
+	247, // 248: harness.HarnessService.DeleteFeatureFlag:output_type -> common.Empty
+	43,  // 249: harness.HarnessService.EvaluateFeatureFlag:output_type -> harness.EvaluateFeatureFlagResponse
+	44,  // 250: harness.HarnessService.CreateRollbackConfig:output_type -> harness.RollbackConfig
+	44,  // 251: harness.HarnessService.GetRollbackConfig:output_type -> harness.RollbackConfig
+	45,  // 252: harness.HarnessService.TakeSnapshot:output_type -> harness.ConfigSnapshot
+	49,  // 253: harness.HarnessService.ListSnapshots:output_type -> harness.ListSnapshotsResponse
+	51,  // 254: harness.HarnessService.ExecuteRollback:output_type -> harness.RollbackEvent
+	52,  // 255: harness.HarnessService.RecordChange:output_type -> harness.ChangeEvent
+	56,  // 256: harness.HarnessService.Analyze:output_type -> harness.AnalysisReport
+	58,  // 257: harness.HarnessService.CreateChaosExperiment:output_type -> harness.ChaosExperiment
+	58,  // 258: harness.HarnessService.StartChaosExperiment:output_type -> harness.ChaosExperiment
+	58,  // 259: harness.HarnessService.StopChaosExperiment:output_type -> harness.ChaosExperiment
+	63,  // 260: harness.HarnessService.ListChaosExperiments:output_type -> harness.ListChaosExperimentsResponse
+	64,  // 261: harness.HarnessService.SetModelPricing:output_type -> harness.ModelPricing
+	66,  // 262: harness.HarnessService.ListModelPricing:output_type -> harness.ListModelPricingResponse
+	69,  // 263: harness.HarnessService.GetCostReport:output_type -> harness.CostReport
+	71,  // 264: harness.HarnessService.GetCostRecommendations:output_type -> harness.ListCostRecommendationsResponse
+	247, // 265: harness.HarnessService.RecordCostUsage:output_type -> common.Empty
+	247, // 266: harness.HarnessService.RecordLLMMetrics:output_type -> common.Empty
+	74,  // 267: harness.HarnessService.GetLLMMetrics:output_type -> harness.LLMMetricsSummary
+	77,  // 268: harness.HarnessService.CreateProposal:output_type -> harness.Proposal
+	80,  // 269: harness.HarnessService.ListProposals:output_type -> harness.ListProposalsResponse
+	77,  // 270: harness.HarnessService.ApproveProposal:output_type -> harness.Proposal
+	77,  // 271: harness.HarnessService.RejectProposal:output_type -> harness.Proposal
+	83,  // 272: harness.HarnessService.RunOptimizer:output_type -> harness.OptimizationResult
+	86,  // 273: harness.HarnessService.AnalyzeAndPropose:output_type -> harness.AnalyzeAndProposeResponse
+	77,  // 274: harness.HarnessService.ExecuteProposal:output_type -> harness.Proposal
+	89,  // 275: harness.HarnessService.ListCatalogAgents:output_type -> harness.ListCatalogAgentsResponse
+	87,  // 276: harness.HarnessService.GetCatalogAgent:output_type -> harness.CatalogAgent
+	87,  // 277: harness.HarnessService.RegisterCatalogAgent:output_type -> harness.CatalogAgent
+	247, // 278: harness.HarnessService.RecordCatalogUsage:output_type -> common.Empty
+	247, // 279: harness.HarnessService.RateCatalogAgent:output_type -> common.Empty
+	93,  // 280: harness.HarnessService.CreateGoldenPathTemplate:output_type -> harness.GoldenPathTemplate
+	96,  // 281: harness.HarnessService.ListGoldenPathTemplates:output_type -> harness.ListGoldenPathTemplatesResponse
+	247, // 282: harness.HarnessService.InstantiateTemplate:output_type -> common.Empty
+	138, // 283: harness.HarnessService.SetEvalSchedule:output_type -> harness.EvalSchedule
+	138, // 284: harness.HarnessService.GetEvalSchedule:output_type -> harness.EvalSchedule
+	143, // 285: harness.HarnessService.ListEvalSchedules:output_type -> harness.ListEvalSchedulesResponse
+	138, // 286: harness.HarnessService.PauseEvalSchedule:output_type -> harness.EvalSchedule
+	138, // 287: harness.HarnessService.ResumeEvalSchedule:output_type -> harness.EvalSchedule
+	247, // 288: harness.HarnessService.DeleteEvalSchedule:output_type -> common.Empty
+	139, // 289: harness.HarnessService.RunEvalScheduleNow:output_type -> harness.ScheduledEvalResult
+	148, // 290: harness.HarnessService.GetEvalScheduleResults:output_type -> harness.GetScheduleResultsResponse
+	149, // 291: harness.HarnessService.GetSchedulerStatus:output_type -> harness.SchedulerStatus
+	149, // 292: harness.HarnessService.SchedulerControl:output_type -> harness.SchedulerStatus
+	151, // 293: harness.HarnessService.GetSchedulerStats:output_type -> harness.SchedulerStatsResponse
+	113, // 294: harness.HarnessService.CreatePrompt:output_type -> harness.Prompt
+	113, // 295: harness.HarnessService.GetPrompt:output_type -> harness.Prompt
+	119, // 296: harness.HarnessService.ListPrompts:output_type -> harness.ListPromptsResponse
+	247, // 297: harness.HarnessService.DeletePrompt:output_type -> common.Empty
+	114, // 298: harness.HarnessService.CreatePromptVersion:output_type -> harness.PromptVersion
+	114, // 299: harness.HarnessService.GetPromptVersion:output_type -> harness.PromptVersion
+	114, // 300: harness.HarnessService.GetActivePromptVersion:output_type -> harness.PromptVersion
+	124, // 301: harness.HarnessService.ListPromptVersions:output_type -> harness.ListPromptVersionsResponse
+	114, // 302: harness.HarnessService.ActivatePromptVersion:output_type -> harness.PromptVersion
+	114, // 303: harness.HarnessService.ArchivePromptVersion:output_type -> harness.PromptVersion
+	114, // 304: harness.HarnessService.RollbackPromptVersion:output_type -> harness.PromptVersion
+	130, // 305: harness.HarnessService.ComparePromptVersions:output_type -> harness.PromptVersionDiff
+	132, // 306: harness.HarnessService.RenderPrompt:output_type -> harness.RenderPromptResponse
+	247, // 307: harness.HarnessService.RecordPromptUsage:output_type -> common.Empty
+	115, // 308: harness.HarnessService.GetPromptPerformance:output_type -> harness.PromptPerformance
+	137, // 309: harness.HarnessService.GetPromptPerformanceTrend:output_type -> harness.PromptPerformanceTrend
+	98,  // 310: harness.HarnessService.EvaluateRAG:output_type -> harness.RAGMetrics
+	101, // 311: harness.HarnessService.BatchEvaluateRAG:output_type -> harness.BatchEvaluateRAGResponse
+	98,  // 312: harness.HarnessService.GetRAGMetrics:output_type -> harness.RAGMetrics
+	104, // 313: harness.HarnessService.ListRAGMetrics:output_type -> harness.ListRAGMetricsResponse
+	107, // 314: harness.HarnessService.CreateRAGEvaluation:output_type -> harness.RAGEvaluation
+	107, // 315: harness.HarnessService.GetRAGEvaluation:output_type -> harness.RAGEvaluation
+	110, // 316: harness.HarnessService.ListRAGEvaluations:output_type -> harness.ListRAGEvaluationsResponse
+	112, // 317: harness.HarnessService.RunRAGEvaluation:output_type -> harness.RunRAGEvaluationResponse
+	174, // 318: harness.HarnessService.ExecutePlayground:output_type -> harness.PlaygroundResult
+	177, // 319: harness.HarnessService.CompareModels:output_type -> harness.CompareModelsResponse
+	178, // 320: harness.HarnessService.StreamPlayground:output_type -> harness.PlaygroundStreamChunk
+	181, // 321: harness.HarnessService.GetPlaygroundHistory:output_type -> harness.GetPlaygroundHistoryResponse
+	247, // 322: harness.HarnessService.DeletePlaygroundHistory:output_type -> common.Empty
+	183, // 323: harness.HarnessService.GetPlaygroundStats:output_type -> harness.PlaygroundStats
+	256, // 324: harness.HarnessService.CreateSession:output_type -> harness.CreateSessionResponse
+	257, // 325: harness.HarnessService.GetSession:output_type -> harness.SessionDetail
+	258, // 326: harness.HarnessService.ListSessions:output_type -> harness.ListSessionsResponse
+	259, // 327: harness.HarnessService.RecordStep:output_type -> harness.RecordStepResponse
+	260, // 328: harness.HarnessService.EndSession:output_type -> harness.EndSessionResponse
+	261, // 329: harness.HarnessService.ReplaySession:output_type -> harness.ReplaySessionResponse
+	262, // 330: harness.HarnessService.GetSessionGraph:output_type -> harness.SessionGraph
+	263, // 331: harness.HarnessService.ExportSession:output_type -> harness.ExportSessionResponse
+	247, // 332: harness.HarnessService.DeleteSession:output_type -> common.Empty
+	154, // 333: harness.HarnessService.GatewayChat:output_type -> harness.GatewayChatResponse
+	154, // 334: harness.HarnessService.GatewayChatStream:output_type -> harness.GatewayChatResponse
+	155, // 335: harness.HarnessService.CreateGatewayConfig:output_type -> harness.GatewayConfig
+	159, // 336: harness.HarnessService.ListGatewayConfigs:output_type -> harness.ListGatewayConfigsResponse
+	155, // 337: harness.HarnessService.GetGatewayConfig:output_type -> harness.GatewayConfig
+	155, // 338: harness.HarnessService.UpdateGatewayConfig:output_type -> harness.GatewayConfig
+	247, // 339: harness.HarnessService.DeleteGatewayConfig:output_type -> common.Empty
+	163, // 340: harness.HarnessService.CreateGatewayRoute:output_type -> harness.GatewayRoute
+	166, // 341: harness.HarnessService.ListGatewayRoutes:output_type -> harness.ListGatewayRoutesResponse
+	168, // 342: harness.HarnessService.DeleteGatewayRoute:output_type -> harness.DeleteGatewayRouteResponse
+	170, // 343: harness.HarnessService.GetGatewayStats:output_type -> harness.GatewayStatsResponse
+	247, // 344: harness.HarnessService.SetLoadBalanceStrategy:output_type -> common.Empty
+	187, // 345: harness.HarnessService.ListCheckpoints:output_type -> harness.ListCheckpointsResponse
+	189, // 346: harness.HarnessService.GetCheckpoint:output_type -> harness.GetCheckpointResponse
+	191, // 347: harness.HarnessService.ResumeFromCheckpoint:output_type -> harness.ResumeFromCheckpointResponse
+	192, // 348: harness.HarnessService.CreateWorkflow:output_type -> harness.Workflow
+	192, // 349: harness.HarnessService.GetWorkflow:output_type -> harness.Workflow
+	192, // 350: harness.HarnessService.UpdateWorkflow:output_type -> harness.Workflow
+	197, // 351: harness.HarnessService.ListWorkflows:output_type -> harness.ListWorkflowsResponse
+	247, // 352: harness.HarnessService.DeleteWorkflow:output_type -> common.Empty
+	201, // 353: harness.HarnessService.ExecuteWorkflow:output_type -> harness.ExecuteWorkflowResponse
+	202, // 354: harness.HarnessService.ExecuteWorkflowStream:output_type -> harness.WorkflowStreamChunk
+	209, // 355: harness.HarnessService.ValidateWorkflow:output_type -> harness.ValidateWorkflowResponse
+	204, // 356: harness.HarnessService.GetWorkflowExecution:output_type -> harness.WorkflowExecution
+	206, // 357: harness.HarnessService.ListWorkflowExecutions:output_type -> harness.ListWorkflowExecutionsResponse
+	247, // 358: harness.HarnessService.CancelWorkflowExecution:output_type -> common.Empty
+	210, // 359: harness.HarnessService.CreateDataset:output_type -> harness.EvalDatasetEntry
+	210, // 360: harness.HarnessService.GetDataset:output_type -> harness.EvalDatasetEntry
+	215, // 361: harness.HarnessService.ListDatasets:output_type -> harness.ListDatasetsResponse
+	247, // 362: harness.HarnessService.DeleteDataset:output_type -> common.Empty
+	211, // 363: harness.HarnessService.AddDatasetCase:output_type -> harness.DatasetCaseEntry
+	247, // 364: harness.HarnessService.AddDatasetCases:output_type -> common.Empty
+	219, // 365: harness.HarnessService.ListDatasetCases:output_type -> harness.ListDatasetCasesResponse
+	221, // 366: harness.HarnessService.ImportDatasetCases:output_type -> harness.ImportDatasetCasesResponse
+	222, // 367: harness.HarnessService.RunExperiment:output_type -> harness.ExperimentEntry
+	222, // 368: harness.HarnessService.GetExperiment:output_type -> harness.ExperimentEntry
+	228, // 369: harness.HarnessService.ListExperiments:output_type -> harness.ListExperimentsResponse
+	230, // 370: harness.HarnessService.GetExperimentResults:output_type -> harness.GetExperimentResultsResponse
+	233, // 371: harness.HarnessService.CompareExperiments:output_type -> harness.CompareExperimentsResponse
+	236, // 372: harness.HarnessService.RunPromptOptimization:output_type -> harness.RunPromptOptimizationResponse
+	247, // 373: harness.HarnessService.AdoptPromptVersion:output_type -> common.Empty
+	225, // [225:374] is the sub-list for method output_type
+	76,  // [76:225] is the sub-list for method input_type
+	76,  // [76:76] is the sub-list for extension type_name
+	76,  // [76:76] is the sub-list for extension extendee
+	0,   // [0:76] is the sub-list for field type_name
 }
 
 func init() { file_proto_harness_harness_proto_init() }
@@ -17607,7 +19788,7 @@ func file_proto_harness_harness_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_harness_harness_proto_rawDesc), len(file_proto_harness_harness_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   219,
+			NumMessages:   247,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

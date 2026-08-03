@@ -13,16 +13,23 @@ import (
 	"gorm.io/gorm"
 )
 
+// ActivateHook is called after a version is activated. Implementations can
+// trigger side effects like automatic evaluation.
+type ActivateHook interface {
+	OnActivate(ctx context.Context, promptKey, versionID string)
+}
+
 // Engine manages prompts and versions with caching
 type Engine struct {
-	db          *gorm.DB
-	renderer    *Renderer
-	tracker     *PerformanceTracker
-	prompts     map[string]*Prompt      // key -> prompt (in-memory cache)
-	versions    map[string]*PromptVersion // promptID -> active version (LRU cache)
-	versionList map[string][]PromptVersion // promptID -> all versions
-	mu          sync.RWMutex
-	cacheSize   int
+	db            *gorm.DB
+	renderer      *Renderer
+	tracker       *PerformanceTracker
+	prompts       map[string]*Prompt         // key -> prompt (in-memory cache)
+	versions      map[string]*PromptVersion  // promptID -> active version (LRU cache)
+	versionList   map[string][]PromptVersion // promptID -> all versions
+	mu            sync.RWMutex
+	cacheSize     int
+	activateHooks []ActivateHook
 }
 
 // NewEngine creates a new prompt engine with database
@@ -346,10 +353,11 @@ func (e *Engine) ListVersions(ctx context.Context, promptKey string) ([]PromptVe
 	return nil, fmt.Errorf("no versions found for prompt: %s", promptKey)
 }
 
-// ActivateVersion activates a specific version
+// ActivateVersion activates a specific version.
+// After activation, any registered ActivateHooks are called outside the mutex
+// to avoid deadlocks.
 func (e *Engine) ActivateVersion(ctx context.Context, versionID string) error {
 	e.mu.Lock()
-	defer e.mu.Unlock()
 
 	// Find the version
 	var targetVersion *PromptVersion
@@ -369,11 +377,13 @@ func (e *Engine) ActivateVersion(ctx context.Context, versionID string) error {
 		if e.db != nil {
 			var v PromptVersion
 			if err := e.db.Where("id = ?", versionID).First(&v).Error; err != nil {
+				e.mu.Unlock()
 				return fmt.Errorf("version not found: %s", versionID)
 			}
 			targetVersion = &v
 			promptID = v.PromptID
 		} else {
+			e.mu.Unlock()
 			return fmt.Errorf("version not found: %s", versionID)
 		}
 	}
@@ -383,11 +393,13 @@ func (e *Engine) ActivateVersion(ctx context.Context, versionID string) error {
 		if err := e.db.Model(&PromptVersion{}).
 			Where("prompt_id = ? AND id != ?", promptID, versionID).
 			Updates(map[string]interface{}{"is_active": false, "status": VersionStatusArchived}).Error; err != nil {
+			e.mu.Unlock()
 			return fmt.Errorf("deactivate other versions: %w", err)
 		}
 
 		if err := e.db.Model(targetVersion).
 			Updates(map[string]interface{}{"is_active": true, "status": VersionStatusActive}).Error; err != nil {
+			e.mu.Unlock()
 			return fmt.Errorf("activate version: %w", err)
 		}
 	}
@@ -413,6 +425,25 @@ func (e *Engine) ActivateVersion(ctx context.Context, versionID string) error {
 
 	// Update active version cache
 	e.versions[promptID] = targetVersion
+
+	// Capture hook info before releasing lock
+	hooks := e.activateHooks
+	promptKey := ""
+	for _, p := range e.prompts {
+		if p.ID == promptID {
+			promptKey = p.Key
+			break
+		}
+	}
+
+	e.mu.Unlock()
+
+	// Fire activate hooks outside the lock to avoid deadlocks
+	for _, hook := range hooks {
+		if promptKey != "" {
+			hook.OnActivate(ctx, promptKey, versionID)
+		}
+	}
 
 	return nil
 }
@@ -540,6 +571,40 @@ func (e *Engine) GetPerformance(ctx context.Context, versionID string, periodSta
 // GetPerformanceTrend gets performance trend for a version
 func (e *Engine) GetPerformanceTrend(ctx context.Context, versionID string, days int) (*PerformanceTrend, error) {
 	return e.tracker.GetPerformanceTrend(ctx, versionID, days)
+}
+
+// AddActivateHook registers a hook that fires after a version is activated.
+func (e *Engine) AddActivateHook(hook ActivateHook) {
+	e.activateHooks = append(e.activateHooks, hook)
+}
+
+// RenderVersion renders a specific prompt version with the given variables.
+// If versionID is empty, it uses the active version for the prompt key.
+// Returns the rendered content and the version ID that was actually used.
+// This implements the playground.PromptRenderer interface.
+func (e *Engine) RenderVersion(ctx context.Context, promptKey, versionID string, vars map[string]interface{}) (string, string, error) {
+	var version *PromptVersion
+	var err error
+
+	if versionID != "" {
+		version, err = e.GetVersion(ctx, versionID)
+	} else {
+		version, err = e.GetActiveVersion(ctx, promptKey)
+	}
+	if err != nil {
+		return "", "", fmt.Errorf("get version: %w", err)
+	}
+
+	renderCtx := &RenderContext{
+		Variables: vars,
+	}
+
+	rendered, err := e.renderer.RenderWithValidation(version.Content, version.Variables, renderCtx)
+	if err != nil {
+		return "", version.ID, fmt.Errorf("render: %w", err)
+	}
+
+	return rendered, version.ID, nil
 }
 
 // GetRenderer returns the renderer for direct use

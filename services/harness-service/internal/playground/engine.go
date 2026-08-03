@@ -13,9 +13,19 @@ import (
 
 // PlaygroundEngine provides Prompt Playground functionality
 type PlaygroundEngine struct {
-	llmClient llm.Client
-	recorder  *Recorder
-	mu        sync.RWMutex
+	llmClient      llm.Client
+	recorder       *Recorder
+	promptRenderer PromptRenderer // Optional: renders prompt versions
+	mu             sync.RWMutex
+}
+
+// PromptRenderer is implemented by prompt.Engine to render prompt templates.
+// This avoids a circular import between playground and prompt packages.
+type PromptRenderer interface {
+	// RenderVersion renders a specific prompt version with the given variables.
+	// If versionID is empty, it uses the active version for the prompt key.
+	RenderVersion(ctx context.Context, promptKey, versionID string, vars map[string]interface{}) (string, string, error)
+	// The second return value is the versionID that was actually used.
 }
 
 // PlaygroundRequest represents a playground execution request
@@ -29,6 +39,10 @@ type PlaygroundRequest struct {
 	TenantID    string                 `json:"tenant_id"`
 	UserID      string                 `json:"user_id"`
 	SessionID   string                 `json:"session_id"`
+	// Prompt version association (stage 1)
+	PromptKey string                 `json:"prompt_key,omitempty"` // When set, render prompt template
+	VersionID string                 `json:"version_id,omitempty"` // When set, use specific version; otherwise active
+	Variables map[string]interface{} `json:"variables,omitempty"`  // Variables for prompt rendering
 }
 
 // PlaygroundResult represents a playground execution result
@@ -43,17 +57,18 @@ type PlaygroundResult struct {
 	FinishReason string    `json:"finish_reason"`
 	LogID        string    `json:"log_id"`
 	CreatedAt    time.Time `json:"created_at"`
+	VersionID    string    `json:"version_id,omitempty"` // Prompt version used (stage 1)
 }
 
 // CompareModelsRequest represents a multi-model comparison request
 type CompareModelsRequest struct {
-	Models      []string    `json:"models"`
+	Models      []string      `json:"models"`
 	Messages    []llm.Message `json:"messages"`
-	Temperature float64     `json:"temperature"`
-	MaxTokens   int         `json:"max_tokens"`
-	TopP        float64     `json:"top_p"`
-	TenantID    string      `json:"tenant_id"`
-	UserID      string      `json:"user_id"`
+	Temperature float64       `json:"temperature"`
+	MaxTokens   int           `json:"max_tokens"`
+	TopP        float64       `json:"top_p"`
+	TenantID    string        `json:"tenant_id"`
+	UserID      string        `json:"user_id"`
 }
 
 // CompareModelsResponse represents multi-model comparison results
@@ -90,10 +105,34 @@ func NewPlaygroundEngine(llmClient llm.Client, recorder *Recorder) *PlaygroundEn
 	}
 }
 
-// Execute executes a single prompt request
+// SetPromptRenderer sets the prompt renderer for version-aware execution.
+func (e *PlaygroundEngine) SetPromptRenderer(renderer PromptRenderer) {
+	e.promptRenderer = renderer
+}
+
+// Execute executes a single prompt request.
+// If PromptKey is set, it renders the prompt template before executing.
 func (e *PlaygroundEngine) Execute(ctx context.Context, req *PlaygroundRequest) (*PlaygroundResult, error) {
 	start := time.Now()
 	logID := generateLogID()
+
+	// If PromptKey is set, render the prompt template
+	var versionID string
+	if req.PromptKey != "" && e.promptRenderer != nil {
+		rendered, vid, err := e.promptRenderer.RenderVersion(ctx, req.PromptKey, req.VersionID, req.Variables)
+		if err != nil {
+			return nil, fmt.Errorf("render prompt: %w", err)
+		}
+		versionID = vid
+		// Inject rendered prompt as system message, user input as user message
+		req.Messages = []llm.Message{
+			{Role: "system", Content: rendered},
+		}
+		// If there's a user message in variables, add it
+		if userInput, ok := req.Variables["user_input"]; ok {
+			req.Messages = append(req.Messages, llm.Message{Role: "user", Content: fmt.Sprintf("%v", userInput)})
+		}
+	}
 
 	// Build LLM request
 	llmReq := &llm.ChatRequest{
@@ -126,6 +165,7 @@ func (e *PlaygroundEngine) Execute(ctx context.Context, req *PlaygroundRequest) 
 		FinishReason: resp.FinishReason,
 		LogID:        logID,
 		CreatedAt:    time.Now(),
+		VersionID:    versionID,
 	}
 
 	// Record history
@@ -326,7 +366,7 @@ func (e *PlaygroundEngine) buildComparison(results []*PlaygroundResult) *ModelCo
 	var totalLatency, totalCost, totalTokens float64
 	var fastestModel, cheapestModel string
 	var minLatency int64 = int64(^uint64(0) >> 1) // Max int64
-	var minCost float64 = 1e10                   // Large number
+	var minCost float64 = 1e10                    // Large number
 
 	validCount := 0
 
@@ -419,4 +459,78 @@ func (r *CompareModelsResponse) ToJSON() string {
 		return "{}"
 	}
 	return string(data)
+}
+
+// CompareVersionsRequest represents a version comparison request (stage 1).
+// It renders and executes 2-4 prompt versions side by side.
+type CompareVersionsRequest struct {
+	PromptKey   string                 `json:"prompt_key"`
+	VersionIDs  []string               `json:"version_ids"` // 2-4 version IDs to compare
+	Variables   map[string]interface{} `json:"variables"`
+	Model       string                 `json:"model"`
+	Temperature float64                `json:"temperature"`
+	MaxTokens   int                    `json:"max_tokens"`
+	TenantID    string                 `json:"tenant_id"`
+	UserID      string                 `json:"user_id"`
+}
+
+// CompareVersionsResponse represents version comparison results.
+type CompareVersionsResponse struct {
+	Results   []*PlaygroundResult `json:"results"`
+	CreatedAt time.Time           `json:"created_at"`
+}
+
+// CompareVersions renders and executes multiple prompt versions side by side.
+func (e *PlaygroundEngine) CompareVersions(ctx context.Context, req *CompareVersionsRequest) (*CompareVersionsResponse, error) {
+	if len(req.VersionIDs) < 2 {
+		return nil, fmt.Errorf("need at least 2 versions to compare")
+	}
+	if len(req.VersionIDs) > 4 {
+		return nil, fmt.Errorf("compare at most 4 versions at once")
+	}
+	if e.promptRenderer == nil {
+		return nil, fmt.Errorf("prompt renderer not configured")
+	}
+
+	results := make([]*PlaygroundResult, len(req.VersionIDs))
+	var wg sync.WaitGroup
+	var firstErr error
+
+	for i, vid := range req.VersionIDs {
+		wg.Add(1)
+		go func(idx int, versionID string) {
+			defer wg.Done()
+
+			playgroundReq := &PlaygroundRequest{
+				Model:       req.Model,
+				Temperature: req.Temperature,
+				MaxTokens:   req.MaxTokens,
+				TenantID:    req.TenantID,
+				UserID:      req.UserID,
+				PromptKey:   req.PromptKey,
+				VersionID:   versionID,
+				Variables:   req.Variables,
+			}
+
+			result, err := e.Execute(ctx, playgroundReq)
+			if err != nil {
+				if firstErr == nil {
+					firstErr = err
+				}
+				return
+			}
+			results[idx] = result
+		}(i, vid)
+	}
+
+	wg.Wait()
+
+	if firstErr != nil {
+		return nil, firstErr
+	}
+
+	return &CompareVersionsResponse{
+		Results:   results,
+		CreatedAt: time.Now(),
+	}, nil
 }

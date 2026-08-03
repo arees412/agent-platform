@@ -285,7 +285,7 @@ func Setup(engine *gin.Engine, cfg *config.Config) {
 	api.PUT("/harness/workflows/:id", harnessHandler.UpdateWorkflow)
 	api.DELETE("/harness/workflows/:id", harnessHandler.DeleteWorkflow)
 	api.POST("/harness/workflows/:id/execute", harnessHandler.ExecuteWorkflow)
-api.POST("/harness/workflows/:id/execute-stream", harnessHandler.ExecuteWorkflowStream)
+	api.POST("/harness/workflows/:id/execute-stream", harnessHandler.ExecuteWorkflowStream)
 	api.POST("/harness/workflows/validate", harnessHandler.ValidateWorkflow)
 	api.GET("/harness/workflows/:id/executions", harnessHandler.ListWorkflowExecutions)
 	api.GET("/harness/workflows/executions/:executionId", harnessHandler.GetWorkflowExecution)
@@ -296,6 +296,26 @@ api.POST("/harness/workflows/:id/execute-stream", harnessHandler.ExecuteWorkflow
 	api.GET("/harness/session/:id/state", harnessHandler.GetSessionState)
 	api.POST("/harness/session/:id/resume", harnessHandler.ResumeSession)
 	api.POST("/harness/session/:id/inject", harnessHandler.InjectMessage)
+
+	// Evaluation Dataset & Experiment routes
+	api.POST("/harness/dataset", harnessHandler.CreateDataset)
+	api.GET("/harness/dataset/list", harnessHandler.ListDatasets)
+	api.GET("/harness/dataset/:id", harnessHandler.GetDataset)
+	api.DELETE("/harness/dataset/:id", harnessHandler.DeleteDataset)
+	api.POST("/harness/dataset/:id/cases", harnessHandler.AddDatasetCase)
+	api.GET("/harness/dataset/:id/cases", harnessHandler.ListDatasetCases)
+	api.POST("/harness/dataset/:id/import", harnessHandler.ImportDatasetCases)
+
+	api.POST("/harness/experiment/run", harnessHandler.RunExperiment)
+	api.GET("/harness/experiment/list", harnessHandler.ListExperiments)
+	api.GET("/harness/experiment/:id", harnessHandler.GetExperiment)
+	api.GET("/harness/experiment/:id/results", harnessHandler.GetExperimentResults)
+	api.POST("/harness/experiment/compare", harnessHandler.CompareExperiments)
+
+	// Prompt Optimizer routes
+	api.POST("/harness/optimizer/run", harnessHandler.RunPromptOptimization)
+	api.POST("/harness/optimizer/adopt", harnessHandler.AdoptPromptVersion)
+
 	// Health check
 	engine.GET("/health", func(c *gin.Context) {
 		c.JSON(200, gin.H{

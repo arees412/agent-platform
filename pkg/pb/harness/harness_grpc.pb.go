@@ -154,6 +154,21 @@ const (
 	HarnessService_GetWorkflowExecution_FullMethodName      = "/harness.HarnessService/GetWorkflowExecution"
 	HarnessService_ListWorkflowExecutions_FullMethodName    = "/harness.HarnessService/ListWorkflowExecutions"
 	HarnessService_CancelWorkflowExecution_FullMethodName   = "/harness.HarnessService/CancelWorkflowExecution"
+	HarnessService_CreateDataset_FullMethodName             = "/harness.HarnessService/CreateDataset"
+	HarnessService_GetDataset_FullMethodName                = "/harness.HarnessService/GetDataset"
+	HarnessService_ListDatasets_FullMethodName              = "/harness.HarnessService/ListDatasets"
+	HarnessService_DeleteDataset_FullMethodName             = "/harness.HarnessService/DeleteDataset"
+	HarnessService_AddDatasetCase_FullMethodName            = "/harness.HarnessService/AddDatasetCase"
+	HarnessService_AddDatasetCases_FullMethodName           = "/harness.HarnessService/AddDatasetCases"
+	HarnessService_ListDatasetCases_FullMethodName          = "/harness.HarnessService/ListDatasetCases"
+	HarnessService_ImportDatasetCases_FullMethodName        = "/harness.HarnessService/ImportDatasetCases"
+	HarnessService_RunExperiment_FullMethodName             = "/harness.HarnessService/RunExperiment"
+	HarnessService_GetExperiment_FullMethodName             = "/harness.HarnessService/GetExperiment"
+	HarnessService_ListExperiments_FullMethodName           = "/harness.HarnessService/ListExperiments"
+	HarnessService_GetExperimentResults_FullMethodName      = "/harness.HarnessService/GetExperimentResults"
+	HarnessService_CompareExperiments_FullMethodName        = "/harness.HarnessService/CompareExperiments"
+	HarnessService_RunPromptOptimization_FullMethodName     = "/harness.HarnessService/RunPromptOptimization"
+	HarnessService_AdoptPromptVersion_FullMethodName        = "/harness.HarnessService/AdoptPromptVersion"
 )
 
 // HarnessServiceClient is the client API for HarnessService service.
@@ -319,6 +334,23 @@ type HarnessServiceClient interface {
 	GetWorkflowExecution(ctx context.Context, in *GetWorkflowExecutionRequest, opts ...grpc.CallOption) (*WorkflowExecution, error)
 	ListWorkflowExecutions(ctx context.Context, in *ListWorkflowExecutionsRequest, opts ...grpc.CallOption) (*ListWorkflowExecutionsResponse, error)
 	CancelWorkflowExecution(ctx context.Context, in *CancelWorkflowExecutionRequest, opts ...grpc.CallOption) (*common.Empty, error)
+	// ==================== Evaluation Dataset & Experiment ====================
+	CreateDataset(ctx context.Context, in *CreateDatasetRequest, opts ...grpc.CallOption) (*EvalDatasetEntry, error)
+	GetDataset(ctx context.Context, in *GetDatasetRequest, opts ...grpc.CallOption) (*EvalDatasetEntry, error)
+	ListDatasets(ctx context.Context, in *ListDatasetsRequest, opts ...grpc.CallOption) (*ListDatasetsResponse, error)
+	DeleteDataset(ctx context.Context, in *GetDatasetRequest, opts ...grpc.CallOption) (*common.Empty, error)
+	AddDatasetCase(ctx context.Context, in *AddDatasetCaseRequest, opts ...grpc.CallOption) (*DatasetCaseEntry, error)
+	AddDatasetCases(ctx context.Context, in *AddDatasetCasesRequest, opts ...grpc.CallOption) (*common.Empty, error)
+	ListDatasetCases(ctx context.Context, in *ListDatasetCasesRequest, opts ...grpc.CallOption) (*ListDatasetCasesResponse, error)
+	ImportDatasetCases(ctx context.Context, in *ImportDatasetCasesRequest, opts ...grpc.CallOption) (*ImportDatasetCasesResponse, error)
+	RunExperiment(ctx context.Context, in *RunExperimentRequest, opts ...grpc.CallOption) (*ExperimentEntry, error)
+	GetExperiment(ctx context.Context, in *GetExperimentRequest, opts ...grpc.CallOption) (*ExperimentEntry, error)
+	ListExperiments(ctx context.Context, in *ListExperimentsRequest, opts ...grpc.CallOption) (*ListExperimentsResponse, error)
+	GetExperimentResults(ctx context.Context, in *GetExperimentResultsRequest, opts ...grpc.CallOption) (*GetExperimentResultsResponse, error)
+	CompareExperiments(ctx context.Context, in *CompareExperimentsRequest, opts ...grpc.CallOption) (*CompareExperimentsResponse, error)
+	// ==================== Prompt Optimizer ====================
+	RunPromptOptimization(ctx context.Context, in *RunPromptOptimizationRequest, opts ...grpc.CallOption) (*RunPromptOptimizationResponse, error)
+	AdoptPromptVersion(ctx context.Context, in *AdoptPromptVersionRequest, opts ...grpc.CallOption) (*common.Empty, error)
 }
 
 type harnessServiceClient struct {
@@ -1705,6 +1737,156 @@ func (c *harnessServiceClient) CancelWorkflowExecution(ctx context.Context, in *
 	return out, nil
 }
 
+func (c *harnessServiceClient) CreateDataset(ctx context.Context, in *CreateDatasetRequest, opts ...grpc.CallOption) (*EvalDatasetEntry, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EvalDatasetEntry)
+	err := c.cc.Invoke(ctx, HarnessService_CreateDataset_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) GetDataset(ctx context.Context, in *GetDatasetRequest, opts ...grpc.CallOption) (*EvalDatasetEntry, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(EvalDatasetEntry)
+	err := c.cc.Invoke(ctx, HarnessService_GetDataset_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) ListDatasets(ctx context.Context, in *ListDatasetsRequest, opts ...grpc.CallOption) (*ListDatasetsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListDatasetsResponse)
+	err := c.cc.Invoke(ctx, HarnessService_ListDatasets_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) DeleteDataset(ctx context.Context, in *GetDatasetRequest, opts ...grpc.CallOption) (*common.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(common.Empty)
+	err := c.cc.Invoke(ctx, HarnessService_DeleteDataset_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) AddDatasetCase(ctx context.Context, in *AddDatasetCaseRequest, opts ...grpc.CallOption) (*DatasetCaseEntry, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DatasetCaseEntry)
+	err := c.cc.Invoke(ctx, HarnessService_AddDatasetCase_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) AddDatasetCases(ctx context.Context, in *AddDatasetCasesRequest, opts ...grpc.CallOption) (*common.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(common.Empty)
+	err := c.cc.Invoke(ctx, HarnessService_AddDatasetCases_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) ListDatasetCases(ctx context.Context, in *ListDatasetCasesRequest, opts ...grpc.CallOption) (*ListDatasetCasesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListDatasetCasesResponse)
+	err := c.cc.Invoke(ctx, HarnessService_ListDatasetCases_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) ImportDatasetCases(ctx context.Context, in *ImportDatasetCasesRequest, opts ...grpc.CallOption) (*ImportDatasetCasesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ImportDatasetCasesResponse)
+	err := c.cc.Invoke(ctx, HarnessService_ImportDatasetCases_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) RunExperiment(ctx context.Context, in *RunExperimentRequest, opts ...grpc.CallOption) (*ExperimentEntry, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExperimentEntry)
+	err := c.cc.Invoke(ctx, HarnessService_RunExperiment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) GetExperiment(ctx context.Context, in *GetExperimentRequest, opts ...grpc.CallOption) (*ExperimentEntry, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExperimentEntry)
+	err := c.cc.Invoke(ctx, HarnessService_GetExperiment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) ListExperiments(ctx context.Context, in *ListExperimentsRequest, opts ...grpc.CallOption) (*ListExperimentsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListExperimentsResponse)
+	err := c.cc.Invoke(ctx, HarnessService_ListExperiments_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) GetExperimentResults(ctx context.Context, in *GetExperimentResultsRequest, opts ...grpc.CallOption) (*GetExperimentResultsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetExperimentResultsResponse)
+	err := c.cc.Invoke(ctx, HarnessService_GetExperimentResults_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) CompareExperiments(ctx context.Context, in *CompareExperimentsRequest, opts ...grpc.CallOption) (*CompareExperimentsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CompareExperimentsResponse)
+	err := c.cc.Invoke(ctx, HarnessService_CompareExperiments_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) RunPromptOptimization(ctx context.Context, in *RunPromptOptimizationRequest, opts ...grpc.CallOption) (*RunPromptOptimizationResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RunPromptOptimizationResponse)
+	err := c.cc.Invoke(ctx, HarnessService_RunPromptOptimization_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *harnessServiceClient) AdoptPromptVersion(ctx context.Context, in *AdoptPromptVersionRequest, opts ...grpc.CallOption) (*common.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(common.Empty)
+	err := c.cc.Invoke(ctx, HarnessService_AdoptPromptVersion_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HarnessServiceServer is the server API for HarnessService service.
 // All implementations must embed UnimplementedHarnessServiceServer
 // for forward compatibility.
@@ -1868,6 +2050,23 @@ type HarnessServiceServer interface {
 	GetWorkflowExecution(context.Context, *GetWorkflowExecutionRequest) (*WorkflowExecution, error)
 	ListWorkflowExecutions(context.Context, *ListWorkflowExecutionsRequest) (*ListWorkflowExecutionsResponse, error)
 	CancelWorkflowExecution(context.Context, *CancelWorkflowExecutionRequest) (*common.Empty, error)
+	// ==================== Evaluation Dataset & Experiment ====================
+	CreateDataset(context.Context, *CreateDatasetRequest) (*EvalDatasetEntry, error)
+	GetDataset(context.Context, *GetDatasetRequest) (*EvalDatasetEntry, error)
+	ListDatasets(context.Context, *ListDatasetsRequest) (*ListDatasetsResponse, error)
+	DeleteDataset(context.Context, *GetDatasetRequest) (*common.Empty, error)
+	AddDatasetCase(context.Context, *AddDatasetCaseRequest) (*DatasetCaseEntry, error)
+	AddDatasetCases(context.Context, *AddDatasetCasesRequest) (*common.Empty, error)
+	ListDatasetCases(context.Context, *ListDatasetCasesRequest) (*ListDatasetCasesResponse, error)
+	ImportDatasetCases(context.Context, *ImportDatasetCasesRequest) (*ImportDatasetCasesResponse, error)
+	RunExperiment(context.Context, *RunExperimentRequest) (*ExperimentEntry, error)
+	GetExperiment(context.Context, *GetExperimentRequest) (*ExperimentEntry, error)
+	ListExperiments(context.Context, *ListExperimentsRequest) (*ListExperimentsResponse, error)
+	GetExperimentResults(context.Context, *GetExperimentResultsRequest) (*GetExperimentResultsResponse, error)
+	CompareExperiments(context.Context, *CompareExperimentsRequest) (*CompareExperimentsResponse, error)
+	// ==================== Prompt Optimizer ====================
+	RunPromptOptimization(context.Context, *RunPromptOptimizationRequest) (*RunPromptOptimizationResponse, error)
+	AdoptPromptVersion(context.Context, *AdoptPromptVersionRequest) (*common.Empty, error)
 	mustEmbedUnimplementedHarnessServiceServer()
 }
 
@@ -2279,6 +2478,51 @@ func (UnimplementedHarnessServiceServer) ListWorkflowExecutions(context.Context,
 }
 func (UnimplementedHarnessServiceServer) CancelWorkflowExecution(context.Context, *CancelWorkflowExecutionRequest) (*common.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelWorkflowExecution not implemented")
+}
+func (UnimplementedHarnessServiceServer) CreateDataset(context.Context, *CreateDatasetRequest) (*EvalDatasetEntry, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateDataset not implemented")
+}
+func (UnimplementedHarnessServiceServer) GetDataset(context.Context, *GetDatasetRequest) (*EvalDatasetEntry, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetDataset not implemented")
+}
+func (UnimplementedHarnessServiceServer) ListDatasets(context.Context, *ListDatasetsRequest) (*ListDatasetsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDatasets not implemented")
+}
+func (UnimplementedHarnessServiceServer) DeleteDataset(context.Context, *GetDatasetRequest) (*common.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteDataset not implemented")
+}
+func (UnimplementedHarnessServiceServer) AddDatasetCase(context.Context, *AddDatasetCaseRequest) (*DatasetCaseEntry, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddDatasetCase not implemented")
+}
+func (UnimplementedHarnessServiceServer) AddDatasetCases(context.Context, *AddDatasetCasesRequest) (*common.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddDatasetCases not implemented")
+}
+func (UnimplementedHarnessServiceServer) ListDatasetCases(context.Context, *ListDatasetCasesRequest) (*ListDatasetCasesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDatasetCases not implemented")
+}
+func (UnimplementedHarnessServiceServer) ImportDatasetCases(context.Context, *ImportDatasetCasesRequest) (*ImportDatasetCasesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ImportDatasetCases not implemented")
+}
+func (UnimplementedHarnessServiceServer) RunExperiment(context.Context, *RunExperimentRequest) (*ExperimentEntry, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RunExperiment not implemented")
+}
+func (UnimplementedHarnessServiceServer) GetExperiment(context.Context, *GetExperimentRequest) (*ExperimentEntry, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetExperiment not implemented")
+}
+func (UnimplementedHarnessServiceServer) ListExperiments(context.Context, *ListExperimentsRequest) (*ListExperimentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListExperiments not implemented")
+}
+func (UnimplementedHarnessServiceServer) GetExperimentResults(context.Context, *GetExperimentResultsRequest) (*GetExperimentResultsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetExperimentResults not implemented")
+}
+func (UnimplementedHarnessServiceServer) CompareExperiments(context.Context, *CompareExperimentsRequest) (*CompareExperimentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CompareExperiments not implemented")
+}
+func (UnimplementedHarnessServiceServer) RunPromptOptimization(context.Context, *RunPromptOptimizationRequest) (*RunPromptOptimizationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RunPromptOptimization not implemented")
+}
+func (UnimplementedHarnessServiceServer) AdoptPromptVersion(context.Context, *AdoptPromptVersionRequest) (*common.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AdoptPromptVersion not implemented")
 }
 func (UnimplementedHarnessServiceServer) mustEmbedUnimplementedHarnessServiceServer() {}
 func (UnimplementedHarnessServiceServer) testEmbeddedByValue()                        {}
@@ -4685,6 +4929,276 @@ func _HarnessService_CancelWorkflowExecution_Handler(srv interface{}, ctx contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HarnessService_CreateDataset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDatasetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).CreateDataset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_CreateDataset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).CreateDataset(ctx, req.(*CreateDatasetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_GetDataset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDatasetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).GetDataset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_GetDataset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).GetDataset(ctx, req.(*GetDatasetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_ListDatasets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDatasetsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).ListDatasets(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_ListDatasets_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).ListDatasets(ctx, req.(*ListDatasetsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_DeleteDataset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetDatasetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).DeleteDataset(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_DeleteDataset_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).DeleteDataset(ctx, req.(*GetDatasetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_AddDatasetCase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddDatasetCaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).AddDatasetCase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_AddDatasetCase_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).AddDatasetCase(ctx, req.(*AddDatasetCaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_AddDatasetCases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddDatasetCasesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).AddDatasetCases(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_AddDatasetCases_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).AddDatasetCases(ctx, req.(*AddDatasetCasesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_ListDatasetCases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDatasetCasesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).ListDatasetCases(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_ListDatasetCases_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).ListDatasetCases(ctx, req.(*ListDatasetCasesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_ImportDatasetCases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ImportDatasetCasesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).ImportDatasetCases(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_ImportDatasetCases_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).ImportDatasetCases(ctx, req.(*ImportDatasetCasesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_RunExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RunExperimentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).RunExperiment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_RunExperiment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).RunExperiment(ctx, req.(*RunExperimentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_GetExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetExperimentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).GetExperiment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_GetExperiment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).GetExperiment(ctx, req.(*GetExperimentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_ListExperiments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListExperimentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).ListExperiments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_ListExperiments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).ListExperiments(ctx, req.(*ListExperimentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_GetExperimentResults_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetExperimentResultsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).GetExperimentResults(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_GetExperimentResults_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).GetExperimentResults(ctx, req.(*GetExperimentResultsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_CompareExperiments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CompareExperimentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).CompareExperiments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_CompareExperiments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).CompareExperiments(ctx, req.(*CompareExperimentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_RunPromptOptimization_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RunPromptOptimizationRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).RunPromptOptimization(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_RunPromptOptimization_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).RunPromptOptimization(ctx, req.(*RunPromptOptimizationRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HarnessService_AdoptPromptVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AdoptPromptVersionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HarnessServiceServer).AdoptPromptVersion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HarnessService_AdoptPromptVersion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HarnessServiceServer).AdoptPromptVersion(ctx, req.(*AdoptPromptVersionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HarnessService_ServiceDesc is the grpc.ServiceDesc for HarnessService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -5211,6 +5725,66 @@ var HarnessService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CancelWorkflowExecution",
 			Handler:    _HarnessService_CancelWorkflowExecution_Handler,
+		},
+		{
+			MethodName: "CreateDataset",
+			Handler:    _HarnessService_CreateDataset_Handler,
+		},
+		{
+			MethodName: "GetDataset",
+			Handler:    _HarnessService_GetDataset_Handler,
+		},
+		{
+			MethodName: "ListDatasets",
+			Handler:    _HarnessService_ListDatasets_Handler,
+		},
+		{
+			MethodName: "DeleteDataset",
+			Handler:    _HarnessService_DeleteDataset_Handler,
+		},
+		{
+			MethodName: "AddDatasetCase",
+			Handler:    _HarnessService_AddDatasetCase_Handler,
+		},
+		{
+			MethodName: "AddDatasetCases",
+			Handler:    _HarnessService_AddDatasetCases_Handler,
+		},
+		{
+			MethodName: "ListDatasetCases",
+			Handler:    _HarnessService_ListDatasetCases_Handler,
+		},
+		{
+			MethodName: "ImportDatasetCases",
+			Handler:    _HarnessService_ImportDatasetCases_Handler,
+		},
+		{
+			MethodName: "RunExperiment",
+			Handler:    _HarnessService_RunExperiment_Handler,
+		},
+		{
+			MethodName: "GetExperiment",
+			Handler:    _HarnessService_GetExperiment_Handler,
+		},
+		{
+			MethodName: "ListExperiments",
+			Handler:    _HarnessService_ListExperiments_Handler,
+		},
+		{
+			MethodName: "GetExperimentResults",
+			Handler:    _HarnessService_GetExperimentResults_Handler,
+		},
+		{
+			MethodName: "CompareExperiments",
+			Handler:    _HarnessService_CompareExperiments_Handler,
+		},
+		{
+			MethodName: "RunPromptOptimization",
+			Handler:    _HarnessService_RunPromptOptimization_Handler,
+		},
+		{
+			MethodName: "AdoptPromptVersion",
+			Handler:    _HarnessService_AdoptPromptVersion_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

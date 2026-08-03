@@ -1824,6 +1824,233 @@ message ValidateWorkflowResponse {
     repeated string errors = 2;
 }
 
+// ==================== Evaluation Dataset & Experiment ====================
+
+// EvalDatasetEntry is a persistent test set used as ground truth for prompt evaluation.
+message EvalDatasetEntry {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string tenant_id = 4;
+    int32 case_count = 5;
+    int64 created_at = 6;
+    int64 updated_at = 7;
+}
+
+// DatasetCaseEntry is a single test case within a dataset.
+message DatasetCaseEntry {
+    string id = 1;
+    string dataset_id = 2;
+    string input = 3;          // User input / question
+    string expected = 4;       // Expected output (for automatic scoring)
+    string context = 5;        // Optional RAG context
+    string tags = 6;           // JSON array, e.g. ["jailbreak","normal"]
+    int64 created_at = 7;
+}
+
+// CreateDatasetRequest
+message CreateDatasetRequest {
+    string name = 1;
+    string description = 2;
+    string tenant_id = 3;
+}
+
+// GetDatasetRequest
+message GetDatasetRequest {
+    string id = 1;
+}
+
+// ListDatasetsRequest
+message ListDatasetsRequest {
+    string tenant_id = 1;
+}
+
+// ListDatasetsResponse
+message ListDatasetsResponse {
+    repeated EvalDatasetEntry datasets = 1;
+}
+
+// AddDatasetCaseRequest
+message AddDatasetCaseRequest {
+    string dataset_id = 1;
+    string input = 2;
+    string expected = 3;
+    string context = 4;
+    string tags = 5;          // JSON array
+}
+
+// AddDatasetCasesRequest (batch)
+message AddDatasetCasesRequest {
+    string dataset_id = 1;
+    repeated DatasetCaseEntry cases = 2;
+}
+
+// ListDatasetCasesRequest
+message ListDatasetCasesRequest {
+    string dataset_id = 1;
+}
+
+// ListDatasetCasesResponse
+message ListDatasetCasesResponse {
+    repeated DatasetCaseEntry cases = 1;
+}
+
+// ImportDatasetCasesRequest — import cases from JSON or CSV content
+message ImportDatasetCasesRequest {
+    string dataset_id = 1;
+    string format = 2;          // "json" or "csv"
+    string content = 3;         // raw JSON array or CSV text
+}
+
+// ImportDatasetCasesResponse
+message ImportDatasetCasesResponse {
+    int32 imported = 1;
+}
+
+// ExperimentEntry is a single run of "configuration × dataset".
+message ExperimentEntry {
+    string id = 1;
+    string name = 2;
+    string dataset_id = 3;
+    string config_type = 4;     // "prompt_version" / "model" / "manual"
+    string config_ref = 5;      // prompt version ID / model name / config JSON
+    string model = 6;
+    string status = 7;          // "running" / "completed" / "failed"
+    double avg_score = 8;
+    int32 case_count = 9;
+    int64 created_at = 10;
+    int64 completed_at = 11;
+}
+
+// ExperimentResultEntry is the result of running a single case through the LLM.
+message ExperimentResultEntry {
+    string id = 1;
+    string experiment_id = 2;
+    string case_id = 3;
+    string output = 4;          // LLM actual output
+    double score = 5;           // 0-1 overall score
+    bool passed = 6;
+    int64 latency_ms = 7;
+    int64 tokens = 8;
+    string scores = 9;          // JSON: multi-dimension scores
+    string error = 10;
+}
+
+// CreateExperimentRequest
+message CreateExperimentRequest {
+    string name = 1;
+    string dataset_id = 2;
+    string config_type = 3;     // "prompt_version" / "model" / "manual"
+    string config_ref = 4;      // prompt version ID
+    string model = 5;
+    string prompt_content = 6;  // rendered prompt content to test
+    string variables = 7;       // JSON: variables for rendering
+    string tenant_id = 8;
+}
+
+// RunExperimentRequest — create + run an experiment in one call
+message RunExperimentRequest {
+    string name = 1;
+    string dataset_id = 2;
+    string config_type = 3;
+    string config_ref = 4;
+    string model = 5;
+    string prompt_content = 6;
+    string variables = 7;       // JSON
+    string tenant_id = 8;
+}
+
+// GetExperimentRequest
+message GetExperimentRequest {
+    string id = 1;
+}
+
+// ListExperimentsRequest
+message ListExperimentsRequest {
+    string dataset_id = 1;
+}
+
+// ListExperimentsResponse
+message ListExperimentsResponse {
+    repeated ExperimentEntry experiments = 1;
+}
+
+// GetExperimentResultsRequest
+message GetExperimentResultsRequest {
+    string experiment_id = 1;
+}
+
+// GetExperimentResultsResponse
+message GetExperimentResultsResponse {
+    repeated ExperimentResultEntry results = 1;
+}
+
+// CompareExperimentsRequest
+message CompareExperimentsRequest {
+    repeated string experiment_ids = 1;
+}
+
+// ExperimentSummaryEntry
+message ExperimentSummaryEntry {
+    string id = 1;
+    string name = 2;
+    string config_type = 3;
+    string config_ref = 4;
+    double avg_score = 5;
+    int32 case_count = 6;
+    int32 passed_count = 7;
+    int32 failed_count = 8;
+    string status = 9;
+}
+
+// CompareExperimentsResponse
+message CompareExperimentsResponse {
+    repeated ExperimentSummaryEntry experiments = 1;
+    string best_experiment_id = 2;
+}
+
+// ==================== Prompt Optimizer ====================
+
+// RunPromptOptimizationRequest
+message RunPromptOptimizationRequest {
+    string prompt_key = 1;
+    string dataset_id = 2;
+    string metric = 3;          // "overall" / "faithfulness" / "relevancy"
+    string strategy = 4;        // "textgrad" / "gepa"
+    string model = 5;           // LLM model for optimization
+    int32 max_rounds = 6;       // default 5
+    int32 no_improve_limit = 7; // default 2
+    double score_threshold = 8; // default 0.8
+    int32 candidates_per_round = 9; // default 2
+    int32 population_size = 10;     // GEPA: default 4
+    string variables = 11;      // JSON: variables for rendering
+}
+
+// OptimizeRoundEntry records one round of optimization.
+message OptimizeRoundEntry {
+    int32 round = 1;
+    string prompt_text = 2;
+    double score = 3;
+    bool improved = 4;
+    string suggestion = 5;
+    string version_id = 6;
+}
+
+// RunPromptOptimizationResponse
+message RunPromptOptimizationResponse {
+    string best_version_id = 1;
+    double best_score = 2;
+    double original_score = 3;
+    int32 rounds = 4;
+    string strategy = 5;
+    repeated OptimizeRoundEntry history = 6;
+}
+
+// AdoptPromptVersionRequest
+message AdoptPromptVersionRequest {
+    string version_id = 1;
+}
+
 // Harness 服务定义
 service HarnessService {
     // 规则管理
@@ -2005,4 +2232,24 @@ service HarnessService {
     rpc GetWorkflowExecution(GetWorkflowExecutionRequest) returns (WorkflowExecution);
     rpc ListWorkflowExecutions(ListWorkflowExecutionsRequest) returns (ListWorkflowExecutionsResponse);
     rpc CancelWorkflowExecution(CancelWorkflowExecutionRequest) returns (common.Empty);
+
+    // ==================== Evaluation Dataset & Experiment ====================
+    rpc CreateDataset(CreateDatasetRequest) returns (EvalDatasetEntry);
+    rpc GetDataset(GetDatasetRequest) returns (EvalDatasetEntry);
+    rpc ListDatasets(ListDatasetsRequest) returns (ListDatasetsResponse);
+    rpc DeleteDataset(GetDatasetRequest) returns (common.Empty);
+    rpc AddDatasetCase(AddDatasetCaseRequest) returns (DatasetCaseEntry);
+    rpc AddDatasetCases(AddDatasetCasesRequest) returns (common.Empty);
+    rpc ListDatasetCases(ListDatasetCasesRequest) returns (ListDatasetCasesResponse);
+    rpc ImportDatasetCases(ImportDatasetCasesRequest) returns (ImportDatasetCasesResponse);
+
+    rpc RunExperiment(RunExperimentRequest) returns (ExperimentEntry);
+    rpc GetExperiment(GetExperimentRequest) returns (ExperimentEntry);
+    rpc ListExperiments(ListExperimentsRequest) returns (ListExperimentsResponse);
+    rpc GetExperimentResults(GetExperimentResultsRequest) returns (GetExperimentResultsResponse);
+    rpc CompareExperiments(CompareExperimentsRequest) returns (CompareExperimentsResponse);
+
+    // ==================== Prompt Optimizer ====================
+    rpc RunPromptOptimization(RunPromptOptimizationRequest) returns (RunPromptOptimizationResponse);
+    rpc AdoptPromptVersion(AdoptPromptVersionRequest) returns (common.Empty);
 }

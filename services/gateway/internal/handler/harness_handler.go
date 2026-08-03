@@ -21,9 +21,9 @@ import (
 
 // RealHarnessHandler handles Harness requests with real gRPC calls
 type RealHarnessHandler struct {
-	cfg                *config.Config
-	client             pb.HarnessServiceClient
-	conn               *grpc.ClientConn
+	cfg                 *config.Config
+	client              pb.HarnessServiceClient
+	conn                *grpc.ClientConn
 	interventionManager *intervention.InterventionManager
 }
 
@@ -35,17 +35,17 @@ func NewRealHarnessHandler(cfg *config.Config) *RealHarnessHandler {
 	if err != nil {
 		// Return stub handler if connection fails
 		return &RealHarnessHandler{
-			cfg:                cfg,
-			client:             nil,
-			conn:               nil,
+			cfg:                 cfg,
+			client:              nil,
+			conn:                nil,
 			interventionManager: intervention.NewInterventionManager(),
 		}
 	}
 
 	return &RealHarnessHandler{
-		cfg:                cfg,
-		client:             pb.NewHarnessServiceClient(conn),
-		conn:               conn,
+		cfg:                 cfg,
+		client:              pb.NewHarnessServiceClient(conn),
+		conn:                conn,
 		interventionManager: intervention.NewInterventionManager(),
 	}
 }
@@ -957,7 +957,7 @@ func (h *RealHarnessHandler) AnalyzeAndPropose(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": 0,
 		"data": gin.H{
-			"proposals":       resp.Proposals,
+			"proposals":        resp.Proposals,
 			"analysis_summary": resp.AnalysisSummary,
 		},
 	})
@@ -1589,13 +1589,13 @@ func (h *RealHarnessHandler) GetSessionStats(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": 0,
 		"data": gin.H{
-			"total_sessions":    totalSessions,
-			"running_sessions":  runningSessions,
+			"total_sessions":     totalSessions,
+			"running_sessions":   runningSessions,
 			"completed_sessions": completedSessions,
-			"failed_sessions":   failedSessions,
-			"total_tokens":      totalTokens,
-			"total_cost":        totalCost,
-			"avg_duration":      avgDuration,
+			"failed_sessions":    failedSessions,
+			"total_tokens":       totalTokens,
+			"total_cost":         totalCost,
+			"avg_duration":       avgDuration,
 		},
 	})
 }
@@ -2469,15 +2469,15 @@ func (h *RealHarnessHandler) CreateWorkflow(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": 0,
 		"data": gin.H{
-			"id":             resp.Id,
-			"name":           resp.Name,
-			"description":    resp.Description,
-			"nodes":          resp.Nodes,
-			"edges":          resp.Edges,
-			"entry_node_id":  resp.EntryNodeId,
-			"tenant_id":      resp.TenantId,
-			"created_at":     resp.CreatedAt,
-			"updated_at":     resp.UpdatedAt,
+			"id":            resp.Id,
+			"name":          resp.Name,
+			"description":   resp.Description,
+			"nodes":         resp.Nodes,
+			"edges":         resp.Edges,
+			"entry_node_id": resp.EntryNodeId,
+			"tenant_id":     resp.TenantId,
+			"created_at":    resp.CreatedAt,
+			"updated_at":    resp.UpdatedAt,
 		},
 	})
 }
@@ -2588,8 +2588,8 @@ func (h *RealHarnessHandler) ExecuteWorkflow(c *gin.Context) {
 
 	id := c.Param("id")
 	var req struct {
-		Input           string `json:"input"`
-		TimeoutSeconds  int32  `json:"timeout_seconds"`
+		Input          string `json:"input"`
+		TimeoutSeconds int32  `json:"timeout_seconds"`
 	}
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, gin.H{"code": -1, "message": err.Error()})
@@ -2712,7 +2712,6 @@ func (h *RealHarnessHandler) ExecuteWorkflowStream(c *gin.Context) {
 	c.Writer.Flush()
 }
 
-
 // UpdateWorkflow updates an existing workflow
 func (h *RealHarnessHandler) UpdateWorkflow(c *gin.Context) {
 	if h.client == nil {
@@ -2796,7 +2795,7 @@ func (h *RealHarnessHandler) ValidateWorkflow(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"code": 0,
 		"data": gin.H{
-			"valid": resp.Valid,
+			"valid":  resp.Valid,
 			"errors": resp.Errors,
 		},
 	})
@@ -2880,36 +2879,306 @@ func executionToJSON(exec *pb.WorkflowExecution) gin.H {
 	nodeResults := make([]gin.H, 0, len(exec.NodeResults))
 	for _, nr := range exec.NodeResults {
 		nodeResults = append(nodeResults, gin.H{
-			"node_id":  nr.NodeId,
-			"output":   nr.Output,
-			"error":    nr.Error,
+			"node_id":   nr.NodeId,
+			"output":    nr.Output,
+			"error":     nr.Error,
 			"node_type": nr.NodeType,
 		})
 	}
 
 	return gin.H{
-		"id":            exec.Id,
-		"workflow_id":   exec.WorkflowId,
-		"status":        exec.Status,
-		"input":         exec.Input,
-		"final_output":  exec.FinalOutput,
-		"error":         exec.Error,
-		"node_results":  nodeResults,
-		"started_at":    exec.StartedAt,
-		"completed_at":  exec.CompletedAt,
-		"duration_ms":   exec.DurationMs,
+		"id":           exec.Id,
+		"workflow_id":  exec.WorkflowId,
+		"status":       exec.Status,
+		"input":        exec.Input,
+		"final_output": exec.FinalOutput,
+		"error":        exec.Error,
+		"node_results": nodeResults,
+		"started_at":   exec.StartedAt,
+		"completed_at": exec.CompletedAt,
+		"duration_ms":  exec.DurationMs,
 	}
 }
 
-
 // ==================== Intervention Handlers ====================
+
+// ==================== Evaluation Dataset & Experiment Handlers ====================
+
+// CreateDataset creates an evaluation dataset
+func (h *RealHarnessHandler) CreateDataset(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	var req pb.CreateDatasetRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	resp, err := h.client.CreateDataset(ctx, &req)
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": resp})
+}
+
+// ListDatasets lists evaluation datasets
+func (h *RealHarnessHandler) ListDatasets(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	resp, err := h.client.ListDatasets(ctx, &pb.ListDatasetsRequest{
+		TenantId: c.GetHeader("X-Tenant-ID"),
+	})
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": gin.H{"datasets": resp.Datasets}})
+}
+
+// GetDataset gets a dataset by ID
+func (h *RealHarnessHandler) GetDataset(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	resp, err := h.client.GetDataset(ctx, &pb.GetDatasetRequest{Id: c.Param("id")})
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": resp})
+}
+
+// DeleteDataset deletes a dataset
+func (h *RealHarnessHandler) DeleteDataset(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	_, err := h.client.DeleteDataset(ctx, &pb.GetDatasetRequest{Id: c.Param("id")})
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": gin.H{"deleted": true}})
+}
+
+// AddDatasetCase adds a test case to a dataset
+func (h *RealHarnessHandler) AddDatasetCase(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	var req pb.AddDatasetCaseRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	req.DatasetId = c.Param("id")
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	resp, err := h.client.AddDatasetCase(ctx, &req)
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": resp})
+}
+
+// ListDatasetCases lists cases in a dataset
+func (h *RealHarnessHandler) ListDatasetCases(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	resp, err := h.client.ListDatasetCases(ctx, &pb.ListDatasetCasesRequest{DatasetId: c.Param("id")})
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": gin.H{"cases": resp.Cases}})
+}
+
+// ImportDatasetCases imports cases from JSON or CSV
+func (h *RealHarnessHandler) ImportDatasetCases(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	var req pb.ImportDatasetCasesRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	req.DatasetId = c.Param("id")
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	resp, err := h.client.ImportDatasetCases(ctx, &req)
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": gin.H{"imported": resp.Imported}})
+}
+
+// RunExperiment creates and runs an experiment
+func (h *RealHarnessHandler) RunExperiment(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	var req pb.RunExperimentRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
+	defer cancel()
+	resp, err := h.client.RunExperiment(ctx, &req)
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": resp})
+}
+
+// ListExperiments lists experiments
+func (h *RealHarnessHandler) ListExperiments(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	resp, err := h.client.ListExperiments(ctx, &pb.ListExperimentsRequest{
+		DatasetId: c.Query("dataset_id"),
+	})
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": gin.H{"experiments": resp.Experiments}})
+}
+
+// GetExperiment gets an experiment by ID
+func (h *RealHarnessHandler) GetExperiment(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	resp, err := h.client.GetExperiment(ctx, &pb.GetExperimentRequest{Id: c.Param("id")})
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": resp})
+}
+
+// GetExperimentResults gets results for an experiment
+func (h *RealHarnessHandler) GetExperimentResults(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	resp, err := h.client.GetExperimentResults(ctx, &pb.GetExperimentResultsRequest{
+		ExperimentId: c.Param("id"),
+	})
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": gin.H{"results": resp.Results}})
+}
+
+// CompareExperiments compares multiple experiments
+func (h *RealHarnessHandler) CompareExperiments(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	var req pb.CompareExperimentsRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	resp, err := h.client.CompareExperiments(ctx, &req)
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": resp})
+}
+
+// RunPromptOptimization runs prompt optimization
+func (h *RealHarnessHandler) RunPromptOptimization(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	var req pb.RunPromptOptimizationRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 300*time.Second)
+	defer cancel()
+	resp, err := h.client.RunPromptOptimization(ctx, &req)
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": resp})
+}
+
+// AdoptPromptVersion adopts the best optimized prompt version
+func (h *RealHarnessHandler) AdoptPromptVersion(c *gin.Context) {
+	if h.client == nil {
+		c.JSON(200, gin.H{"code": -1, "message": "harness service not available"})
+		return
+	}
+	var req pb.AdoptPromptVersionRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	_, err := h.client.AdoptPromptVersion(ctx, &req)
+	if err != nil {
+		c.JSON(500, gin.H{"code": -1, "message": err.Error()})
+		return
+	}
+	c.JSON(200, gin.H{"code": 0, "data": gin.H{"activated": true}})
+}
+
+// ==================== Intervention Handlers (original) ====================
 
 // InterveneSession handles pause/stop/modify/inject interventions on a session
 func (h *RealHarnessHandler) InterveneSession(c *gin.Context) {
 	sessionID := c.Param("sessionId")
 
 	var req struct {
-		Type       string                 `json:"type"`                 // pause, stop, modify, inject
+		Type       string                 `json:"type"` // pause, stop, modify, inject
 		Reason     string                 `json:"reason,omitempty"`
 		UserID     string                 `json:"user_id,omitempty"`
 		Parameters map[string]interface{} `json:"parameters,omitempty"` // For modify

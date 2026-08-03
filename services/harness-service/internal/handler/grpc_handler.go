@@ -501,3 +501,67 @@ func (h *HarnessHandler) ListWorkflowExecutions(ctx context.Context, req *pb.Lis
 func (h *HarnessHandler) CancelWorkflowExecution(ctx context.Context, req *pb.CancelWorkflowExecutionRequest) (*commonpb.Empty, error) {
 	return h.service.CancelWorkflowExecution(ctx, req)
 }
+
+// ==================== Evaluation Dataset & Experiment Methods ====================
+
+func (h *HarnessHandler) CreateDataset(ctx context.Context, req *pb.CreateDatasetRequest) (*pb.EvalDatasetEntry, error) {
+	return h.service.CreateDataset(ctx, req)
+}
+
+func (h *HarnessHandler) GetDataset(ctx context.Context, req *pb.GetDatasetRequest) (*pb.EvalDatasetEntry, error) {
+	return h.service.GetDataset(ctx, req)
+}
+
+func (h *HarnessHandler) ListDatasets(ctx context.Context, req *pb.ListDatasetsRequest) (*pb.ListDatasetsResponse, error) {
+	return h.service.ListDatasets(ctx, req)
+}
+
+func (h *HarnessHandler) DeleteDataset(ctx context.Context, req *pb.GetDatasetRequest) (*commonpb.Empty, error) {
+	return h.service.DeleteDataset(ctx, req)
+}
+
+func (h *HarnessHandler) AddDatasetCase(ctx context.Context, req *pb.AddDatasetCaseRequest) (*pb.DatasetCaseEntry, error) {
+	return h.service.AddDatasetCase(ctx, req)
+}
+
+func (h *HarnessHandler) AddDatasetCases(ctx context.Context, req *pb.AddDatasetCasesRequest) (*commonpb.Empty, error) {
+	return h.service.AddDatasetCases(ctx, req)
+}
+
+func (h *HarnessHandler) ListDatasetCases(ctx context.Context, req *pb.ListDatasetCasesRequest) (*pb.ListDatasetCasesResponse, error) {
+	return h.service.ListDatasetCases(ctx, req)
+}
+
+func (h *HarnessHandler) ImportDatasetCases(ctx context.Context, req *pb.ImportDatasetCasesRequest) (*pb.ImportDatasetCasesResponse, error) {
+	return h.service.ImportDatasetCases(ctx, req)
+}
+
+func (h *HarnessHandler) RunExperiment(ctx context.Context, req *pb.RunExperimentRequest) (*pb.ExperimentEntry, error) {
+	return h.service.RunExperiment(ctx, req)
+}
+
+func (h *HarnessHandler) GetExperiment(ctx context.Context, req *pb.GetExperimentRequest) (*pb.ExperimentEntry, error) {
+	return h.service.GetExperiment(ctx, req)
+}
+
+func (h *HarnessHandler) ListExperiments(ctx context.Context, req *pb.ListExperimentsRequest) (*pb.ListExperimentsResponse, error) {
+	return h.service.ListExperiments(ctx, req)
+}
+
+func (h *HarnessHandler) GetExperimentResults(ctx context.Context, req *pb.GetExperimentResultsRequest) (*pb.GetExperimentResultsResponse, error) {
+	return h.service.GetExperimentResults(ctx, req)
+}
+
+func (h *HarnessHandler) CompareExperiments(ctx context.Context, req *pb.CompareExperimentsRequest) (*pb.CompareExperimentsResponse, error) {
+	return h.service.CompareExperiments(ctx, req)
+}
+
+// ==================== Prompt Optimizer Methods ====================
+
+func (h *HarnessHandler) RunPromptOptimization(ctx context.Context, req *pb.RunPromptOptimizationRequest) (*pb.RunPromptOptimizationResponse, error) {
+	return h.service.RunPromptOptimization(ctx, req)
+}
+
+func (h *HarnessHandler) AdoptPromptVersion(ctx context.Context, req *pb.AdoptPromptVersionRequest) (*commonpb.Empty, error) {
+	return h.service.AdoptPromptVersion(ctx, req)
+}

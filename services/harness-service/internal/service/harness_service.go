@@ -22,6 +22,7 @@ import (
 	"agent-platform/services/harness-service/internal/featureflag"
 	"agent-platform/services/harness-service/internal/gateway"
 	"agent-platform/services/harness-service/internal/goldenpath"
+	"agent-platform/services/harness-service/internal/optimizer"
 	"agent-platform/services/harness-service/internal/planner"
 	"agent-platform/services/harness-service/internal/playground"
 	"agent-platform/services/harness-service/internal/prompt"
@@ -67,6 +68,12 @@ type HarnessService struct {
 	agentClient     agentpb.AgentServiceClient
 	workflowRepo    *repository.WorkflowRepository
 	workflowEngine  *wfengine.Engine
+	// Stage 0: Evaluation dataset + experiment
+	datasetEngine    *evaluate.DatasetEngine
+	experimentEngine *evaluate.ExperimentEngine
+	evalHook         *optimizer.EvalHook
+	// Stage 2: Prompt optimizer
+	optimizeService *optimizer.OptimizeService
 	mu              sync.RWMutex
 }
 
@@ -113,6 +120,27 @@ func NewHarnessService(llmClient llm.Client, repo *repository.HarnessRepository,
 	if err := svc.prompt.AutoMigrate(); err != nil {
 		fmt.Printf("Warning: failed to migrate prompt tables: %v\n", err)
 	}
+
+	// Wire Playground with prompt renderer (stage 1)
+	svc.playground.SetPromptRenderer(svc.prompt)
+
+	// Initialize evaluation dataset + experiment engines (stage 0)
+	svc.datasetEngine = evaluate.NewDatasetEngine(repo.GetDB())
+	if err := svc.datasetEngine.AutoMigrate(); err != nil {
+		fmt.Printf("Warning: failed to migrate dataset tables: %v\n", err)
+	}
+	datasetScorer := evaluate.NewScorerWithLLM(svc.llmClient, "")
+	svc.experimentEngine = evaluate.NewExperimentEngine(repo.GetDB(), svc.datasetEngine, datasetScorer, svc.llmClient)
+	if err := svc.experimentEngine.AutoMigrate(); err != nil {
+		fmt.Printf("Warning: failed to migrate experiment tables: %v\n", err)
+	}
+
+	// Wire EvalHook: prompt version activation triggers auto-evaluation (stage 0)
+	svc.evalHook = optimizer.NewEvalHook(svc.experimentEngine, svc.prompt)
+	svc.prompt.AddActivateHook(svc.evalHook)
+
+	// Initialize optimizer service (stage 2)
+	svc.optimizeService = optimizer.NewOptimizeService(svc.prompt, svc.experimentEngine, svc.datasetEngine, svc.llmClient)
 
 	// Initialize Gateway engine
 	gatewayRepo := gateway.NewRepository(repo.GetDB())
@@ -1189,7 +1217,6 @@ func (s *HarnessService) ExecuteWorkflowStream(req *pb.ExecuteWorkflowRequest, s
 	}
 	return s.workflowEngine.ExecuteStream(stream.Context(), req.Id, req.Input, req.TenantId, int64(req.TimeoutSeconds), stream)
 }
-
 
 // ChatStream handles streaming harness chat
 func (s *HarnessService) ChatStream(req *pb.HarnessChatRequest, stream pb.HarnessService_ChatStreamServer) error {

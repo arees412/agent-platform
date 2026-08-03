@@ -62,3 +62,8 @@ services/harness-service/config.yaml
 .env
 .env.local
 *.local
+
+# =========================================
+# 内部文档（规划、研究，不提交到仓库）
+# =========================================
+docs/internal/

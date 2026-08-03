@@ -20,11 +20,18 @@ RUN CGO_ENABLED=0 go build -o mcp-service ./services/mcp-service/cmd
 FROM alpine:latest
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates nodejs npm
+
+# Use China npm mirror so npx downloads MCP server packages faster.
+# Most community MCP servers are npm packages launched via `npx -y <pkg>`.
+RUN npm config set registry https://registry.npmmirror.com
 
 WORKDIR /app
 COPY --from=builder /build/mcp-service .
 COPY services/mcp-service/config.yaml .
+
+# Persistent npx cache + a working data dir MCP servers can write to.
+RUN mkdir -p /app/.npm /app/data && ln -sf /app/.npm /root/.npm
 
 EXPOSE 50005
 

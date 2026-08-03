@@ -55,4 +55,38 @@ export const harnessApi = {
   listPendingApprovals: () => client.get('/api/v2/harness/approval/pending'),
   approveRequest: (id: string) => client.post('/api/v2/harness/approval/approve', { request_id: id }),
   rejectRequest: (id: string, reason: string) => client.post('/api/v2/harness/approval/reject', { request_id: id, reason }),
+
+  // Evaluation Dataset
+  createDataset: (data: { name: string; description?: string }) =>
+    client.post('/api/v2/harness/dataset', data),
+  listDatasets: () =>
+    client.get('/api/v2/harness/dataset/list'),
+  getDataset: (id: string) =>
+    client.get(`/api/v2/harness/dataset/${id}`),
+  deleteDataset: (id: string) =>
+    client.delete(`/api/v2/harness/dataset/${id}`),
+  addDatasetCase: (datasetId: string, data: { input: string; expected: string; context?: string; tags?: string[] }) =>
+    client.post(`/api/v2/harness/dataset/${datasetId}/cases`, data),
+  listDatasetCases: (datasetId: string) =>
+    client.get(`/api/v2/harness/dataset/${datasetId}/cases`),
+  importDatasetCases: (datasetId: string, data: { format: string; content: string }) =>
+    client.post(`/api/v2/harness/dataset/${datasetId}/import`, data),
+
+  // Experiment
+  runExperiment: (data: { name: string; dataset_id: string; config_type: string; config_ref: string; model?: string; prompt_content?: string; variables?: string }) =>
+    client.post('/api/v2/harness/experiment/run', data),
+  listExperiments: (datasetId?: string) =>
+    client.get('/api/v2/harness/experiment/list', { params: datasetId ? { dataset_id: datasetId } : {} }),
+  getExperiment: (id: string) =>
+    client.get(`/api/v2/harness/experiment/${id}`),
+  getExperimentResults: (id: string) =>
+    client.get(`/api/v2/harness/experiment/${id}/results`),
+  compareExperiments: (experimentIds: string[]) =>
+    client.post('/api/v2/harness/experiment/compare', { experiment_ids: experimentIds }),
+
+  // Prompt Optimizer
+  runPromptOptimization: (data: { prompt_key: string; dataset_id: string; metric?: string; strategy?: string; max_rounds?: number; no_improve_limit?: number; score_threshold?: number; model?: string; candidates_per_round?: number; population_size?: number; variables?: string }) =>
+    client.post('/api/v2/harness/optimizer/run', data),
+  adoptPromptVersion: (versionId: string) =>
+    client.post('/api/v2/harness/optimizer/adopt', { version_id: versionId }),
 };
