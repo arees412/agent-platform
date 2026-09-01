@@ -11,17 +11,45 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   backend:
-    name: Go (build / vet / test -race)
+    name: Go (format / build / vet / test -race)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-go@v5
         with:
           go-version: '1.22'
           cache: true
+
+      - name: Check formatting of changed Go files
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [[ -z "$BASE_SHA" || "$BASE_SHA" =~ ^0+$ ]]; then
+            mapfile -t go_files < <(git ls-files '*.go')
+          else
+            mapfile -t go_files < <(git diff --name-only --diff-filter=ACMR "$BASE_SHA" "$GITHUB_SHA" -- '*.go')
+          fi
+
+          if (( ${#go_files[@]} == 0 )); then
+            echo "No changed Go files."
+            exit 0
+          fi
+
+          unformatted="$(gofmt -l "${go_files[@]}")"
+          if [[ -n "$unformatted" ]]; then
+            echo "The following changed Go files are not gofmt-formatted:"
+            echo "$unformatted"
+            exit 1
+          fi
 
       - name: Build
         run: go build ./...
