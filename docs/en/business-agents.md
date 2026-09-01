@@ -1,6 +1,6 @@
 # Business Agent Pack
 
-The AgentForge AI Business Agent Pack adds five original, compileable business-agent definitions to the existing multi-agent engine. The catalog is implemented in `pkg/businessagents`, adapted in `pkg/agent/business_agents.go`, and included by `pkg/agent.DefaultAgents()`.
+The AgentForge AI Business Agent Pack adds five original, compilable business-agent definitions to the existing multi-agent engine. The catalog is implemented in `pkg/businessagents`, adapted in `pkg/agent/business_agents.go`, and included by `pkg/agent.DefaultAgents()`.
 
 The agents are decision-support components. They do not have account-write, payment, CRM-write, filing, browser-write, or messaging tools. Legal, financial, compliance, customer-account, and external-communication actions remain recommendations or drafts pending authorized human approval.
 
