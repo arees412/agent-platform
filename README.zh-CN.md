@@ -1,5 +1,7 @@
 # AgentForge AI — 企业级多 Agent AI 运营平台
 
+> **Reference note:** Upstream and Chinese-language documentation is retained here for reference. The English [README](./README.md) is the canonical source for current AgentForge-specific functionality and project status.
+
 > 通过可扩展的平台协调专业 AI Agent、企业知识、工具、记忆与人工审批。
 
 [English](./README.md) | [简体中文](./README.zh-CN.md)

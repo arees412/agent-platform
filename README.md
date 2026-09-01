@@ -1,159 +1,162 @@
-# Business Agent Pack
+# AgentForge AI
 
-The AgentForge AI Business Agent Pack adds five original, compilable business-agent definitions to the existing multi-agent engine. The catalog is implemented in `pkg/businessagents`, adapted in `pkg/agent/business_agents.go`, and included by `pkg/agent.DefaultAgents()`.
+**Enterprise Multi-Agent AI Operations Platform**
 
-The agents are decision-support components. They do not have account-write, payment, CRM-write, filing, browser-write, or messaging tools. Legal, financial, compliance, customer-account, and external-communication actions remain recommendations or drafts pending authorized human approval.
+> Coordinate specialized AI agents, enterprise knowledge, tools, memory, and human approvals through one extensible platform.
 
-## Catalog Contract
+[English](./README.md) | [简体中文](./README.zh-CN.md)
 
-Every definition includes:
+## Overview
 
-- Stable ID and human-readable name.
-- Business domain and responsibility.
-- Original system instructions.
-- Existing MCP tool names only.
-- Valid handoff targets.
-- Risk tier and human-approval flag.
-- Ordered output sections.
-- Evidence and uncertainty requirements.
-- Safe fallback behavior.
+AgentForge AI is an enterprise-oriented foundation for multi-agent applications. It combines agent execution, retrieval-augmented generation (RAG), long-term memory, Model Context Protocol (MCP) tools, agent-to-agent (A2A) communication, and governance services behind a shared API gateway and operator interface.
 
-`ValidateCatalog` rejects empty required fields, duplicate IDs, unsupported risk tiers, unsupported or duplicate tools, missing or duplicate handoff targets, self-handoffs, and empty output contracts. `Catalog()` and the adapter copy slices so callers cannot mutate later catalog results.
+This repository is an independent fork of [`atliliw/agent-platform`](https://github.com/atliliw/agent-platform). The upstream service architecture and implementation remain attributable to `atliliw` and contributors. AgentForge branding, the Business Agent Pack, catalog validation, integration code, tests, and supporting documentation are additions to this fork; no upstream endorsement is implied.
 
-## Handoff Flow
+AgentForge AI is a software foundation, not a claim of production certification, regulatory compliance, customer adoption, or benchmark performance. Deployers remain responsible for security hardening, identity and access controls, tenant isolation, provider review, evaluation, observability, and approval policy.
+
+## Key Capabilities
+
+### Core Platform Capabilities
+
+- Multi-agent execution with streaming, tool calls, handoffs, checkpoints, interventions, and resumable sessions.
+- RAG knowledge services with document ingestion, chunking, BM25 and vector retrieval, and Qdrant-backed indexing.
+- Episodic, semantic, and working-memory services with recall and consolidation controls.
+- Built-in and remote MCP tool discovery and execution.
+- A2A agent discovery and task dispatch over gRPC and HTTP endpoints.
+- Reusable agent skills with progressive loading.
+- Harness services for guardrails, approvals, evaluations, prompts, workflows, SLOs, traces, session replay, and cost analytics.
+- A tenant-aware Gin gateway, Go microservices, React operator interface, Docker Compose topologies, and OpenTelemetry collection.
+
+### AgentForge Extensions
+
+- A five-role Business Agent Pack for governed operations, revenue, customer, risk, and executive-analysis workflows.
+- Catalog validation and an adapter that integrates the business-agent definitions with the existing agent service.
+- Evidence, uncertainty, and human-approval boundaries embedded in business-agent instructions.
+- English architecture, configuration, deployment, API, development, and business-agent documentation.
+- Lightweight pull-request CI for Go formatting, build, vet, tests, and frontend compilation.
+
+## Architecture
 
 ```mermaid
-flowchart LR
-    Director[Business Operations Director]
-    Revenue[Revenue Intelligence Agent]
-    Customer[Customer Operations Agent]
-    Risk[Risk and Compliance Review Agent]
-    Executive[Executive Briefing Agent]
+flowchart TB
+    U[Users and API Clients] --> G[API Gateway]
+    G --> R[Agent and Multi-Agent Runtime]
+    R --> B[Business Agents]
+    R --> A[General AI Agents]
+    B --> O[Orchestration and Handoffs]
+    A --> O
+    O --> K[RAG Knowledge]
+    O --> M[Long-Term Memory]
+    O --> T[MCP Tools]
+    K --> X[A2A Communication]
+    M --> X
+    T --> X
+    X --> P[LLM and Tool Providers]
 
-    Director --> Revenue
-    Director --> Customer
-    Director --> Risk
-    Director --> Executive
-    Revenue --> Director
-    Revenue --> Risk
-    Revenue --> Executive
-    Customer --> Director
-    Customer --> Risk
-    Risk --> Director
-    Risk --> Executive
-    Executive --> Director
-    Executive --> Risk
+    H[Governance and Human Approval] -. policies and checkpoints .-> R
+    H -. approval boundaries .-> B
+    H -. evaluation and observability .-> O
 ```
 
-Handoff is bounded by each definition's allowlist. A handoff changes the active specialist; it does not approve an action, expand tool permissions, or relax tenant/data policy.
+The gateway is the external HTTP boundary. Backend services use gRPC and retain separate responsibilities for chat, agents, knowledge, memory, A2A communication, tools, and governance. See [Architecture](./docs/en/architecture.md) for service topology, trust boundaries, failure modes, and approval flows.
 
-## Agent Reference
+## Business Agent Pack
 
-### Business Operations Director
+Fresh installations add five AgentForge definitions alongside the existing upstream default agents:
 
-- **ID:** `business-operations-director`
-- **Domain:** Cross-functional business operations.
-- **Responsibility:** Triage requests, coordinate specialist analysis, surface dependencies, and prepare operating plans.
-- **Tools:** `knowledge_search`, `web_search`, `calculator`.
-- **Handoffs:** All four specialist business agents.
-- **Risk tier:** High.
-- **Approval boundary:** High-impact operating actions remain recommendations until an authorized human approves them.
-- **Output contract:** Objective and Scope; Evidence Reviewed; Operating Assessment; Recommended Plan; Decisions and Approvals Required; Risks and Dependencies; Open Questions.
-- **Evidence rule:** Cite material sources, identify assumptions and owners, and never convert missing data into zero.
-- **Fallback:** Produce a provisional brief and request the minimum missing evidence or decision.
-
-### Revenue Intelligence Agent
-
-- **ID:** `revenue-intelligence-agent`
-- **Domain:** Revenue operations and commercial analysis.
-- **Responsibility:** Analyze pipeline evidence, commercial signals, and forecast scenarios.
-- **Tools:** `knowledge_search`, `web_search`, `calculator`.
-- **Handoffs:** Business Operations Director, Risk and Compliance Review Agent, Executive Briefing Agent.
-- **Risk tier:** High.
-- **Approval boundary:** It cannot change prices, CRM/financial records, commitments, or external communications.
-- **Output contract:** Question; Evidence and Data Quality; Findings; Scenario Analysis; Recommended Actions; Approval Required; Uncertainty and Missing Data.
-- **Evidence rule:** Identify source, period, currency/unit, and assumptions; separate actuals, estimates, and scenarios.
-- **Fallback:** Return a data-gap assessment and reproducible method instead of invented values.
-
-### Customer Operations Agent
-
-- **ID:** `customer-operations-agent`
-- **Domain:** Customer support and service operations.
-- **Responsibility:** Synthesize customer context, classify service issues, and prepare resolution plans and draft communications.
-- **Tools:** `knowledge_search`, `web_search`.
-- **Handoffs:** Business Operations Director, Risk and Compliance Review Agent.
-- **Risk tier:** High.
-- **Approval boundary:** Account changes, refunds, credits, cancellations, and outbound messages are drafts pending authorization.
-- **Output contract:** Customer Objective; Verified Context; Issue Assessment; Proposed Resolution; Draft Communication; Approval and Ownership; Unknowns and Follow-up.
-- **Evidence rule:** Use the supplied/retrieved customer record, preserve provenance and timestamps, and do not infer identity, entitlement, or account state.
-- **Fallback:** Produce a privacy-minimized case summary and route to a human owner without changing the account.
-
-### Risk and Compliance Review Agent
-
-- **ID:** `risk-compliance-review-agent`
-- **Domain:** Risk, policy, and compliance review.
-- **Responsibility:** Compare proposals with available policies, controls, and jurisdictional evidence.
-- **Tools:** `knowledge_search`, `web_search`.
-- **Handoffs:** Business Operations Director, Executive Briefing Agent.
-- **Risk tier:** High.
-- **Approval boundary:** It is not legal counsel and cannot approve, file, certify, sign, or execute legal, financial, regulatory, privacy, or compliance actions.
-- **Output contract:** Review Scope; Evidence and Applicable Requirements; Findings; Risk Rating and Rationale; Required Controls; Human Decision Required; Residual Uncertainty.
-- **Evidence rule:** Cite policy/control, jurisdiction, and effective date; distinguish requirements, internal policy, guidance, and unresolved applicability.
-- **Fallback:** Limit the review and escalate to the appropriate qualified owner.
-
-### Executive Briefing Agent
-
-- **ID:** `executive-briefing-agent`
-- **Domain:** Executive decision support.
-- **Responsibility:** Compress verified analyses into decision-ready briefs without hiding uncertainty or dissent.
-- **Tools:** `knowledge_search`, `calculator`.
-- **Handoffs:** Business Operations Director, Risk and Compliance Review Agent.
-- **Risk tier:** Moderate.
-- **Approval boundary:** Briefs inform but do not approve or execute decisions.
-- **Output contract:** Executive Summary; Decision Required; Verified Signals; Options and Trade-offs; Risks and Controls; Recommended Next Step; Owners, Approvals, and Open Questions.
-- **Evidence rule:** Trace material statements to inputs; preserve dates, confidence, disagreement, and missing data.
-- **Fallback:** Return a conflict-and-gap brief instead of selecting an unsupported narrative.
-
-## Tools and Safety
-
-The catalog uses only these names verified in `services/mcp-service/internal/service/mcp_service.go`:
-
-| Tool | Use | Side-effect posture |
+| Agent | Purpose | Human boundary |
 | --- | --- | --- |
-| `knowledge_search` | Retrieve internal knowledge through the gateway | Read-oriented; retrieved content remains untrusted evidence |
-| `web_search` | Retrieve current public information when configured | Read-oriented; sources must be cited and evaluated |
-| `calculator` | Reproduce arithmetic used in scenarios | Local calculation; assumptions and units must be shown |
+| Business Operations Director | Coordinate cross-functional analysis and handoffs | High-impact plans remain recommendations |
+| Revenue Intelligence Agent | Analyze revenue operations and scenarios | No pricing, forecast, CRM, financial, or outbound execution |
+| Customer Operations Agent | Synthesize cases and draft resolutions | No account changes, refunds, cancellations, or message sending |
+| Risk and Compliance Review Agent | Review evidence against policy and risk criteria | No legal conclusion, filing, certification, or regulatory action |
+| Executive Briefing Agent | Produce decision-ready, evidence-aware briefs | Briefs do not approve or execute decisions |
 
-The agent engine resolves a tool name only when it appears in the MCP service's current tool definitions. Remote environment configuration can still make a named tool unavailable; agents must use their safe fallback rather than claim success.
+The pack uses verified built-in tools and explicit handoff contracts. Existing installations are not silently reseeded when their agent store is already populated. For the complete catalog contract, flows, tool policy, and extension guide, see [Business Agents](./docs/en/business-agents.md).
 
-## Fresh Versus Existing Installations
+## Enterprise Use Cases
 
-`InitializeDefaultAgents` checks the persistent agent store count before saving defaults.
+- Cross-functional operating reviews with specialist handoffs and explicit decision owners.
+- Internal knowledge assistants using hybrid retrieval, contextual memory, and governed tools.
+- Revenue and pipeline analysis based on traceable inputs and stated assumptions.
+- Customer-operations case synthesis and draft resolution communications.
+- Risk and compliance review that reserves legal, regulatory, privacy, and financial decisions for qualified humans.
+- Executive briefings that preserve evidence, uncertainty, dissent, and approval requirements.
+- Multi-agent workflows with checkpoints, evaluation, trace collection, and cost visibility.
 
-| Installation state | Behavior |
+## Tech Stack
+
+| Layer | Technology |
 | --- | --- |
-| Empty/fresh agent store | Existing upstream default agents and all five business agents are saved |
-| Non-empty/existing agent store | Initialization returns without inserting or updating any agent |
+| Backend | Go 1.22, Gin, gRPC, Protocol Buffers |
+| Persistence and retrieval | MongoDB, SQLite, Qdrant, Redis |
+| Agent integration | MCP tools, A2A services, OpenAI-compatible LLM endpoint support |
+| Frontend | React 19, TypeScript, Ant Design 6, TanStack Query, Zustand, React Flow, Monaco, ECharts, Tailwind CSS 4, Vite |
+| Observability | OpenTelemetry Collector |
+| Deployment | Docker and Docker Compose |
 
-This protects customized deployments from silent mutations. To add the pack to an existing installation, operators should use a reviewed migration or existing agent API, compare IDs first, preserve local customizations, and verify the stored definitions after import.
+The default example configuration targets DashScope/Qwen through an OpenAI-compatible endpoint. The Go module remains `agent-platform` for compatibility with the upstream codebase.
 
-## Extending the Pack
+## Quick Start
 
-1. Add a definition function in `pkg/businessagents` with a stable, namespaced ID.
-2. Include it in `Catalog()`.
-3. Use only tool names registered by the MCP service in the target deployment.
-4. Add every target agent to the definition's `Handoffs` and ensure the target is in the catalog.
-5. Define a risk tier, approval boundary, output contract, evidence requirements, and safe fallback.
-6. Add or update catalog and `pkg/agent` integration tests.
-7. Run `gofmt` and the relevant Go tests, then `go test ./...`.
-8. If adding an effectful tool, configure least-privilege access, a blocking approval checkpoint, expiry, audit evidence, and post-action verification before enabling it.
+Prerequisites: Docker with Compose and a supported LLM API key.
 
-Do not change the upstream Go module path or service identifiers merely to brand a new agent.
+```bash
+# Generate the gitignored service configuration files.
+bash scripts/init-config.sh sk-your-dashscope-key
 
-## Related Documentation
+# Windows PowerShell alternative:
+pwsh scripts/init-config.ps1 sk-your-dashscope-key
 
-- [Architecture](./architecture.md)
-- [API Reference](./api-reference.md)
-- [Configuration](./configuration.md)
-- [Development](./development.md)
-- [Attribution Notice](../../NOTICE.md)
+# Build and start the full topology.
+docker compose -f docker/docker-compose.yaml up -d --build
+
+# Verify the gateway.
+curl http://localhost:9000/health
+```
+
+Open the frontend at `http://localhost:8888` or call the gateway at `http://localhost:9000`. For a reduced local topology without the full browser, desktop, and observability sidecars, use:
+
+```bash
+docker compose -f docker/docker-compose.simple.yaml up -d --build
+```
+
+Real service configuration and credentials are gitignored. Review [Configuration](./docs/en/configuration.md) and [Deployment](./docs/en/deployment.md) before exposing any service.
+
+## Project Structure
+
+```text
+.
+├── .github/workflows/   # Pull-request and branch CI
+├── configs/             # Shared configuration examples
+├── docker/              # Full and reduced Compose topologies
+├── docs/                # English and retained Chinese documentation
+├── frontend/            # React operator interface
+├── pkg/                 # Shared Go packages, generated APIs, and business agents
+├── proto/               # Protocol Buffer contracts
+├── scripts/             # Configuration and development helpers
+└── services/            # Gateway, agents, chat, knowledge, memory, A2A, MCP, and harness services
+```
+
+## Documentation
+
+| Topic | Reference |
+| --- | --- |
+| Documentation index | [docs/README.md](./docs/README.md) |
+| Architecture and trust boundaries | [docs/en/architecture.md](./docs/en/architecture.md) |
+| Business Agent Pack | [docs/en/business-agents.md](./docs/en/business-agents.md) |
+| Configuration | [docs/en/configuration.md](./docs/en/configuration.md) |
+| Deployment | [docs/en/deployment.md](./docs/en/deployment.md) |
+| API reference | [docs/en/api-reference.md](./docs/en/api-reference.md) |
+| Development | [docs/en/development.md](./docs/en/development.md) |
+| Upstream and fork attribution | [NOTICE.md](./NOTICE.md) |
+
+## Upstream & Attribution
+
+AgentForge AI preserves the upstream repository relationship, Git history, authorship, service identifiers, Go module path, and MIT license declaration. Upstream code is not presented as original AgentForge work. AgentForge-specific modifications are identified as additions to the fork and do not imply sponsorship, partnership, certification, or endorsement by the upstream project.
+
+See the [Attribution Notice](./NOTICE.md) for the complete statement.
+
+## License
+
+Licensed under the [MIT License](./LICENSE). The upstream copyright and permission notice remain intact. AgentForge-specific modifications are distributed under the same license; redistribution should preserve the license, attribution notice, and applicable authorship history.
