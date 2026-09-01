@@ -10,7 +10,7 @@ import (
 func DefaultAgents() []*Agent {
 	now := time.Now()
 
-	return []*Agent{
+	defaults := []*Agent{
 		// Main Agent - 主调度 Agent
 		{
 			ID:                "main-agent",
@@ -89,7 +89,7 @@ func DefaultAgents() []*Agent {
 			Temperature:       0.7,
 			ToolConfig: map[string]ToolSpecificConfig{
 				"browser_navigate": {
-					APIKey:  "",  // 从环境变量读取
+					APIKey:  "", // 从环境变量读取
 					BaseURL: "",
 					Model:   "",
 				},
@@ -98,6 +98,8 @@ func DefaultAgents() []*Agent {
 			UpdatedAt: now,
 		},
 	}
+
+	return append(defaults, BusinessAgentDefaults(now)...)
 }
 
 // InitializeDefaultAgents inserts default agents into MongoDB if no agents exist
