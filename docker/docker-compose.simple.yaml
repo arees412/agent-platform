@@ -1,11 +1,10 @@
-# 精简 Docker Compose 配置（不含 Obscura / OpenTelemetry / frontend）
-# 与 docker-compose.yaml（生产完整栈）的区别：仅含服务 + Qdrant/MongoDB/Redis，无观测与浏览器引擎。
-# 使用：docker compose -f docker/docker-compose.simple.yaml up -d
-
-version: '3.8'
+# Reduced Docker Compose profile without Obscura, OpenTelemetry, or the frontend.
+# Unlike docker-compose.yaml, this profile contains only the services and
+# Qdrant, MongoDB, and Redis; it omits observability and browser components.
+# Usage: docker compose -f docker/docker-compose.simple.yaml up -d
 
 services:
-  # Gateway Service - API 网关
+  # Gateway service - API gateway
   gateway:
     build:
       context: ..
@@ -24,7 +23,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # Chat Service - 对话服务
+  # Chat service
   chat-service:
     build:
       context: ..
@@ -41,7 +40,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # Knowledge Service - 知识库服务
+  # Knowledge service
   knowledge-service:
     build:
       context: ..
@@ -58,7 +57,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # Memory Service - 记忆服务
+  # Memory service
   memory-service:
     build:
       context: ..
@@ -74,7 +73,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # A2A Service - 跨服务通信
+  # A2A service - cross-service communication
   a2a-service:
     build:
       context: ..
@@ -88,7 +87,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # MCP Service - 工具协议服务
+  # MCP service - tool protocol service
   mcp-service:
     build:
       context: ..
@@ -102,7 +101,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # Agent Service - 多 Agent 编排服务
+  # Agent service - multi-agent orchestration
   agent-service:
     build:
       context: ..
@@ -119,7 +118,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # MCP Demo Server - MCP 协议演示服务器 (用于测试 MCP 客户端连接)
+  # MCP demo server - validates MCP client connections
   mcp-demo-server:
     build:
       context: ..
@@ -130,7 +129,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # Harness Service - 运维治理服务
+  # Harness service - operational governance
   harness-service:
     build:
       context: ..
@@ -144,7 +143,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # Qdrant - 向量数据库
+  # Qdrant - vector database
   qdrant:
     image: qdrant/qdrant:latest
     ports:
@@ -156,7 +155,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # MongoDB - 文档数据库
+  # MongoDB - document database
   mongodb:
     image: mongo:7
     ports:
@@ -167,7 +166,7 @@ services:
       - agent-network
     restart: unless-stopped
 
-  # Redis - 缓存
+  # Redis - cache
   redis:
     image: redis:7-alpine
     ports:

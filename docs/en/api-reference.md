@@ -1,6 +1,6 @@
 # API Reference
 
-> HTTP API reference for Agent Platform. [中文](../zh-CN/api-reference.md)
+> HTTP API reference for AgentForge AI. [Chinese](../zh-CN/api-reference.md)
 
 - **Base URL:** `http://localhost:9000`
 - **API prefix:** all routes are under `/api/v2` and pass through tenant middleware.

@@ -1,6 +1,6 @@
 # AgentForge AI Documentation
 
-> Documentation for the AgentForge AI independent fork of [`atliliw/agent-platform`](https://github.com/atliliw/agent-platform). English is the primary reference for AgentForge-specific additions; existing Chinese upstream companion documentation remains available.
+> Documentation for AgentForge AI, a customized derivative of [`atliliw/agent-platform`](https://github.com/atliliw/agent-platform). English is the primary reference for AgentForge-specific additions; retained Chinese upstream companion documentation remains available.
 
 ## English
 
@@ -15,17 +15,17 @@
 
 Suggested path: [Architecture](./en/architecture.md) → [Business Agents](./en/business-agents.md) → [Configuration](./en/configuration.md) → [Deployment](./en/deployment.md).
 
-## 中文
+## Retained Chinese-language documentation
 
-| 主题 | 文件 |
+| Topic | File |
 | --- | --- |
-| 架构 | [zh-CN/architecture.md](./zh-CN/architecture.md) |
-| 配置 | [zh-CN/configuration.md](./zh-CN/configuration.md) |
-| 部署 | [zh-CN/deployment.md](./zh-CN/deployment.md) |
-| API 参考 | [zh-CN/api-reference.md](./zh-CN/api-reference.md) |
-| 开发 | [zh-CN/development.md](./zh-CN/development.md) |
+| Architecture | [zh-CN/architecture.md](./zh-CN/architecture.md) |
+| Configuration | [zh-CN/configuration.md](./zh-CN/configuration.md) |
+| Deployment | [zh-CN/deployment.md](./zh-CN/deployment.md) |
+| API reference | [zh-CN/api-reference.md](./zh-CN/api-reference.md) |
+| Development | [zh-CN/development.md](./zh-CN/development.md) |
 
-AgentForge Business Agent Pack 的详细参考目前位于 [英文文档](./en/business-agents.md)；中文概览见项目的 [README.zh-CN.md](../README.zh-CN.md)。
+Detailed Business Agent Pack documentation is maintained in [English](./en/business-agents.md). A retained Chinese overview is available at [upstream/README.zh-CN.md](./upstream/README.zh-CN.md).
 
 ## Internal and Archived Material
 

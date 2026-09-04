@@ -1,6 +1,6 @@
 # Configuration
 
-> How Agent Platform services are configured. [中文](../zh-CN/configuration.md)
+> How AgentForge AI services are configured. [Chinese](../zh-CN/configuration.md)
 
 Each service reads a YAML config file at startup. The real `llm.api_key` lives in `config.yaml`, which is **gitignored**; the committed `config.example.yaml` is the template. Generate the real configs with `scripts/init-config.sh`.
 

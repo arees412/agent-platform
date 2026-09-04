@@ -4,13 +4,13 @@
 
 > Coordinate specialized AI agents, enterprise knowledge, tools, memory, and human approvals through one extensible platform.
 
-[English](./README.md) | [简体中文](./README.zh-CN.md)
+[English](./README.md) | [Retained Chinese documentation](./docs/upstream/README.zh-CN.md)
 
 ## Overview
 
 AgentForge AI is an enterprise-oriented foundation for multi-agent applications. It combines agent execution, retrieval-augmented generation (RAG), long-term memory, Model Context Protocol (MCP) tools, agent-to-agent (A2A) communication, and governance services behind a shared API gateway and operator interface.
 
-This repository is an independent fork of [`atliliw/agent-platform`](https://github.com/atliliw/agent-platform). The upstream service architecture and implementation remain attributable to `atliliw` and contributors. AgentForge branding, the Business Agent Pack, catalog validation, integration code, tests, and supporting documentation are additions to this fork; no upstream endorsement is implied.
+This repository is a customized and extended derivative of [`atliliw/agent-platform`](https://github.com/atliliw/agent-platform). The upstream service architecture and implementation remain attributable to `atliliw` and contributors. AgentForge branding, the Business Agent Pack, catalog validation, integration code, tests, and supporting documentation are AgentForge-specific additions; no upstream endorsement is implied.
 
 AgentForge AI is a software foundation, not a claim of production certification, regulatory compliance, customer adoption, or benchmark performance. Deployers remain responsible for security hardening, identity and access controls, tenant isolation, provider review, evaluation, observability, and approval policy.
 
@@ -153,7 +153,7 @@ Real service configuration and credentials are gitignored. Review [Configuration
 
 ## Upstream & Attribution
 
-AgentForge AI preserves the upstream repository relationship, Git history, authorship, service identifiers, Go module path, and MIT license declaration. Upstream code is not presented as original AgentForge work. AgentForge-specific modifications are identified as additions to the fork and do not imply sponsorship, partnership, certification, or endorsement by the upstream project.
+AgentForge AI preserves its upstream derivation, Git history, authorship, service identifiers, Go module path, and MIT license declaration. Upstream code is not presented as original AgentForge work. AgentForge-specific modifications are identified separately and do not imply sponsorship, partnership, certification, or endorsement by the upstream project.
 
 See the [Attribution Notice](./NOTICE.md) for the complete statement.
 
