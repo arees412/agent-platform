@@ -1,6 +1,6 @@
 # Development
 
-> Local development guide for Agent Platform. [中文](../zh-CN/development.md)
+> Local development guide for AgentForge AI. [Chinese](../zh-CN/development.md)
 
 ## Prerequisites
 
@@ -11,7 +11,7 @@ Install the toolchain for your platform:
 | Go | ≥ 1.22 | <https://go.dev/dl/> (verify: `go version`) |
 | protoc + plugins | latest | Only if you edit `.proto` files - generated code is committed in `pkg/pb/`. Install protoc from <https://grpc.io/docs/protoc-installation/>, then `go install google.golang.org/protobuf/cmd/protoc-gen-go@latest` and `go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest` |
 | Docker + Compose | ≥ 20.10 | <https://docs.docker.com/get-docker/> (used for Qdrant/MongoDB/Redis and the full stack) |
-| Node.js | ≥ 18 | <https://nodejs.org/> (frontend dev only) |
+| Node.js | ≥ 22.13 | <https://nodejs.org/> (frontend development only; required by the current Vite toolchain) |
 | golangci-lint | latest | Optional, for `make lint`: <https://golangci-lint.run/usage/install/> |
 
 Tip (mainland China): set `GOPROXY=https://goproxy.cn,direct` and `npm config set registry https://registry.npmmirror.com` for faster downloads.
@@ -19,7 +19,7 @@ Tip (mainland China): set `GOPROXY=https://goproxy.cn,direct` and `npm config se
 ## Project Structure
 
 ```
-agent-platform/
+agentforge-ai/
 ├── docs/                   # Documentation (en/ + zh-CN/)
 ├── proto/                  # Protobuf definitions (common, chat, knowledge, memory, a2a, mcp, harness)
 ├── pkg/                    # Shared libraries
@@ -27,7 +27,7 @@ agent-platform/
 │   ├── qdrant/             # Qdrant client
 │   ├── mongodb/            # MongoDB client
 │   ├── redis/              # Redis client
-│   ├── config/             # Config loading + env overrides
+│   ├── config/             # YAML configuration loading
 │   ├── agent/              # Agent engine primitives (handoff, store, etc.)
 │   ├── browseragent/       # Browser automation + pool
 │   ├── mcp/                # MCP client (stdio + streamable HTTP)
@@ -43,7 +43,7 @@ agent-platform/
 │   ├── agent-service/
 │   ├── harness-service/
 │   └── mcp-demo-server/
-├── frontend/               # Vue 3 + Element Plus + Tailwind
+├── frontend/               # React 19 + Ant Design + Tailwind CSS
 ├── docker/                 # Docker Compose configs + otel
 ├── configs/                # Example configs
 ├── Makefile
@@ -104,7 +104,7 @@ make tidy               # go mod tidy
 
 ```bash
 cd frontend
-npm install
+npm ci
 npm run dev             # Vite dev server on :5173
 npm run build           # production build
 ```

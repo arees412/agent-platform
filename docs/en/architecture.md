@@ -1,6 +1,6 @@
 # AgentForge AI Architecture
 
-> System, service, trust, and governance architecture for AgentForge AI. AgentForge AI is an independent fork of [`atliliw/agent-platform`](https://github.com/atliliw/agent-platform).
+> System, service, trust, and governance architecture for AgentForge AI, a customized derivative of [`atliliw/agent-platform`](https://github.com/atliliw/agent-platform).
 
 ## Architectural Goals
 

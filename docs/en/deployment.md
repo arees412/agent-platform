@@ -1,8 +1,8 @@
 # Deployment
 
-> Complete deployment guide. Clone the repo and run - no local Go/protoc/Node toolchain required for the Docker path. [中文](../zh-CN/deployment.md)
+> Complete deployment guide. Clone the repository and run it without a local Go, protoc, or Node.js toolchain when using Docker. [Chinese](../zh-CN/deployment.md)
 
-There are two ways to run Agent Platform:
+There are two ways to run AgentForge AI:
 
 - **Option A - Docker Compose (recommended):** builds every service image from source inside Docker. You only need Docker installed. This is the clone-and-deploy path.
 - **Option B - Local build:** build binaries with `make build` and run them directly (or via Compose with pre-built images). Needs Go and optionally Node.
@@ -32,8 +32,8 @@ docker compose version
 ### 2. Clone
 
 ```bash
-git clone https://github.com/atliliw/agent-platform.git
-cd agent-platform
+git clone https://github.com/arees412/agentforge-ai.git
+cd agentforge-ai
 ```
 
 ### 3. Generate service configs (required)
@@ -66,7 +66,7 @@ docker compose -f docker/docker-compose.yaml up -d --build
 # docker compose -f docker/docker-compose.simple.yaml up -d --build
 ```
 
-The first build compiles every Go service (multi-stage build) and the Vue frontend. It uses China-friendly mirrors (`goproxy.cn`, Aliyun APK, npmmirror) so it works well on mainland networks. Expect several minutes on first run; subsequent starts are fast.
+The first build compiles every Go service (multi-stage build) and the React frontend. It uses China-friendly mirrors (`goproxy.cn`, Aliyun APK, and npmmirror) for dependency downloads. Expect several minutes on the first run; subsequent starts are faster.
 
 ### 6. Verify
 
@@ -123,7 +123,7 @@ Use this if you want to run binaries directly or develop without rebuilding Dock
 |------|---------|-------|
 | Go | ≥ 1.22 | <https://go.dev/dl/> |
 | protoc + plugins | latest | Only needed if you edit `.proto` files (generated code is committed in `pkg/pb/`) |
-| Node.js | ≥ 18 | Only for frontend dev |
+| Node.js | ≥ 22.13 | Only for frontend development; required by the current Vite toolchain |
 | Docker | ≥ 20.10 | Still needed for Qdrant/MongoDB/Redis (or run them separately) |
 
 ### 2. Generate service configs

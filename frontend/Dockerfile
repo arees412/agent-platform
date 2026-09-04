@@ -1,14 +1,14 @@
-# 构建阶段
-FROM node:20-alpine AS builder
+# Build stage. Node 22 matches CI and the current frontend toolchain.
+FROM node:22-alpine AS builder
 WORKDIR /app
-# 使用淘宝镜像
+# Use the existing project registry mirror for dependency installation.
 RUN npm config set registry https://registry.npmmirror.com
 COPY frontend/package*.json ./
 RUN npm ci
 COPY frontend/ .
 RUN npm run build
 
-# 生产阶段
+# Production stage
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY frontend/nginx.conf /etc/nginx/conf.d/default.conf
